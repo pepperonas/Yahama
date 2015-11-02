@@ -1,0 +1,82 @@
+<!--
+  ~ Copyright (c) 2015 Martin Pfeffer
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <!-- Multiwindow-Support -->
+    <dimen name="app_defaultsize_w">632dp</dimen>
+    <dimen name="app_defaultsize_h">598dp</dimen>
+    <dimen name="app_minimumsize_w">632dp</dimen>
+    <dimen name="app_minimumsize_h">598dp</dimen>
+
+    <!--FAB-->
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <!--LAYOUT PADDING-->
+    <dimen name="layout_padding_t">24dp</dimen>
+    <dimen name="layout_padding_b">16dp</dimen>
+    <dimen name="layout_padding_l_r">16dp</dimen>
+
+    <!--CARD-->
+    <dimen name="gap_card_to_card_smaller_h">2dp</dimen>
+    <dimen name="gap_card_to_card_larger_h">4dp</dimen>
+    <dimen name="gap_labelcard_to_actioncard_v">4dp</dimen>
+    <dimen name="gap_card_to_next_section_v">16dp</dimen>
+
+    <dimen name="card_corner_radius">2dp</dimen>
+
+    <!--ACTION CARD-->
+    <dimen name="actioncard_large_height">72dp</dimen>
+
+    <!--LABEL CARD-->
+    <dimen name="labelcard_large_height">36dp</dimen>
+    <dimen name="labelcard_text_size">16sp</dimen>
+
+    <!--SWICHTES-->
+    <dimen name="gap_switch_to_switch_v">16dp</dimen>
+    <dimen name="text_padding_switch">8dp</dimen>
+
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="channel_card_text_padding">8dp</dimen>
+    <dimen name="dialog_header_margin_bottom">16dp</dimen>
+
+    <!--RADIO CARDS-->
+    <dimen name="radiocard_height">64dp</dimen>
+    <dimen name="gap_radiocard_to_radiocard_v">4dp</dimen>
+    <dimen name="radiocard_text_size">20sp</dimen>
+    <dimen name="radiocard_icon_margin_l">16dp</dimen>
+    <dimen name="radiocard_text_margin_l">16dp</dimen>
+    <dimen name="radiocard_icon_min_w">40dp</dimen>
+    <dimen name="radiocard_icon_min_h">40dp</dimen>
+    <dimen name="radiocard_icon_max_w">40dp</dimen>
+    <dimen name="radiocard_icon_max_h">40dp</dimen>
+    <dimen name="station_dialog_tabelrow_padding_b">4dp</dimen>
+    <dimen name="dialog_help_and_feedback_tv_margin">32dp</dimen>
+
+    <!--<dimen name="radiocard_height">72dp</dimen>-->
+    <!--<dimen name="gap_radiocard_to_radiocard_v">4dp</dimen>-->
+    <!--<dimen name="radiocard_text_size">20sp</dimen>-->
+    <!--<dimen name="radiocard_icon_margin_l">16dp</dimen>-->
+    <!--<dimen name="radiocard_text_margin_l">16dp</dimen>-->
+    <!--<dimen name="radiocard_icon_min_w">40dp</dimen>-->
+    <!--<dimen name="radiocard_icon_min_h">40dp</dimen>-->
+    <!--<dimen name="radiocard_icon_max_w">40dp</dimen>-->
+    <!--<dimen name="radiocard_icon_max_h">40dp</dimen>-->
+    <!--<dimen name="station_dialog_tabelrow_padding_b">4dp</dimen>-->
+
+</resources>

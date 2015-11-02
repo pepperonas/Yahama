@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015 Martin Pfeffer
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/navigation_subheader_controller"
+            android:title="@string/navigation_sub_controller">
+            <menu>
+                <item
+                    android:id="@+id/audio"
+                    android:checked="false"
+                    android:icon="?attr/td_drawer_audio_icon"
+                    android:title="@string/audio"/>
+                <item
+                    android:id="@+id/dsp"
+                    android:checked="false"
+                    android:icon="?attr/td_drawer_dsp_icon"
+                    android:title="@string/dsp"/>
+                <item
+                    android:id="@+id/input"
+                    android:checked="false"
+                    android:icon="?attr/td_drawer_input_icon"
+                    android:title="@string/input"/>
+                <item
+                    android:id="@+id/webradio"
+                    android:checked="false"
+                    android:icon="?attr/td_drawer_webradio_icon"
+                    android:title="@string/webradio"/>
+                <item
+                    android:id="@+id/spotify"
+                    android:checked="false"
+                    android:icon="?attr/td_drawer_spotify_icon"
+                    android:title="@string/spotify"/>
+            </menu>
+        </item>
+
+
+        <item
+            android:id="@+id/navigation_subheader_more"
+            android:title="@string/navigation_sub_more">
+            <menu>
+                <item
+                    android:id="@+id/settings"
+                    android:checked="false"
+                    android:icon="?attr/td_drawer_settings_icon"
+                    android:title="@string/settings"/>
+                <item
+                    android:id="@+id/help_and_feedback"
+                    android:checked="false"
+                    android:icon="?attr/td_drawer_help_and_feedback_icon"
+                    android:title="@string/help_and_feedback"/>
+            </menu>
+
+        </item>
+
+    </group>
+
+</menu>

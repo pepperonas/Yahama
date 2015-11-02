@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015 Martin Pfeffer
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string-array name="navigation_view_items">
+        <item>Audio</item>
+        <item>Video</item>
+        <item>Webradio</item>
+        <item>Spotify</item>
+        <item>Settings</item>
+        <item>Help &amp; Feedback</item>
+    </string-array>
+
+    <string-array name="dialog_items_sleeptimer">
+        <item>30 min.</item>
+        <item>60 min.</item>
+        <item>90 min.</item>
+        <item>120 min.</item>
+        <item>disable</item>
+    </string-array>
+
+    <string-array name="dialog_items_select_nav_drawer_detail">
+        <item>IP-address</item>
+        <item>Input</item>
+        <item>Volume</item>
+    </string-array>
+
+    <string-array name="dialog_items_select_theme">
+        <item>@string/dark</item>
+        <item>@string/light</item>
+    </string-array>
+
+    <string-array name="dialog_items_select_vol_steps">
+        <item>0.5 dB</item>
+        <item>1.0 dB</item>
+        <item>2.5 dB</item>
+        <item>5.0 dB</item>
+    </string-array>
+
+
+</resources>

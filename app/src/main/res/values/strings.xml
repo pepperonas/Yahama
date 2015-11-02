@@ -1,0 +1,111 @@
+<!--
+  ~ Copyright (c) 2015 Martin Pfeffer
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="input">Input</string>
+    <string name="webradio">Webradio</string>
+    <string name="settings">Settings</string>
+    <string name="help_and_feedback">Help &amp; Feedback</string>
+    <string name="navigation_sub_controller">AV-Controller</string>
+    <string name="navigation_sub_more">More</string>
+    <string name="volume">Volume</string>
+    <string name="ip_address">IP-address</string>
+    <string name="player">Playback</string>
+    <string name="bass">Bass</string>
+    <string name="treble">Treble</string>
+    <string name="dialog_title_help_and_feedback">Help and Feedback</string>
+    <string name="dialog_title_get_premium">Premium-Upgrade</string>
+    <string name="dialog_title_promotion">Promotion</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="fab_action_mute">Mute</string>
+    <string name="fab_action_unmute">Unmute</string>
+    <string name="toolbar_info_unmute">unmuted</string>
+    <string name="toolbar_info_mute">muted</string>
+    <string name="fab_action_power_on">Switch on</string>
+    <string name="fab_action_power_off">Switch off</string>
+    <string name="others">Others</string>
+    <string name="tuner">Tuner</string>
+    <string name="stop">Stop</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="not_connected">Not connected</string>
+    <string name="connected">Connected</string>
+    <string name="powered_off">Switched off</string>
+    <string name="fab_action_set_timer">Set timer</string>
+    <string name="dialog_title_sleeptimer">Set timer</string>
+    <string name="choose">Choose</string>
+    <string name="fab_action_show_device_info">Device configuration</string>
+    <string name="dialog_title_device_info">Device configuration</string>
+    <string name="play_mode">Mode</string>
+    <string name="movie">Movie</string>
+    <string name="music">Music</string>
+    <string name="foR">for</string>
+    <string name="pref_category_premium_title">Premium</string>
+    <string name="pref_category_usability_title">Usability</string>
+    <string name="pref_category_design_title">Design</string>
+    <string name="pref_category_others_title">Others</string>
+    <string name="undo">Undo</string>
+    <string name="sleep_timer_set_start">Switching off in</string>
+    <string name="sleep_timer_set_end">min.</string>
+    <string name="sleep_timer_disabled">Timer disabled.</string>
+    <string name="pref_title_detail_in_nav_drawer">Detail in navigation</string>
+    <string name="dialog_title_select_nav_drawer_detail">Detail in navigation</string>
+    <string name="dialog_title_check_settings">Check settings</string>
+    <string name="dialog_content_wifi_disabled">Wifi is disabled. Do you want to enable it?</string>
+    <string name="pref_title_theme">Theme</string>
+    <string name="dialog_title_theme">Theme</string>
+    <string name="pref_title_get_premium">Premium upgrade</string>
+    <string name="pref_title_vol_steps">Volume steps</string>
+    <string name="dialog_title_volume_steps">Volume steps</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+    <string name="premium_unlocked_title">Thanks!</string>
+    <string name="premium_unlocked_summary">Premium unlocked.\nTouch, to hide.</string>
+    <string name="open_volume_slider">Show slider</string>
+    <string name="active">active</string>
+    <string name="inactive">inactive</string>
+    <string name="progress_dialog_title_lookup">Seaching…</string>
+    <string name="progress_dialog_content_lookup">Your phone searches the amplifier. This may take up to 30 seconds.</string>
+    <string name="dialog_title_lookup_failed">Search finished</string>
+    <string name="dialog_content_lookup_failed">Your amplifier hasn\'t be found. Please check if your device is connected to your local network. Would you like to restart the lookup?</string>
+    <string name="progress_dialog_title_waiting_for_wifi">Just a moment…</string>
+    <string name="progress_dialog_content_waiting_for_wifi">Checking connection. This will take a few seconds.</string>
+    <string name="progress_dialog_title_execute">Please wait…</string>
+    <string name="progress_dialog_content_execute">Action is processed.</string>
+    <string name="left_right">Links / Rechts:</string>
+    <string name="front_rear">Front / Rear:</string>
+    <string name="notification_title">Yahama makes the beat!</string>
+    <string name="station">Stations</string>
+    <string name="song">Artist</string>
+    <string name="track">Titel</string>
+    <string name="reset">Reset</string>
+    <string name="mute">mute</string>
+    <string name="premium_unlocked">Unlocked</string>
+    <string name="dialog_title_test_phase_expired">Note</string>
+    <string name="dialog_content_test_phase_expired">Test phase expired. Purchasing the premium access, will permanently remove the advertising.</string>
+    <string name="dialog_learn_more">Learn more</string>
+    <string name="dialog_not_now">Not now</string>
+    <string name="dialog_no_thanks">No thanks</string>
+    <string name="dialog_done">Done</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_got_it">Got it</string>
+    <string name="sb_hold_to_configure_dsp">Touch long to configure the DSP.</string>
+
+</resources>

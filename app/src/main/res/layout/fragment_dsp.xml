@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015 Martin Pfeffer
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:paddingTop="@dimen/layout_padding_t"
+                  android:paddingLeft="@dimen/layout_padding_l_r"
+                  android:paddingRight="@dimen/layout_padding_l_r"
+                  android:paddingBottom="@dimen/layout_padding_b">
+
+
+        <!--SWITCHES-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_direct_and_straight"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/labelcard_large_height"
+            android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+            card_view:cardCornerRadius="@dimen/card_corner_radius">
+
+            <TextView
+                android:id="@+id/tv_direct_and_straight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/play_mode"
+                android:textColor="@color/label_card_text_color"
+                android:layout_gravity="center"
+                android:textSize="@dimen/labelcard_text_size"
+                android:textStyle="bold"/>
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/gap_card_to_next_section_v"
+            android:gravity="right">
+
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/direct"
+                android:id="@+id/sw_direct"
+                android:layout_marginBottom="@dimen/gap_switch_to_switch_v"
+                android:switchPadding="@dimen/text_padding_switch"
+                android:textStyle="bold"/>
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/straight"
+                android:id="@+id/sw_straight"
+                android:switchPadding="@dimen/text_padding_switch"
+                android:layout_marginBottom="@dimen/gap_switch_to_switch_v"
+                android:animateLayoutChanges="true"/>
+
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/spec_extra_bass"
+                android:id="@+id/sw_extra_bass"
+                android:layout_marginBottom="@dimen/gap_switch_to_switch_v"
+                android:animateLayoutChanges="true"/>
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/spec_adaptive_drc"
+                android:id="@+id/sw_adaptive_drc"
+                android:layout_marginBottom="@dimen/gap_switch_to_switch_v"
+                android:animateLayoutChanges="true"/>
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/spec_3dCinemaDrc"
+                android:id="@+id/sw_3d_cinema_drc"
+                android:animateLayoutChanges="true"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/dsp_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true">
+
+            <!--CHANNEL-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_music"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/labelcard_large_height"
+                android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+                card_view:cardCornerRadius="@dimen/card_corner_radius">
+
+                <TextView
+                    android:id="@+id/tv_music"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/music"
+                    android:textColor="@color/label_card_text_color"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/labelcard_text_size"
+                    android:textStyle="bold"/>
+
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/layout_music123"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gap_card_to_card_smaller_h"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_music_2ch"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_music_2ch"
+                        android:text="@string/music_2ch"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_music_surround_decoder"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_music_surround_decoder"
+                        android:text="@string/music_surround_decoder"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_music_7ch"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_music_7ch"
+                        android:text="@string/music_7ch"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layout_music13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gap_card_to_card_smaller_h"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/gap_card_to_card_smaller_h">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_music_cellarclub"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_music_cellarclub"
+                        android:text="@string/cellar_club"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_music_chamber"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_music_chamber"
+                        android:text="@string/chamber"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_music_hallinmunich"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_music_hallinmunich"
+                        android:text="@string/hall_in_munich"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_music46"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_card_to_card_smaller_h"
+                android:layout_marginBottom="@dimen/gap_card_to_card_smaller_h"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_music_hallinvienna"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_music_hallinvienna"
+                        android:text="@string/hall_in_vienna"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_music_musicvideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h">
+
+                    <TextView
+                        android:id="@+id/tv_music_musicvideo"
+                        android:text="@string/music_video"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_music_thebottomline"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_music_thebottomline"
+                        android:text="@string/the_bottom_line"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_music"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_card_to_card_smaller_h"
+                android:layout_marginBottom="@dimen/gap_card_to_next_section_v"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_music_theroxytheatre"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h">
+
+                    <TextView
+                        android:id="@+id/tv_music_theroxytheatre"
+                        android:text="@string/the_roxy_theatre"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="false"
+                    android:layout_weight="1">
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="false"
+                    android:layout_weight="1">
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+
+            <!--MOVIE-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_movie"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/labelcard_large_height"
+                android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+                card_view:cardCornerRadius="@dimen/card_corner_radius">
+
+                <TextView
+                    android:id="@+id/tv_movie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/movie"
+                    android:textColor="@color/label_card_text_color"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/labelcard_text_size"
+                    android:textStyle="bold"/>
+
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/layout_movie13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gap_card_to_card_smaller_h"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_movie_actiongame"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_movie_actiongame"
+                        android:text="@string/actiongame"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_movie_adventure"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_movie_adventure"
+                        android:text="@string/adventure"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_movie_drama"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_movie_drama"
+                        android:text="@string/drama"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_movie46"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_card_to_card_smaller_h"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/gap_card_to_card_smaller_h">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_movie_monomovie"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_movie_monomovie"
+                        android:text="@string/mono_movie"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_movie_roleplaygame"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_movie_roleplaygame"
+                        android:text="@string/role_play_game"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_movie_sci_fi"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_movie_sci_fi"
+                        android:text="@string/sci_fi"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_movie79"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/gap_card_to_card_smaller_h"
+                android:layout_marginBottom="@dimen/gap_card_to_card_smaller_h">
+
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_movie_spectacle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_movie_spectacle"
+                        android:text="@string/spectacle"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_movie_sports"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
+                    android:clickable="true"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_movie_sport"
+                        android:text="@string/sports"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_movie_standard"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/actioncard_large_height"
+                    android:clickable="true"
+                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
+                    android:foreground="@drawable/card_foreground"
+                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_movie_standard"
+                        android:text="@string/standard"
+                        android:textColor="@color/input_action_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/channel_card_text_padding"/>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

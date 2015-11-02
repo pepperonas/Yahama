@@ -1,0 +1,28 @@
+.gradle
+/local.properties
+/build
+
+#built application files
+*.apk
+
+# generated files
+bin/
+gen/
+
+# Windows thumbnail db
+Thumbs.db
+
+# Eclipse project files
+.classpath
+.project
+
+# Android Studio
+*.iml
+.idea
+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
+app/build/
+
+# Additional Files
+# e.g 'additionalfiles/images'
+/app/src/main/java/com/pepperonas/yahama/app/dialogs/DialogPromotion.java
+/app/src/main/res/values/strings_untranslatable.xml

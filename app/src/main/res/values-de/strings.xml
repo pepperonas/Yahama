@@ -1,0 +1,122 @@
+<!--
+  ~ Copyright (c) 2015 Martin Pfeffer
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="open">Öffnen</string>
+    <string name="close">Schließen</string>
+    <string name="input">Input</string>
+    <string name="webradio">Webradio</string>
+    <string name="settings">Einstellungen</string>
+    <string name="help_and_feedback">Hilfe &amp; Feedback</string>
+
+    <string name="navigation_sub_controller">AV-Steuerung</string>
+    <string name="navigation_sub_more">Weiteres</string>
+    <string name="volume">Lautstärke</string>
+    <string name="ip_address">IP-Adresse</string>
+    <string name="player">Wiedergabe</string>
+    <string name="bass">Bass</string>
+    <string name="treble">Höhen</string>
+    <string name="dialog_title_help_and_feedback">Hilfe und Feedback</string>
+    <string name="dialog_title_get_premium">Premium-Upgrade</string>
+    <string name="dialog_title_promotion">Promotion</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+
+    <string name="fab_action_mute">Ton ausschalten</string>
+    <string name="fab_action_unmute">Ton einschalten</string>
+
+    <string name="toolbar_info_unmute">Ton eingeschaltet</string>
+    <string name="toolbar_info_mute">Ton ausgeschaltet</string>
+
+
+    <string name="fab_action_power_on">Einschalten</string>
+    <string name="fab_action_power_off">Ausschalten</string>
+
+    <string name="others">Sonstige</string>
+    <string name="tuner">Tuner</string>
+    <string name="stop">Stop</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="not_connected">Nicht verbunden</string>
+    <string name="connected">Verbunden</string>
+    <string name="powered_off">Ausgeschaltet</string>
+    <string name="fab_action_set_timer">Sleeptimer einstellen</string>
+    <string name="dialog_title_sleeptimer">Sleeptimer einstellen</string>
+    <string name="choose">Auswählen</string>
+    <string name="fab_action_show_device_info">Konfiguration anzeigen</string>
+    <string name="dialog_title_device_info">Gerätekonfiguration</string>
+
+    <string name="play_mode">Wiedergabemodus</string>
+    <string name="movie">Film</string>
+    <string name="music">Musik</string>
+    <string name="foR">für</string>
+    <string name="pref_category_premium_title">Premium</string>
+    <string name="pref_category_usability_title">Handhabung</string>
+    <string name="pref_category_design_title">Design</string>
+    <string name="pref_category_others_title">Sonstiges</string>
+
+    <string name="undo">Rückgängig</string>
+    <string name="sleep_timer_set_start">Abschaltung in</string>
+    <string name="sleep_timer_set_end">min.</string>
+    <string name="sleep_timer_disabled">Sleeptimer deaktiviert.</string>
+
+    <string name="pref_title_detail_in_nav_drawer">Detail in Navigationsübersicht</string>
+    <string name="dialog_title_select_nav_drawer_detail">Detail in Navigation</string>
+
+    <string name="dialog_title_check_settings">Einstellungen prüfen</string>
+    <string name="dialog_content_wifi_disabled">Die WLAN-Einstellung ist deaktiviert. Möchten Sie die Netzwerk-Einstellungen öffnen?</string>
+
+    <string name="pref_title_theme">Theme</string>
+    <string name="dialog_title_theme">Theme</string>
+    <string name="pref_title_get_premium">Upgrade auf Premium</string>
+    <string name="pref_title_vol_steps">Lautstärkeschritte</string>
+    <string name="dialog_title_volume_steps">Lautstärkeschritte</string>
+    <string name="dark">Dunkel</string>
+    <string name="light">Hell</string>
+    <string name="premium_unlocked_title">Vielen Dank!</string>
+    <string name="premium_unlocked_summary">Premium ist freigeschaltet.\nBerühren, um Anzeige zu verbergen.</string>
+    <string name="open_volume_slider">Regler öffnen</string>
+    <string name="active">aktiv</string>
+    <string name="inactive">inaktiv</string>
+
+    <string name="progress_dialog_title_lookup">Suche Verstärker…</string>
+    <string name="progress_dialog_content_lookup">Ihr Telefon sucht den Verstärker. Dieser Vorgang benötigt bis zu 30 Sekunden.</string>
+    <string name="dialog_title_lookup_failed">Suche beendet</string>
+    <string name="dialog_content_lookup_failed">Ihr Verstärker konnte nicht gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über das WLAN-Netzwerk erreichbar ist. Möchten Sie die Suche neu starten?</string>
+    <string name="progress_dialog_title_waiting_for_wifi">Einen Augenblick…</string>
+    <string name="progress_dialog_content_waiting_for_wifi">Die Verbindung wird geprüft. Der Vorgang ist sofort abgeschlossen.</string>
+    <string name="progress_dialog_title_execute">Einen Moment…</string>
+    <string name="progress_dialog_content_execute">Die Aktion wird verarbeitet.</string>
+    <string name="left_right">Links / Rechts:</string>
+    <string name="front_rear">Vorne / Hinten:</string>
+    <string name="notification_title">Yahama macht den Beat!</string>
+    <string name="station">Sender</string>
+    <string name="song">Artist</string>
+    <string name="track">Titel</string>
+    <string name="reset">Reset</string>
+    <string name="mute">mute</string>
+    <string name="premium_unlocked">Freigeschaltet</string>
+    <string name="dialog_title_test_phase_expired">Hinweis</string>
+    <string name="dialog_content_test_phase_expired">Die Testphase ist abgelaufen. Entfernen Sie Werbung dauerhaft durch den Kauf der Premium-Freischaltung.</string>
+    <string name="dialog_learn_more">Weitere Informationen</string>
+    <string name="dialog_not_now">Nicht jetzt</string>
+    <string name="dialog_no_thanks">Kein Interesse</string>
+    <string name="dialog_done">Fertig</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_got_it">Alles klar</string>
+    <string name="sb_hold_to_configure_dsp">Durch langes Berühren kann der DSP konfiguriert werden.</string>
+
+</resources>

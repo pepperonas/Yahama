@@ -1,0 +1,74 @@
+<!--
+  ~ Copyright (c) 2015 Martin Pfeffer
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:maxLevel="0">
+        <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+                android:color="@color/pinkA3"
+                android:drawable="@drawable/card_foreground_selector"
+            />
+    </item>
+    <item android:maxLevel="1">
+        <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+                android:color="@color/light_blueA3"
+                android:drawable="@drawable/card_foreground_selector"
+            />
+    </item>
+    <item android:maxLevel="2">
+        <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+                android:color="@color/light_greenA3"
+                android:drawable="@drawable/card_foreground_selector"
+            />
+    </item>
+    <item android:maxLevel="3">
+        <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+                android:color="@color/purpleA3"
+                android:drawable="@drawable/card_foreground_selector"
+            />
+    </item>
+    <item android:maxLevel="4">
+        <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+                android:color="@color/redA3"
+                android:drawable="@drawable/card_foreground_selector"
+            />
+    </item>
+    <item android:maxLevel="5">
+        <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+                android:color="@color/orangeA3"
+                android:drawable="@drawable/card_foreground_selector"
+            />
+    </item>
+    <item android:maxLevel="6">
+        <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+                android:color="@color/yellowA3"
+                android:drawable="@drawable/card_foreground_selector"
+            />
+    </item>
+    <item android:maxLevel="7">
+        <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+                android:color="@color/colorAccent"
+                android:drawable="@drawable/card_foreground_selector"
+            />
+    </item>
+    <item android:maxLevel="8">
+        <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+                android:color="@color/colorAccent_light"
+                android:drawable="@drawable/card_foreground_selector"
+            />
+    </item>
+
+</level-list>
