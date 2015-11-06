@@ -107,5 +107,6 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_got_it">Got it</string>
     <string name="sb_hold_to_configure_dsp">Touch long to configure the DSP.</string>
+    <string name="dialog_get_premium_msg">- Ad-free\n- Get Yahama for your desktop\n- Support my work</string>
 
 </resources>

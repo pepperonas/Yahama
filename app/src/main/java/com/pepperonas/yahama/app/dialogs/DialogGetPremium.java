@@ -38,7 +38,7 @@ public class DialogGetPremium {
     public DialogGetPremium(final MainActivity main, final SettingsFragment sf, final Context ctx) {
         new MaterialDialog.Builder(ctx)
                 .title(R.string.dialog_title_get_premium)
-                .content("...")
+                .content(R.string.dialog_get_premium_msg)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
                 .callback(new MaterialDialog.ButtonCallback() {

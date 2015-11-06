@@ -15,11 +15,6 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keep class com.mikepenz.iconics.** { *; }
--keep class com.mikepenz.community_material_typeface_library.CommunityMaterial
--keep class com.mikepenz.fontawesome_typeface_library.FontAwesome
--keep class com.mikepenz.google_material_typeface_library.GoogleMaterial
--keep class com.mikepenz.meteocons_typeface_library.Meteoconcs
--keep class com.mikepenz.octicons_typeface_library.Octicons
--keep class com.google.android.gms** { *; }
--dontwarn com.google.android.gms.**
+-keep class com.mikepenz.** { *; }
+-keep class com.google.** { *; }
+-dontwarn com.google.**
