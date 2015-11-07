@@ -21,10 +21,9 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
 /**
- * Created by martin on 06.08.2015.
+ * @author Martin Pfeffer (pepperonas)
  */
 public class FadeAnitmation {
-
 
     private View view;
     private float maxBrightness = 1.0f;

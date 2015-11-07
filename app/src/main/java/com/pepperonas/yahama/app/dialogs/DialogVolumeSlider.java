@@ -36,7 +36,6 @@ public class DialogVolumeSlider {
 
     private TextView mTvVolume;
     private MaterialDialog mDialog;
-    private long mDeltaCloseDialog = System.currentTimeMillis();
 
 
     public DialogVolumeSlider(final Activity act) {
@@ -92,7 +91,6 @@ public class DialogVolumeSlider {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 MainActivity.getAmp().setMute(false);
-                MainActivity.updateNotificationDelayed();
             }
 
 

@@ -30,7 +30,6 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -174,9 +173,6 @@ public class MainActivity extends AppCompatActivity {
 
         mInvisibleVolSlider = new SeekBar(this);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                mNotificationReceiver, new IntentFilter("notification_action"));
-
         if (Utils.isConnected(MainActivity.this)) {
             startApp();
         } else new DialogWifiDisabled(MainActivity.this).showDialog();
@@ -190,6 +186,34 @@ public class MainActivity extends AppCompatActivity {
 
         doAnalytics("MainActivity", "Starting...");
 
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("mute");
+        filter.addAction("play");
+        filter.addAction("pause");
+        // Add other actions as needed
+
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals("mute")) {
+                    Log.d(TAG, "onReceive  " + "mute");
+                    mFabMute.callOnClick();
+                    mNotificationPanel.update();
+
+                } else if (intent.getAction().equals("play")) {
+                    Log.d(TAG, "onReceive  " + "play");
+                    runCtrlrTask(false, Commands.PLAYBACK_CONTROL(AmpYaRxV577.PC_PLAY));
+
+                } else if (intent.getAction().equals("pause")) {
+                    Log.d(TAG, "onReceive  " + "pause");
+                    runCtrlrTask(false, Commands.PLAYBACK_CONTROL(AmpYaRxV577.PC_PAUSE));
+
+                }
+            }
+        };
+
+        registerReceiver(receiver, filter);
     }
 
 
@@ -417,29 +441,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(
-                mNotificationReceiver);
-
         if (mNotificationPanel != null) {
             mNotificationPanel.cancel();
         }
     }
-
-
-    private BroadcastReceiver mNotificationReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String message = intent.getStringExtra("button_clicked");
-            Log.d("NtfctnRecvr", "message: " + message);
-            if (message.equals("pause")) {
-                runCtrlrTask(false, Commands.PLAYBACK_CONTROL(AmpYaRxV577.PC_PAUSE));
-            } else if (message.equals("play")) {
-                runCtrlrTask(false, Commands.PLAYBACK_CONTROL(AmpYaRxV577.PC_PLAY));
-            } else if (message.equals("mute")) {
-                mFabMute.callOnClick();
-            }
-        }
-    };
 
 
     @Override
@@ -882,6 +887,7 @@ public class MainActivity extends AppCompatActivity {
             boolean spkrBset = (s.split(Const.M_SPKR_B_SET)[1]).equals("true");
             mAmp.setSpeakerB(spkrBset);
         }
+
     }
 
 
@@ -1210,10 +1216,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        //        View header = LayoutInflater.from(this).inflate(R.layout.navdrawer_header, null);
-        //        mNavView.addHeaderView(header);
-
     }
 
 
@@ -1344,7 +1346,7 @@ public class MainActivity extends AppCompatActivity {
                 mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
                 mTitleWriterHandler.postDelayed(mTitleWriterRunnable, Const.DELAY_TITLE_RESET);
 
-                updateNotificationDelayed();
+                //                updateNotificationDelayed();
             }
         });
 
@@ -1403,15 +1405,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static void updateNotificationDelayed() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mNotificationPanel.update();
-            }
-        }, 400);
-    }
+    //    public static void updateNotificationDelayed() {
+    //        final Handler handler = new Handler();
+    //        handler.postDelayed(new Runnable() {
+    //            @Override
+    //            public void run() {
+    //                mNotificationPanel.update();
+    //            }
+    //        }, 400);
+    //    }
 
 
     private void closeFabMenuDelayed() {

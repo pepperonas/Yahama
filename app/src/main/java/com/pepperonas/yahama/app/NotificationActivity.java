@@ -19,7 +19,6 @@ package com.pepperonas.yahama.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.pepperonas.yahama.app.dialogs.DialogVolumeSlider;
@@ -51,18 +50,6 @@ public class NotificationActivity extends Activity {
                 Log.i(TAG, "volume");
                 DialogVolumeSlider dsv = new DialogVolumeSlider(this);
                 dsv.show();
-            } else if (action.equalsIgnoreCase("pause")) {
-                Log.i(TAG, "pause");
-                sendMessage("pause");
-                finish();
-            } else if (action.equalsIgnoreCase("play")) {
-                Log.i(TAG, "play");
-                sendMessage("play");
-                finish();
-            } else if (action.equalsIgnoreCase("mute")) {
-                Log.i(TAG, "mute");
-                sendMessage("mute");
-                finish();
             }
         }
     }
@@ -79,18 +66,7 @@ public class NotificationActivity extends Activity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
-        //        PendingIntent intent = PendingIntent.getActivity(this, 0, intent, 0);
-        //        notification.setLatestEventInfo(context, title, message, intent);
-        //        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        //        notificationManager.notify(0, notification);
     }
 
-
-    private void sendMessage(String which) {
-        Log.d(TAG, "Broadcasting message");
-        Intent intent = new Intent("notification_action");
-        intent.putExtra("button_clicked", which);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-    }
 
 }

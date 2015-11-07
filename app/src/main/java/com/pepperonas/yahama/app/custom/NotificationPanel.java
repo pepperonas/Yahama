@@ -24,12 +24,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.pepperonas.javabase.log.Log;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.NotificationActivity;
 import com.pepperonas.yahama.app.R;
@@ -98,9 +98,8 @@ public class NotificationPanel {
 
 
     public void initMute() {
-        Intent mute = new Intent(mCtx, NotificationActivity.class);
-        mute.putExtra("notification_filter", "mute");
-        PendingIntent btnMute = PendingIntent.getActivity(mCtx, 0, mute, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent mute = new Intent("mute");
+        PendingIntent btnMute = PendingIntent.getBroadcast(mCtx, 0, mute, 0);
         mRemoteViews.setOnClickPendingIntent(R.id.ntfctn_btn_mute, btnMute);
 
         Drawable d;
@@ -119,9 +118,8 @@ public class NotificationPanel {
 
 
     private void initPause() {
-        Intent pause = new Intent(mCtx, NotificationActivity.class);
-        pause.putExtra("notification_filter", "pause");
-        PendingIntent btnPause = PendingIntent.getActivity(mCtx, 1, pause, 0);
+        Intent pause = new Intent("pause");
+        PendingIntent btnPause = PendingIntent.getBroadcast(mCtx, 1, pause, 0);
         mRemoteViews.setOnClickPendingIntent(R.id.ntfctn_btn_pause, btnPause);
 
         Drawable d = new IconicsDrawable(mCtx, CommunityMaterial
@@ -133,9 +131,8 @@ public class NotificationPanel {
 
 
     private void initPlay() {
-        Intent play = new Intent(mCtx, NotificationActivity.class);
-        play.putExtra("notification_filter", "play");
-        PendingIntent btnPlay = PendingIntent.getActivity(mCtx, 2, play, 0);
+        Intent play = new Intent("play");
+        PendingIntent btnPlay = PendingIntent.getBroadcast(mCtx, 2, play, 0);
         mRemoteViews.setOnClickPendingIntent(R.id.ntfctn_btn_play, btnPlay);
 
         Drawable d = new IconicsDrawable(mCtx, CommunityMaterial
@@ -149,7 +146,12 @@ public class NotificationPanel {
     private void initVolume() {
         Intent volume = new Intent(mCtx, NotificationActivity.class);
         volume.putExtra("notification_filter", "volume");
+
+        volume.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
         PendingIntent btnVolume = PendingIntent.getActivity(mCtx, 3, volume, 0);
+
         mRemoteViews.setOnClickPendingIntent(R.id.ntfctn_btn_volume, btnVolume);
 
         Drawable d = new IconicsDrawable(mCtx, CommunityMaterial
@@ -163,8 +165,11 @@ public class NotificationPanel {
     private void initLauncher() {
         Intent launch = new Intent(mCtx, NotificationActivity.class);
         launch.putExtra("notification_filter", "launch");
-        PendingIntent btnVolume = PendingIntent.getActivity(mCtx, 4, launch, PendingIntent.FLAG_NO_CREATE);
-        mRemoteViews.setOnClickPendingIntent(R.id.ntfctn_btn_launcher, btnVolume);
+        launch.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        PendingIntent btnLaunch = PendingIntent.getActivity(mCtx, 4, launch, 0);
+        mRemoteViews.setOnClickPendingIntent(R.id.ntfctn_btn_launcher, btnLaunch);
 
         Drawable d = new IconicsDrawable(mCtx, CommunityMaterial
                 .Icon.cmd_open_in_app).colorRes(mIconColor).sizeDp(Const.NOTIFICATION_ICON_SIZE);
