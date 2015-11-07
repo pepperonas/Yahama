@@ -46,6 +46,8 @@
         <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_default_material_dark</item>
 
+        <item name="td_unofficial">@drawable/replace_it</item>
+
     </style>
 
 
@@ -77,6 +79,8 @@
         <item name="colorAccent">@color/colorAccent_light</item>
         <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
         <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
+
+        <item name="td_unofficial">@drawable/replace_it</item>
 
     </style>
 

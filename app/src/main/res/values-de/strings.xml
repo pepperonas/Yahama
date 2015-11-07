@@ -119,4 +119,6 @@
     <string name="dialog_got_it">Alles klar</string>
     <string name="sb_hold_to_configure_dsp">Durch langes Berühren kann der DSP konfiguriert werden.</string>
     <string name="dialog_get_premium_msg">- Werbefrei\n- Kostenlose Desktop-App\n- Unterstützung meiner Arbeit</string>
+    <string name="select_icon">Icon auswählen</string>
+
 </resources>

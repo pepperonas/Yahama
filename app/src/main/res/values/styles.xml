@@ -58,6 +58,8 @@
         <item name="td_drawer_settings_icon">@drawable/ic_settings_white_24dp</item>
         <item name="td_drawer_help_and_feedback_icon">@drawable/ic_help_circle_white_24dp</item>
 
+        <item name="td_unofficial">@drawable/replace_it</item>
+
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_default_material_dark</item>
@@ -89,6 +91,8 @@
         <item name="td_drawer_spotify_icon">@drawable/ic_spotify_black_24dp</item>
         <item name="td_drawer_settings_icon">@drawable/ic_settings_black_24dp</item>
         <item name="td_drawer_help_and_feedback_icon">@drawable/ic_help_circle_black_24dp</item>
+
+        <item name="td_unofficial">@drawable/replace_it</item>
 
         <item name="colorAccent">@color/colorAccent_light</item>
         <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>

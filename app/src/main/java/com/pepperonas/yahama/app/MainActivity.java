@@ -18,9 +18,12 @@ package com.pepperonas.yahama.app;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +41,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -90,6 +94,9 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -245,7 +252,6 @@ public class MainActivity extends AppCompatActivity {
         initNavDrawer();
 
         makeFragmentTransaction(AudioFragment.newInstance(0));
-
     }
 
 
@@ -263,6 +269,47 @@ public class MainActivity extends AppCompatActivity {
             case Const.REQ_CODE_PREMIUM_PURCHASE:
                 processPurchase(resultCode, data);
                 break;
+            case Const.REQ_CODE_SELECT_PICTURE:
+                storeIcon(data);
+                break;
+        }
+    }
+
+
+    private void storeIcon(Intent data) {
+        Log.d(TAG, "onActivityResult  " + "icon selected...");
+        try {
+            ContextWrapper cw = new ContextWrapper(getApplicationContext());
+            File directory = cw.getDir("icon", Context.MODE_PRIVATE);
+            File path = new File(directory, "custom_app_icon.png");
+
+            InputStream is = MainActivity.this.getContentResolver().openInputStream(data.getData());
+            FileOutputStream fos = new FileOutputStream(path);
+
+            int read;
+            byte[] bytes = new byte[1024];
+            while ((read = is.read(bytes)) != -1) {
+                fos.write(bytes, 0, read);
+            }
+            if (fos != null) fos.close();
+            is.close();
+
+            AesPrefs.put("custom_icon_path", path.getAbsolutePath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        loadIconFromStorage();
+    }
+
+
+    private void loadIconFromStorage() {
+        ImageView iv = (ImageView) findViewById(R.id.iv_logo);
+        try {
+            File f = new File(AesPrefs.get("custom_icon_path", ""));
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            iv.setImageBitmap(b);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -1106,6 +1153,16 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close) {
 
             @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+
+                if (!AesPrefs.get("custom_icon_path", "").isEmpty()) {
+                    loadIconFromStorage();
+                }
+            }
+
+
+            @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
             }
@@ -1114,6 +1171,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+
+                ImageView iv = (ImageView) findViewById(R.id.iv_logo);
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        pickIntent.setType("image/*");
+
+                        Intent chooserIntent = Intent.createChooser(MainActivity.this.getIntent(), getString(R.string.select_icon));
+                        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+
+                        startActivityForResult(chooserIntent, Const.REQ_CODE_SELECT_PICTURE);
+                    }
+                });
+
             }
         };
 
@@ -1137,6 +1210,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        //        View header = LayoutInflater.from(this).inflate(R.layout.navdrawer_header, null);
+        //        mNavView.addHeaderView(header);
+
     }
 
 
@@ -1444,12 +1521,20 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setNavViewTitle(String title) {
-        if (mTvNavViewTitle != null) mTvNavViewTitle.setText(title);
+        if (mTvNavViewTitle != null) {
+            mTvNavViewTitle.setText(title);
+        } else if (mNavView != null) {
+            mTvNavViewTitle = (TextView) mNavView.findViewById(R.id.nav_view_header_title);
+        }
     }
 
 
     public void setNavViewSubtitle(String title) {
-        if (mTvNavViewSubtitle != null) mTvNavViewSubtitle.setText(title);
+        if (mTvNavViewSubtitle != null) {
+            mTvNavViewSubtitle.setText(title);
+        } else if (mNavView != null) {
+            mTvNavViewSubtitle = (TextView) mNavView.findViewById(R.id.nav_view_header_subtitle);
+        }
     }
 
 

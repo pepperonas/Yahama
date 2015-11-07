@@ -27,6 +27,7 @@
     <attr name="td_fab_normal" format="reference"/>
     <attr name="td_nav_drawer_bg" format="reference"/>
     <attr name="td_circle" format="reference"/>
+    <attr name="td_unofficial" format="reference"/>
 
     <attr name="td_drawer_audio_icon" format="reference"/>
     <attr name="td_drawer_dsp_icon" format="reference"/>

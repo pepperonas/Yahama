@@ -21,7 +21,6 @@ package com.pepperonas.yahama.app.utility;
  */
 public class Const {
 
-
     public static final String ANALYTICS_ID = "UA-58002990-10";
 
     public static final int INSERT_HERE_21 = 21;
@@ -61,6 +60,7 @@ public class Const {
     public static final int REQ_CODE_ENABLE_WIFI = 0;
     public static final int REQ_CODE_NOTIFICATION = 1;
     public static final int REQ_CODE_PREMIUM_PURCHASE = 1001;
+    public static final int REQ_CODE_SELECT_PICTURE = 5;
 
     public static final String M_ENHANCER_SET = "m_enhancer_set";
     public static final String M_DIALOG_SHOW_DSP_CONFIG = "m_show_dialog_viewid=";

@@ -30,7 +30,6 @@ import com.pepperonas.yahama.app.utility.Setup;
  */
 public class DialogDeviceInfo {
 
-
     public DialogDeviceInfo(Context ctx, String dbgMsg) {
         new MaterialDialog.Builder(ctx)
                 .title(R.string.dialog_title_device_info)
