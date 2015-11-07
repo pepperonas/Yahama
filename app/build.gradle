@@ -38,8 +38,8 @@ android {
         applicationId "com.pepperonas.yahama.app"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 11
-        versionName "0.1.1"
+        versionCode 12
+        versionName "0.1.2"
         project.ext.set("archivesBaseName", "yahama");
     }
 

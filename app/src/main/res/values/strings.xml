@@ -89,7 +89,7 @@
     <string name="progress_dialog_content_waiting_for_wifi">Checking connection. This will take a few seconds.</string>
     <string name="progress_dialog_title_execute">Please wait…</string>
     <string name="progress_dialog_content_execute">Action is processed.</string>
-    <string name="left_right">Links / Rechts:</string>
+    <string name="left_right">Left / Right:</string>
     <string name="front_rear">Front / Rear:</string>
     <string name="notification_title">Yahama makes the beat!</string>
     <string name="station">Stations</string>
