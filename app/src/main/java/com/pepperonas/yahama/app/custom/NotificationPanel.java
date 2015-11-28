@@ -29,7 +29,7 @@ import android.widget.RemoteViews;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.pepperonas.javabase.log.Log;
+import com.pepperonas.jbasx.log.Log;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.NotificationActivity;
 import com.pepperonas.yahama.app.R;

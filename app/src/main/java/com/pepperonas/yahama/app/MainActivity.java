@@ -25,6 +25,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -159,6 +160,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         if (Setup.getTheme() != 0) {
             setTheme(R.style.AppTheme_Light);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setNavigationBarColor(getResources().getColor(R.color.primaryColor_light));
+            }
+        } else {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setNavigationBarColor(getResources().getColor(R.color.primaryColor));
+            }
         }
 
         super.onCreate(savedInstanceState);
@@ -981,21 +989,21 @@ public class MainActivity extends AppCompatActivity {
     private void initConfigLiveClub(String s) {
         if (s.contains("<" + AmpYaRxV577.XML_CELLAR_CLUB + ">")) {
             String cellar = s.split("<" + AmpYaRxV577.XML_CELLAR_CLUB + ">")[1].split(
-                    "</" + AmpYaRxV577.XML_CELLAR_CLUB)[0];
+                    "</" + AmpYaRxV577.XML_CELLAR_CLUB                               )[0];
 
             initAudioRoom(mAmp.getConfigLiveClub().getCellarClub(), cellar);
         }
 
         if (s.contains("<" + AmpYaRxV577.XML_THE_BOTTOM_LINE + ">")) {
             String bottom = s.split("<" + AmpYaRxV577.XML_THE_BOTTOM_LINE + ">")[1].split(
-                    "</" + AmpYaRxV577.XML_THE_BOTTOM_LINE)[0];
+                    "</" + AmpYaRxV577.XML_THE_BOTTOM_LINE                               )[0];
 
             initAudioRoom(mAmp.getConfigLiveClub().getTheBottomLine(), bottom);
         }
 
         if (s.contains("<" + AmpYaRxV577.XML_THE_ROXY_THEATRE + ">")) {
             String roxy = s.split("<" + AmpYaRxV577.XML_THE_ROXY_THEATRE + ">")[1].split(
-                    "</" + AmpYaRxV577.XML_THE_ROXY_THEATRE)[0];
+                    "</" + AmpYaRxV577.XML_THE_ROXY_THEATRE                             )[0];
 
             initAudioRoomAdvanced(mAmp.getConfigLiveClub().getTheRoxyTheatre(), roxy);
         }
@@ -1003,8 +1011,8 @@ public class MainActivity extends AppCompatActivity {
         mAmp.getConfigLiveClub().dbgMsg();
 
         if (s.contains(Const.M_DIALOG_SHOW_DSP_CONFIG)) {
-            new DialogCinemaDsp3d(this, Integer.parseInt(s.split(
-                    Const.M_DIALOG_SHOW_DSP_CONFIG)[1].split("</")[0]));
+            new DialogCinemaDsp3d(this, Integer.parseInt                           (s.split(
+                    Const.M_DIALOG_SHOW_DSP_CONFIG              )[1].split("</")[0]));
         }
     }
 
@@ -1125,7 +1133,7 @@ public class MainActivity extends AppCompatActivity {
         if (mFragment instanceof AudioFragment) {
             AudioFragment af = (AudioFragment) mFragment;
             af.setMain(MainActivity.this);
-            af.updateSwitches(
+            af.updateSwitches        (
                     mAmp.isEnhancer(),
                     mAmp.isSpeakerA(),
                     mAmp.isSpeakerB());
@@ -1134,7 +1142,7 @@ public class MainActivity extends AppCompatActivity {
         if (mFragment instanceof DspFragment) {
             DspFragment dspf = (DspFragment) mFragment;
             dspf.setMain(MainActivity.this);
-            dspf.updateSwitches(
+            dspf.updateSwitches          (
                     mAmp.isDirect(),
                     mAmp.isStraight(),
                     mAmp.isExtraBass(),
@@ -1332,11 +1340,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new ControllerTask(false).execute(
-                        Commands.TOGGLE_MUTE(mAmp.isMute() ? AmpYaRxV577.OFF
+                        Commands.TOGGLE_MUTE                               (mAmp.isMute() ? AmpYaRxV577.OFF
                                                            : AmpYaRxV577.ON),
                         Const.M_MUTE,
                         mAmp.isMute() ? "false"
-                                      : "true");
+                                      : "true"   );
 
                 setTemporaryTitleUpdate(mAmp.isMute() ? getString(R.string.toolbar_info_unmute)
                                                       : getString(R.string.toolbar_info_mute));
@@ -1356,8 +1364,8 @@ public class MainActivity extends AppCompatActivity {
                 if (mAmp.isOn()) closeAppDelayed();
                 else mFabMenu.collapse();
 
-                new ControllerTask(false).execute(
-                        Commands.SET_POWER(mAmp.isOn() ? AmpYaRxV577.STANDBY
+                new ControllerTask(false).execute     (
+                        Commands.SET_POWER                             (mAmp.isOn() ? AmpYaRxV577.STANDBY
                                                        : AmpYaRxV577.ON),
                         mAmp.isOn() ? Const.M_POWER_OFF
                                     : Const.M_POWER_ON);
@@ -1376,7 +1384,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        fabSleeptimer.setIconDrawable(
+        fabSleeptimer.setIconDrawable                                                 (
                 new IconicsDrawable(this, CommunityMaterial.Icon.cmd_timer)
                         .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
@@ -1389,7 +1397,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        fabDeviceInfo.setIconDrawable(
+        fabDeviceInfo.setIconDrawable                                                 (
                 new IconicsDrawable(this, GoogleMaterial.Icon.gmd_info_outline)
                         .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
@@ -1428,19 +1436,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void reinitFab() {
-        mFabPower.setIconDrawable(
+        mFabPower.setIconDrawable                                                     (
                 new IconicsDrawable(this, CommunityMaterial.Icon.cmd_power)
                         .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
-        mFabPower.setColorNormal(getResources().getColor(
+        mFabPower.setColorNormal                    (getResources().getColor(
                 mAmp.isOn() ? R.color.fabPowerRed
-                            : R.color.fabPowerGreen));
+                            : R.color.fabPowerGreen                         ));
 
         mFabPower.setTitle(mAmp.isOn() ? getString(R.string.fab_action_power_off)
                                        : getString(R.string.fab_action_power_on));
 
 
-        mFabMute.setIconDrawable(
+        mFabMute.setIconDrawable                                                      (
                 new IconicsDrawable(this, mAmp.isMute() ? GoogleMaterial.Icon.gmd_volume_up
                                                         : GoogleMaterial.Icon.gmd_volume_off)
                         .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));

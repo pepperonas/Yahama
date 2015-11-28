@@ -24,7 +24,7 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.Iconics;
 import com.pepperonas.aesprefs.AesPrefs;
-import com.pepperonas.andcommon.AndCommon;
+import com.pepperonas.andbasx.AndBasx;
 
 /**
  * @author Martin Pfeffer (pepperonas)
@@ -40,12 +40,7 @@ public class YahamaApp extends Application {
 
         AesPrefs.init(this, "config", "myaespreferencepassword");
 
-        AndCommon.init(this);
-
-        //        Iconics.registerFont(new Meteoconcs());
-        //        Iconics.registerFont(new Octicons());
-        //        Iconics.registerFont(new CommunityMaterial());
-        //        Iconics.registerFont(new CustomFont());
+        AndBasx.init(this);
 
         //only required if you add a custom or generic font on your own
         Iconics.init(getApplicationContext());

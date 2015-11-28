@@ -24,7 +24,7 @@
         <item name="td_primary_color">@color/primaryColor</item>
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryColorDark</item>
-        <item name="td_nav_drawer_header">@color/primaryColorDark</item>
+        <item name="td_nav_drawer_header">@drawable/side_nav_bar</item>
 
         <item name="td_fab_menu_normal">@color/fabMenuColorNormal</item>
         <item name="td_fab_menu_pressed">@color/fabMenuColorPressed</item>
@@ -46,7 +46,7 @@
         <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_default_material_dark</item>
 
-        <item name="td_unofficial">@drawable/replace_it</item>
+        <item name="td_unofficial">@drawable/ic_launcher</item>
 
     </style>
 
@@ -58,7 +58,7 @@
         <item name="td_primary_color">@color/primaryColor_light</item>
         <item name="colorPrimary">@color/primaryColor_light</item>
         <item name="colorPrimaryDark">@color/primaryColorDark_light</item>
-        <item name="td_nav_drawer_header">@color/primaryColorDark_light</item>
+        <item name="td_nav_drawer_header">@drawable/side_nav_bar_light</item>
 
         <item name="td_fab_menu_normal">@color/fabMenuColorNormal_light</item>
         <item name="td_fab_menu_pressed">@color/fabMenuColorPressed_light</item>
@@ -80,7 +80,7 @@
         <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
         <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
 
-        <item name="td_unofficial">@drawable/replace_it</item>
+        <item name="td_unofficial">@drawable/ic_launcher</item>
 
     </style>
 
