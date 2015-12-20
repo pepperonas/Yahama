@@ -18,7 +18,8 @@
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -27,16 +28,13 @@
                   android:layout_height="wrap_content"
                   android:paddingTop="@dimen/layout_padding_t"
                   android:paddingLeft="@dimen/layout_padding_l_r"
-                  android:paddingRight="@dimen/layout_padding_l_r"
-        >
+                  android:paddingRight="@dimen/layout_padding_l_r">
 
 
         <!--AV-->
         <android.support.v7.widget.CardView
             android:id="@+id/cv_av"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/labelcard_large_height"
-            android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+            style="@style/custom_title_card"
             card_view:cardCornerRadius="@dimen/card_corner_radius">
 
             <TextView
@@ -60,13 +58,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_av_av1"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_av_av1"
@@ -80,14 +73,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_av_av2"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_av_av2"
@@ -101,13 +88,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_av_av3"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_av_av3"
@@ -131,13 +113,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_av_av4"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_av_av4"
@@ -151,14 +128,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_av_av5"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_av_av5"
@@ -172,13 +143,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_av_av6"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_av_av6"
@@ -196,9 +162,7 @@
         <!--HDMI-->
         <android.support.v7.widget.CardView
             android:id="@+id/cv_hdmi"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/labelcard_large_height"
-            android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+            style="@style/custom_title_card"
             card_view:cardCornerRadius="@dimen/card_corner_radius">
 
             <TextView
@@ -222,13 +186,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_hdmi_hdmi1"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_hdmi_hdmi1"
@@ -242,14 +201,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_hdmi_hdmi2"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_hdmi_hdmi2"
@@ -263,13 +216,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_hdmi_hdmi3"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_hdmi_hdmi3"
@@ -293,13 +241,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_hdmi_hdmi4"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_hdmi_hdmi4"
@@ -313,14 +256,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_hdmi_hdmi5"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_hdmi_hdmi5"
@@ -334,13 +271,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_hdmi_hdmi6"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_hdmi_hdmi6"
@@ -358,9 +290,7 @@
         <!--OTHERS-->
         <android.support.v7.widget.CardView
             android:id="@+id/cv_others"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/labelcard_large_height"
-            android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+            style="@style/custom_title_card"
             card_view:cardCornerRadius="@dimen/card_corner_radius">
 
             <TextView
@@ -384,13 +314,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_others_tuner"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_others_tuner"
@@ -404,14 +329,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_others_aux"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_others_aux"
@@ -425,13 +344,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_others_usb"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                android:layout_weight="1">
+                style="@style/custom_action_card"
+                app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
                     android:id="@+id/tv_others_usb"

@@ -23,6 +23,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+
     <!--CardContent-->
     <style name="Widget.CardContent" parent="android:Widget">
         <item name="android:paddingLeft">16dp</item>
@@ -33,10 +34,10 @@
     </style>
 
 
+    <!--APP-THEME-->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
 
         <item name="td_accent_color">@color/colorAccent</item>
-
         <item name="td_primary_color">@color/primaryColor</item>
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryColorDark</item>
@@ -61,8 +62,8 @@
         <item name="td_unofficial">@drawable/ic_launcher</item>
 
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
-        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_dark_failsafe</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark_failsafe</item>
 
     </style>
 
@@ -70,7 +71,6 @@
     <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="td_accent_color">@color/colorAccent_light</item>
-
         <item name="td_primary_color">@color/primaryColor_light</item>
         <item name="colorPrimary">@color/primaryColor_light</item>
         <item name="colorPrimaryDark">@color/primaryColorDark_light</item>
@@ -95,43 +95,67 @@
         <item name="td_unofficial">@drawable/ic_launcher</item>
 
         <item name="colorAccent">@color/colorAccent_light</item>
-        <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
-        <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_light_failsafe</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_light_failsafe</item>
 
     </style>
 
-    <style name="Transparent.Base" parent="AppTheme">
 
+    <style name="Transparent.Base" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:colorForeground">#fff</item>
-
-        <!--transparent statusbar-->
-        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
-        <!--<item name="android:statusBarColor">@color/transparent</item>-->
-
     </style>
 
 
+    <!--TRANSPARENT-->
     <style name="Transparent" parent="Transparent.Base">
-
         <item name="td_accent_color">@color/colorAccent</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
-        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark</item>
-
+        <item name="android:textColorPrimary">@color/primary_text_default_material_dark_failsafe</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark_failsafe</item>
     </style>
 
 
     <style name="Transparent.Light" parent="Transparent.Base">
-
         <item name="td_accent_color">@color/colorAccent_light</item>
         <item name="colorAccent">@color/colorAccent_light</item>
-        <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
-        <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_light_failsafe</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_light_failsafe</item>
+    </style>
 
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+
+    <!--DIALOG-->
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowAnimationStyle">@style/Animation.VolumeSliderActivity</item>
+        <item name="android:windowBackground">@color/black_semi_transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="td_accent_color">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_dark_failsafe</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark_failsafe</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Light" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowAnimationStyle">@style/Animation.VolumeSliderActivity</item>
+        <item name="android:windowBackground">@color/black_semi_transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="td_accent_color">@color/indigoA2</item>
+        <item name="colorAccent">@color/indigoA2</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_dark_failsafe</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark_failsafe</item>
+    </style>
+
+    <style name="Animation.VolumeSliderActivity" parent="android:Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
 </resources>

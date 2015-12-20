@@ -17,7 +17,7 @@
 package com.pepperonas.yahama.app.data.entity;
 
 /**
- * Created by martin on 11.08.2015.
+ * @author Martin Pfeffer (pepperonas)
  */
 public abstract class BaseEntity {
 

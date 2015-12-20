@@ -33,17 +33,17 @@ import com.pepperonas.jbasx.log.Log;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.NotificationActivity;
 import com.pepperonas.yahama.app.R;
+import com.pepperonas.yahama.app.VolumeSliderActivity;
 import com.pepperonas.yahama.app.utility.Const;
 import com.pepperonas.yahama.app.utility.Setup;
 import com.pepperonas.yahama.app.utils.Utils;
 
 /**
- * Created by martin on 12.08.2015.
- * NotificationPanel
+ * @author Martin Pfeffer (pepperonas)
  */
 public class NotificationPanel {
 
-    private static final String TAG = "NtfctnPanel";
+    private static final String TAG = "NotificationPanel";
 
     private static final int DEFAULT_NOTIFICATION = 0;
 
@@ -52,28 +52,25 @@ public class NotificationPanel {
 
     private NotificationCompat.Builder mBuilder;
     private final RemoteViews mRemoteViews;
-    private final int mBackgroundColor;
     private final int mIconColor;
 
 
     public NotificationPanel(Activity ctx) {
         this.mCtx = ctx;
 
-        mBackgroundColor = Setup.getNotificationBackground();
         mIconColor = Setup.getNotificationIconColor();
 
         mBuilder = new NotificationCompat.Builder(ctx)
                 .setContentTitle(ctx.getString(R.string.notification_title))
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setOngoing(Setup.getNotificationOngoing());
 
         mRemoteViews = new RemoteViews(ctx.getPackageName(), R.layout.notification_view);
-        mRemoteViews.setInt(R.id.notification_layout, "setBackgroundColor", mBackgroundColor);
+        mRemoteViews.setInt(R.id.notification_layout, "setBackgroundColor", Setup.getNotificationBackground());
 
         initMute();
-        initPause();
-        initPlay();
+        initClose();
         initVolume();
         initLauncher();
 
@@ -81,7 +78,6 @@ public class NotificationPanel {
 
         mManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         mManager.notify(DEFAULT_NOTIFICATION, mBuilder.build());
-
     }
 
 
@@ -91,12 +87,15 @@ public class NotificationPanel {
 
 
     public void update() {
-        Log.d(TAG, "NOTIFICATION UPDATE!! ~~");
+        Log.d(TAG, "NOTIFICATION UPDATE!");
         initMute();
         mManager.notify(DEFAULT_NOTIFICATION, mBuilder.build());
     }
 
 
+    /**
+     * Handle in {@link MainActivity}, see {@link MainActivity#mNotificationReceiver}.
+     */
     public void initMute() {
         Intent mute = new Intent("mute");
         PendingIntent btnMute = PendingIntent.getBroadcast(mCtx, 0, mute, 0);
@@ -117,38 +116,14 @@ public class NotificationPanel {
     }
 
 
-    private void initPause() {
-        Intent pause = new Intent("pause");
-        PendingIntent btnPause = PendingIntent.getBroadcast(mCtx, 1, pause, 0);
-        mRemoteViews.setOnClickPendingIntent(R.id.ntfctn_btn_pause, btnPause);
-
-        Drawable d = new IconicsDrawable(mCtx, CommunityMaterial
-                .Icon.cmd_pause).colorRes(mIconColor).sizeDp(Const.NOTIFICATION_ICON_SIZE);
-
-        Bitmap b = Utils.drawableToBitmap(d);
-        mRemoteViews.setImageViewBitmap(R.id.ntfctn_btn_pause, b);
-    }
-
-
-    private void initPlay() {
-        Intent play = new Intent("play");
-        PendingIntent btnPlay = PendingIntent.getBroadcast(mCtx, 2, play, 0);
-        mRemoteViews.setOnClickPendingIntent(R.id.ntfctn_btn_play, btnPlay);
-
-        Drawable d = new IconicsDrawable(mCtx, CommunityMaterial
-                .Icon.cmd_play).colorRes(mIconColor).sizeDp(Const.NOTIFICATION_ICON_SIZE);
-
-        Bitmap b = Utils.drawableToBitmap(d);
-        mRemoteViews.setImageViewBitmap(R.id.ntfctn_btn_play, b);
-    }
-
-
+    /**
+     * Handle in {@link VolumeSliderActivity}.
+     */
     private void initVolume() {
-        Intent volume = new Intent(mCtx, NotificationActivity.class);
-        volume.putExtra("notification_filter", "volume");
+        Intent volume = new Intent(mCtx, VolumeSliderActivity.class);
 
-        volume.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        volume.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         PendingIntent btnVolume = PendingIntent.getActivity(mCtx, 3, volume, 0);
 
@@ -162,6 +137,9 @@ public class NotificationPanel {
     }
 
 
+    /**
+     * Handle in {@link NotificationActivity}, see {@link NotificationActivity#launchApp}.
+     */
     private void initLauncher() {
         Intent launch = new Intent(mCtx, NotificationActivity.class);
         launch.putExtra("notification_filter", "launch");
@@ -176,6 +154,22 @@ public class NotificationPanel {
 
         Bitmap b = Utils.drawableToBitmap(d);
         mRemoteViews.setImageViewBitmap(R.id.ntfctn_btn_launcher, b);
+    }
+
+
+    /**
+     * Handle in {@link MainActivity}, see {@link MainActivity#mNotificationReceiver}.
+     */
+    private void initClose() {
+        Intent close = new Intent("close");
+        PendingIntent btnClose = PendingIntent.getBroadcast(mCtx, 1, close, 0);
+        mRemoteViews.setOnClickPendingIntent(R.id.ntfctn_btn_close, btnClose);
+
+        Drawable d = new IconicsDrawable(mCtx, GoogleMaterial
+                .Icon.gmd_close).colorRes(mIconColor).sizeDp(Const.NOTIFICATION_ICON_SIZE);
+
+        Bitmap b = Utils.drawableToBitmap(d);
+        mRemoteViews.setImageViewBitmap(R.id.ntfctn_btn_close, b);
     }
 
 }

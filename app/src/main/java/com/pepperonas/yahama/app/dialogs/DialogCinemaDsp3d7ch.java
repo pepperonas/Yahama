@@ -58,10 +58,12 @@ public class DialogCinemaDsp3d7ch {
                         super.onPositive(dialog);
                     }
 
+
                     @Override
                     public void onNegative(MaterialDialog dialog) {
                         super.onNegative(dialog);
                     }
+
 
                     @Override
                     public void onNeutral(MaterialDialog dialog) {
@@ -116,11 +118,11 @@ public class DialogCinemaDsp3d7ch {
 
                                         String leftRight = main.getString(R.string.left_right) + " " + Utils.checkLimits(5, pXi);
                                         String frontRear = main.getString(R.string.front_rear) + " " + Utils.checkLimits(5, pYi);
-                                        tvRange.setText(leftRight + "\n" + frontRear);
+                                        tvRange.setText(String.format("%s\n%s", leftRight, frontRear));
 
-                                        main.runCtrlrTask(false, Commands.SURROUND_DSP_3D_CONFIG(
+                                        main.runCtrlrTask                                        (false, Commands.SURROUND_DSP_3D_CONFIG(
                                                 Utils.checkLimits(5, pXi),
-                                                Utils.checkLimits(5, pYi)));
+                                                Utils.checkLimits(5, pYi)                       ));
 
                                 }
 
@@ -153,7 +155,7 @@ public class DialogCinemaDsp3d7ch {
         visualizer.setY(touchFrame.getHeight() / 2 - visualizer.getHeight() / 2);
         String leftRight = main.getString(R.string.left_right) + " 0";
         String frontRear = main.getString(R.string.front_rear) + " 0";
-        tvRange.setText(leftRight + "\n" + frontRear);
+        tvRange.setText(String.format("%s\n%s", leftRight, frontRear));
     }
 
 }

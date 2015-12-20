@@ -23,15 +23,15 @@ public class Const {
 
     public static final String ANALYTICS_ID = "UA-58002990-10";
 
-    public static final int INSERT_HERE_21 = 21;
-
     public static final long DELAY_TITLE_RESET = 5000L;
 
-    public static final int DEFAULT_TIMEOUT_FOR_LOOKUP = 100;
+    public static final long DELAY_DISMISS_VOLUME_DIALOG = 5000L;
+
+    public static final long DRIVER_REFRESH_RATE = 5000L;
 
     public static final long DELAY_BETWEEN_COMMANDS = 50L;
 
-    public static final long DRIVER_REFRESH_RATE = 5000;
+    public static final int DEFAULT_TIMEOUT_FOR_LOOKUP = 100;
 
     public static final int OVERSCROLL_TOP = 0;
     public static final int OVERSCROLL_RIGHT = 1;
@@ -58,7 +58,6 @@ public class Const {
     public static final String M_SPKR_B_SET = "m_spkr_b_set";
 
     public static final int REQ_CODE_ENABLE_WIFI = 0;
-    public static final int REQ_CODE_NOTIFICATION = 1;
     public static final int REQ_CODE_PREMIUM_PURCHASE = 1001;
     public static final int REQ_CODE_SELECT_PICTURE = 5;
 

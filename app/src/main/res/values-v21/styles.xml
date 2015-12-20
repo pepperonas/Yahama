@@ -43,8 +43,8 @@
         <item name="td_drawer_help_and_feedback_icon">@drawable/ic_help_circle_white_24dp</item>
 
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
-        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_dark_failsafe</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark_failsafe</item>
 
         <item name="td_unofficial">@drawable/ic_launcher</item>
 
@@ -77,8 +77,8 @@
         <item name="td_drawer_help_and_feedback_icon">@drawable/ic_help_circle_black_24dp</item>
 
         <item name="colorAccent">@color/colorAccent_light</item>
-        <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
-        <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_light_failsafe</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_light_failsafe</item>
 
         <item name="td_unofficial">@drawable/ic_launcher</item>
 
@@ -103,8 +103,8 @@
 
         <item name="td_accent_color">@color/colorAccent</item>
         <item name="android:colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/primary_text_default_material_dark</item>
-        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_dark_failsafe</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_dark_failsafe</item>
 
     </style>
 
@@ -113,8 +113,8 @@
 
         <item name="td_accent_color">@color/colorAccent_light</item>
         <item name="android:colorAccent">@color/colorAccent_light</item>
-        <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
-        <item name="android:textColorSecondary">@color/secondary_text_default_material_light</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_light_failsafe</item>
+        <item name="android:textColorSecondary">@color/secondary_text_default_material_light_failsafe</item>
 
     </style>
 

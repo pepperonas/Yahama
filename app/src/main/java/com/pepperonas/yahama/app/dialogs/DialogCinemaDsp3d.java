@@ -86,17 +86,10 @@ public class DialogCinemaDsp3d {
                 .customView(R.layout.dialog_cinema_dsp3d, true)
                 .positiveText(R.string.ok)
                 .neutralText(R.string.reset)
-                .negativeText(R.string.cancel)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-                    }
-
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
                     }
 
 
@@ -149,6 +142,7 @@ public class DialogCinemaDsp3d {
             _surBackInitDly = ((Standard) be).getSurBackInitDly();
             _surBackRoomSize = ((Standard) be).getSurBackRoomSize();
             _surBackLiveness = ((Standard) be).getSurBackLiveness();
+
         }
 
         for (int i = 0; i < 7; i++) {
@@ -169,56 +163,47 @@ public class DialogCinemaDsp3d {
 
                         case 0:
                             m0 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(
-                                    (progress - DSP_LVL_OFFSET), m1, m2, m3, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.dsp_lvl) + ": " + (progress - DSP_LVL_OFFSET));
+                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD((progress - DSP_LVL_OFFSET), m1, m2, m3, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.dsp_lvl), progress - DSP_LVL_OFFSET));
                             break;
 
                         case 1:
                             m1 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(
-                                    m0, progress, m2, m3, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.sur_init_dly) + ": " + progress);
+                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(m0, progress, m2, m3, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_init_dly), progress));
                             break;
 
                         case 2:
                             m2 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(
-                                    m0, m1, progress, m3, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.sur_room_size) + ": " + progress);
+                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(m0, m1, progress, m3, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_room_size), progress));
                             break;
 
                         case 3:
                             m3 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(
-                                    m0, m1, m2, progress, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.sur_liveness) + ": " + progress);
+                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(m0, m1, m2, progress, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_liveness), progress));
                             break;
 
                         case 4:
                             m4 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(
-                                    m0, m1, m2, m3, progress, m5, m6));
-                            tv.setText(mMain.getString(R.string.sur_back_init_dly) + ": " + progress);
+                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(m0, m1, m2, m3, progress, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_back_init_dly), progress));
                             break;
 
                         case 5:
                             m5 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(
-                                    m0, m1, m2, m3, m4, progress, m6));
-                            tv.setText(mMain.getString(R.string.sur_back_room_size) + ": " + progress);
+                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(m0, m1, m2, m3, m4, progress, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_back_room_size), progress));
                             break;
 
                         case 6:
                             m6 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(
-                                    m0, m1, m2, m3, m4, m5, progress));
-                            tv.setText(mMain.getString(R.string.sur_back_liveness) + ": " + progress);
+                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_STANDARD(m0, m1, m2, m3, m4, m5, progress));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_back_liveness), progress));
                             break;
 
                     }
-                    Log.i(TAG, "onLLLProgressChanged \n" + m0 + "\n" + m1 + "\n" + m2 + "\n" +
-                               m3 + "\n" + m4 + "\n" + m5 + "\n" + m6);
                 }
 
 
@@ -243,49 +228,49 @@ public class DialogCinemaDsp3d {
                 switch (x) {
 
                     case 0:
-                        tv.setText(mMain.getString(R.string.dsp_lvl) + ": " + (_dspLvl));
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.dsp_lvl), _dspLvl));
                         sb.setMax(9);
                         sb.setProgress(_dspLvl + DSP_LVL_OFFSET);
                         m0 = _dspLvl;
                         break;
 
                     case 1:
-                        tv.setText(mMain.getString(R.string.sur_init_dly) + ": " + _surInitDly);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_init_dly), _surInitDly));
                         sb.setMax(49);
                         sb.setProgress(_surInitDly);
                         m1 = _surInitDly;
                         break;
 
                     case 2:
-                        tv.setText(mMain.getString(R.string.sur_room_size) + ": " + _surRoomSize);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_room_size), _surRoomSize));
                         sb.setMax(20);
                         sb.setProgress(_surRoomSize);
                         m2 = _surRoomSize;
                         break;
 
                     case 3:
-                        tv.setText(mMain.getString(R.string.sur_liveness) + ": " + _surLiveness);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_liveness), _surLiveness));
                         sb.setMax(10);
                         sb.setProgress(_surLiveness);
                         m3 = _surLiveness;
                         break;
 
                     case 4:
-                        tv.setText(mMain.getString(R.string.sur_back_init_dly) + ": " + _surBackInitDly);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_back_init_dly), _surBackInitDly));
                         sb.setMax(49);
                         sb.setProgress(_surBackInitDly);
                         m4 = _surBackInitDly;
                         break;
 
                     case 5:
-                        tv.setText(mMain.getString(R.string.sur_back_room_size) + ": " + _surBackRoomSize);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_back_room_size), _surBackRoomSize));
                         sb.setMax(20);
                         sb.setProgress(_surBackRoomSize);
                         m5 = _surBackRoomSize;
                         break;
 
                     case 6:
-                        tv.setText(mMain.getString(R.string.sur_back_liveness) + ": " + _surBackLiveness);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_back_liveness), _surBackLiveness));
                         sb.setMax(10);
                         sb.setProgress(_surBackLiveness);
                         m6 = _surBackLiveness;
@@ -399,56 +384,54 @@ public class DialogCinemaDsp3d {
 
                         case 0:
                             m0 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MOVIE(
-                                    getXmlName(), (progress - DSP_LVL_OFFSET), m1, m2, m3, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.dsp_lvl) + ": " + (progress - DSP_LVL_OFFSET));
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MOVIE(getXmlName(), (progress - DSP_LVL_OFFSET), m1, m2, m3, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.dsp_lvl), progress - DSP_LVL_OFFSET));
                             break;
 
                         case 1:
                             m1 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MOVIE(
-                                    getXmlName(), m0, progress, m2, m3, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.init_dly) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MOVIE(getXmlName(), m0, progress, m2, m3, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.init_dly), progress));
                             break;
 
                         case 2:
                             m2 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MOVIE(
-                                    getXmlName(), m0, m1, progress, m3, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.room_size) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MOVIE(getXmlName(), m0, m1, progress, m3, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.room_size), progress));
                             break;
 
                         case 3:
                             m3 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MOVIE(
-                                    getXmlName(), m0, m1, m2, progress, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.sur_init_dly) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MOVIE(getXmlName(), m0, m1, m2, progress, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_init_dly), progress));
                             break;
 
                         case 4:
                             m4 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MOVIE(
-                                    getXmlName(), m0, m1, m2, m3, progress, m5, m6));
-                            tv.setText(mMain.getString(R.string.sur_room_size) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MOVIE(getXmlName(), m0, m1, m2, m3, progress, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_room_size), progress));
                             break;
 
                         case 5:
                             m5 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MOVIE(
-                                    getXmlName(), m0, m1, m2, m3, m4, progress, m6));
-                            tv.setText(mMain.getString(R.string.sur_back_init_dly) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MOVIE(getXmlName(), m0, m1, m2, m3, m4, progress, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_back_init_dly), progress));
                             break;
 
                         case 6:
                             m6 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MOVIE(
-                                    getXmlName(), m0, m1, m2, m3, m4, m5, progress));
-                            tv.setText(mMain.getString(R.string.sur_back_room_size) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MOVIE(getXmlName(), m0, m1, m2, m3, m4, m5, progress));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_back_room_size), progress));
                             break;
 
                     }
-                    Log.i(TAG, "onProgressChanged \n" + m0 + "\n" + m1 + "\n" + m2 + "\n" +
-                               m3 + "\n" + m4 + "\n" + m5 + "\n" + m6);
                 }
 
 
@@ -472,49 +455,49 @@ public class DialogCinemaDsp3d {
                 switch (x) {
 
                     case 0:
-                        tv.setText(mMain.getString(R.string.dsp_lvl) + ": " + (_dspLvl));
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.dsp_lvl), _dspLvl));
                         sb.setMax(9);
                         sb.setProgress(_dspLvl + DSP_LVL_OFFSET);
                         m0 = _dspLvl;
                         break;
 
                     case 1:
-                        tv.setText(mMain.getString(R.string.init_dly) + ": " + _initDly);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.init_dly), _initDly));
                         sb.setMax(99);
                         sb.setProgress(_initDly);
                         m1 = _initDly;
                         break;
 
                     case 2:
-                        tv.setText(mMain.getString(R.string.room_size) + ": " + _roomSize);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.room_size), _roomSize));
                         sb.setMax(20);
                         sb.setProgress(_roomSize);
                         m2 = _roomSize;
                         break;
 
                     case 3:
-                        tv.setText(mMain.getString(R.string.sur_init_dly) + ": " + _surInitDly);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_init_dly), _surInitDly));
                         sb.setMax(49);
                         sb.setProgress(_surInitDly);
                         m3 = _surInitDly;
                         break;
 
                     case 4:
-                        tv.setText(mMain.getString(R.string.sur_room_size) + ": " + _surRoomSize);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_room_size), _surRoomSize));
                         sb.setMax(20);
                         sb.setProgress(_surRoomSize);
                         m4 = _surRoomSize;
                         break;
 
                     case 5:
-                        tv.setText(mMain.getString(R.string.sur_back_init_dly) + ": " + _surBackInitDly);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_back_init_dly), _surBackInitDly));
                         sb.setMax(49);
                         sb.setProgress(_surBackInitDly);
                         m5 = _surBackInitDly;
                         break;
 
                     case 6:
-                        tv.setText(mMain.getString(R.string.sur_back_room_size) + ": " + _surBackRoomSize);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.sur_back_room_size), _surBackRoomSize));
                         sb.setMax(20);
                         sb.setProgress(_surBackRoomSize);
                         m6 = _surBackRoomSize;
@@ -578,31 +561,30 @@ public class DialogCinemaDsp3d {
 
                         case 0:
                             m0 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC(
-                                    getXmlName(), (progress - DSP_LVL_OFFSET), m1, m2, m3));
-                            tv.setText(mMain.getString(R.string.dsp_lvl) + ": " + (progress - DSP_LVL_OFFSET));
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC(getXmlName(), (progress - DSP_LVL_OFFSET), m1, m2, m3));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.dsp_lvl), progress - DSP_LVL_OFFSET));
                             break;
 
                         case 1:
                             m1 = progress;
                             mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC(getXmlName(), m0, progress, m2, m3));
-                            tv.setText(mMain.getString(R.string.init_dly) + ": " + progress);
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.init_dly), progress));
                             break;
 
                         case 2:
                             m2 = progress;
                             mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC(getXmlName(), m0, m1, progress, m3));
-                            tv.setText(mMain.getString(R.string.room_size) + ": " + progress);
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.room_size), progress));
                             break;
 
                         case 3:
                             m3 = progress;
                             mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC(getXmlName(), m0, m1, m2, progress));
-                            tv.setText(mMain.getString(R.string.liveness) + ": " + progress);
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.liveness), progress));
                             break;
 
                     }
-                    Log.i(TAG, "onProgressChanged \n" + m0 + "\n" + m1 + "\n" + m2 + "\n" + m3);
                 }
 
 
@@ -625,28 +607,28 @@ public class DialogCinemaDsp3d {
                 switch (x) {
 
                     case 0:
-                        tv.setText(mMain.getString(R.string.dsp_lvl) + ": " + (_dspLvl));
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.dsp_lvl), _dspLvl));
                         sb.setMax(9);
                         sb.setProgress(_dspLvl + DSP_LVL_OFFSET);
                         m0 = _dspLvl;
                         break;
 
                     case 1:
-                        tv.setText(mMain.getString(R.string.init_dly) + ": " + _initDly);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.init_dly), _initDly));
                         sb.setMax(99);
                         sb.setProgress(_initDly);
                         m1 = _initDly;
                         break;
 
                     case 2:
-                        tv.setText(mMain.getString(R.string.room_size) + ": " + _roomSize);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.room_size), _roomSize));
                         sb.setMax(20);
                         sb.setProgress(_roomSize);
                         m2 = _roomSize;
                         break;
 
                     case 3:
-                        tv.setText(mMain.getString(R.string.liveness) + ": " + _liveness);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.liveness), _liveness));
                         sb.setMax(10);
                         sb.setProgress(_liveness);
                         m3 = _liveness;
@@ -705,56 +687,54 @@ public class DialogCinemaDsp3d {
 
                         case 0:
                             m0 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), (progress - DSP_LVL_OFFSET), m1, m2, m3, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.dsp_lvl) + ": " + (progress - DSP_LVL_OFFSET));
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), (progress - DSP_LVL_OFFSET), m1, m2, m3, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.dsp_lvl), progress - DSP_LVL_OFFSET));
                             break;
 
                         case 1:
                             m1 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, progress, m2, m3, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.init_dly) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, progress, m2, m3, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.init_dly), progress));
                             break;
 
                         case 2:
                             m2 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, m1, progress, m3, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.room_size) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, m1, progress, m3, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.room_size), progress));
                             break;
 
                         case 3:
                             m3 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, m1, m2, progress, m4, m5, m6));
-                            tv.setText(mMain.getString(R.string.liveness) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, m1, m2, progress, m4, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.liveness), progress));
                             break;
 
                         case 4:
                             m4 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, m1, m2, m3, progress + REV_TIME_OFFSET, m5, m6));
-                            tv.setText(mMain.getString(R.string.revTime) + ": " + (progress + REV_TIME_OFFSET));
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, m1, m2, m3, progress + REV_TIME_OFFSET, m5, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.revTime), progress + REV_TIME_OFFSET));
                             break;
 
                         case 5:
                             m5 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, m1, m2, m3, m4, progress, m6));
-                            tv.setText(mMain.getString(R.string.revDly) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, m1, m2, m3, m4, progress, m6));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.revDly), progress));
                             break;
 
                         case 6:
                             m6 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, m1, m2, m3, m4, m5, progress));
-                            tv.setText(mMain.getString(R.string.revLvl) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, m1, m2, m3, m4, m5, progress));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.revLvl), progress));
                             break;
 
                     }
-                    Log.i(TAG, "onProgressChanged \n" + m0 + "\n" + m1 + "\n" + m2 + "\n" +
-                               m3 + "\n" + m4 + "\n" + m5 + "\n" + m6);
                 }
 
 
@@ -779,49 +759,49 @@ public class DialogCinemaDsp3d {
                 switch (x) {
 
                     case 0:
-                        tv.setText(mMain.getString(R.string.dsp_lvl) + ": " + (_dspLvl));
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.dsp_lvl), _dspLvl));
                         sb.setMax(9);
                         sb.setProgress(_dspLvl + DSP_LVL_OFFSET);
                         m0 = _dspLvl;
                         break;
 
                     case 1:
-                        tv.setText(mMain.getString(R.string.init_dly) + ": " + _initDly);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.init_dly), _initDly));
                         sb.setMax(99);
                         sb.setProgress(_initDly);
                         m1 = _initDly;
                         break;
 
                     case 2:
-                        tv.setText(mMain.getString(R.string.room_size) + ": " + _roomSize);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.room_size), _roomSize));
                         sb.setMax(20);
                         sb.setProgress(_roomSize);
                         m2 = _roomSize;
                         break;
 
                     case 3:
-                        tv.setText(mMain.getString(R.string.liveness) + ": " + _liveness);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.liveness), _liveness));
                         sb.setMax(10);
                         sb.setProgress(_liveness);
                         m3 = _liveness;
                         break;
 
                     case 4:
-                        tv.setText(mMain.getString(R.string.revTime) + ": " + _revTime);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.revTime), _revTime));
                         sb.setMax(40);
                         sb.setProgress(_revTime - REV_TIME_OFFSET);
                         m4 = _revTime;
                         break;
 
                     case 5:
-                        tv.setText(mMain.getString(R.string.revDly) + ": " + _revDly);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.revDly), _revDly));
                         sb.setMax(250);
                         sb.setProgress(_revDly);
                         m5 = _revDly;
                         break;
 
                     case 6:
-                        tv.setText(mMain.getString(R.string.revLvl) + ": " + _revLvl);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.revLvl), _revLvl));
                         sb.setMax(100);
                         sb.setProgress(_revLvl);
                         m6 = _revLvl;
@@ -871,49 +851,47 @@ public class DialogCinemaDsp3d {
 
                         case 0:
                             m0 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), (progress - DSP_LVL_OFFSET), m1, -1, m2, m3, m4, m5));
-                            tv.setText(mMain.getString(R.string.dsp_lvl) + ": " + (progress - DSP_LVL_OFFSET));
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), (progress - DSP_LVL_OFFSET), m1, -1, m2, m3, m4, m5));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.dsp_lvl), progress - DSP_LVL_OFFSET));
                             break;
 
                         case 1:
                             m1 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, progress, -1, m2, m3, m4, m5));
-                            tv.setText(mMain.getString(R.string.init_dly) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, progress, -1, m2, m3, m4, m5));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.init_dly), progress));
                             break;
 
                         case 2:
                             m2 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, m1, -1, progress, m3, m4, m5));
-                            tv.setText(mMain.getString(R.string.liveness) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, m1, -1, progress, m3, m4, m5));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.liveness), progress));
                             break;
 
                         case 3:
                             m3 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, m1, -1, m2, progress + REV_TIME_OFFSET, m4, m5));
-                            tv.setText(mMain.getString(R.string.revTime) + ": " + (progress + REV_TIME_OFFSET));
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, m1, -1, m2, progress + REV_TIME_OFFSET, m4, m5));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.revTime), progress + REV_TIME_OFFSET));
                             break;
 
                         case 4:
                             m4 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, m1, -1, m2, m3, progress, m5));
-                            tv.setText(mMain.getString(R.string.revDly) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, m1, -1, m2, m3, progress, m5));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.revDly), progress));
                             break;
 
                         case 5:
                             m5 = progress;
-                            mMain.runCtrlrTask(false, Commands.SET_3D_DSP_MUSIC_ADVANCED(
-                                    getXmlName(), m0, m1, -1, m2, m3, m4, progress));
-                            tv.setText(mMain.getString(R.string.revLvl) + ": " + progress);
+                            mMain.runCtrlrTask
+                                    (false, Commands.SET_3D_DSP_MUSIC_ADVANCED(getXmlName(), m0, m1, -1, m2, m3, m4, progress));
+                            tv.setText(String.format("%s: %d", mMain.getString(R.string.revLvl), progress));
                             break;
 
                     }
-                    Log.i(TAG, "onProgressChanged \n" + m0 + "\n" + m1 + "\n" + "-1 <-- see info" +
-                               "\n" + m3 + "\n" + m4 + "\n" + m5);
                 }
 
 
@@ -937,42 +915,42 @@ public class DialogCinemaDsp3d {
                 switch (x) {
 
                     case 0:
-                        tv.setText(mMain.getString(R.string.dsp_lvl) + ": " + (_dspLvl));
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.dsp_lvl), _dspLvl));
                         sb.setMax(9);
                         sb.setProgress(_dspLvl + DSP_LVL_OFFSET);
                         m0 = _dspLvl;
                         break;
 
                     case 1:
-                        tv.setText(mMain.getString(R.string.init_dly) + ": " + _initDly);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.init_dly), _initDly));
                         sb.setMax(99);
                         sb.setProgress(_initDly);
                         m1 = _initDly;
                         break;
 
                     case 2:
-                        tv.setText(mMain.getString(R.string.liveness) + ": " + _liveness);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.liveness), _liveness));
                         sb.setMax(10);
                         sb.setProgress(_liveness);
                         m2 = _liveness;
                         break;
 
                     case 3:
-                        tv.setText(mMain.getString(R.string.revTime) + ": " + _revTime);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.revTime), _revTime));
                         sb.setMax(40);
                         sb.setProgress(_revTime - REV_TIME_OFFSET);
                         m3 = _revTime;
                         break;
 
                     case 4:
-                        tv.setText(mMain.getString(R.string.revDly) + ": " + _revDly);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.revDly), _revDly));
                         sb.setMax(250);
                         sb.setProgress(_revDly);
                         m4 = _revDly;
                         break;
 
                     case 5:
-                        tv.setText(mMain.getString(R.string.revLvl) + ": " + _revLvl);
+                        tv.setText(String.format("%s: %d", mMain.getString(R.string.revLvl), _revLvl));
                         sb.setMax(100);
                         sb.setProgress(_revLvl);
                         m5 = _revLvl;
@@ -999,27 +977,23 @@ public class DialogCinemaDsp3d {
 
 
     private boolean isSurround() {
-        return Utils.stringEquals(
-                mXmlName,
-                AmpYaRxV577.SPECTACLE, AmpYaRxV577.XML_SCIFI,
-                AmpYaRxV577.DRAMA, AmpYaRxV577.ADVENTURE,
-                AmpYaRxV577.SPORTS, AmpYaRxV577.XML_MUSIC_VIDEO,
-                AmpYaRxV577.XML_ACTION_GAME, AmpYaRxV577.XML_ROLEPLAYING_GAME);
+        return Utils.stringEquals
+                (mXmlName, AmpYaRxV577.SPECTACLE, AmpYaRxV577.XML_SCIFI,
+                 AmpYaRxV577.DRAMA, AmpYaRxV577.ADVENTURE,
+                 AmpYaRxV577.SPORTS, AmpYaRxV577.XML_MUSIC_VIDEO,
+                 AmpYaRxV577.XML_ACTION_GAME, AmpYaRxV577.XML_ROLEPLAYING_GAME);
     }
 
 
     private boolean isAudioRoom() {
-        return Utils.stringEquals(
-                mXmlName,
-                AmpYaRxV577.XML_CELLAR_CLUB, AmpYaRxV577.XML_THE_BOTTOM_LINE,
-                AmpYaRxV577.XML_HALL_IN_MUNICH, AmpYaRxV577.XML_HALL_IN_VIENNA);
+        return Utils.stringEquals
+                (mXmlName, AmpYaRxV577.XML_CELLAR_CLUB, AmpYaRxV577.XML_THE_BOTTOM_LINE,
+                 AmpYaRxV577.XML_HALL_IN_MUNICH, AmpYaRxV577.XML_HALL_IN_VIENNA);
     }
 
 
     private boolean isAudioRoomAdvanced() {
-        return Utils.stringEquals(
-                mXmlName,
-                AmpYaRxV577.XML_MONO_MOVIE, AmpYaRxV577.XML_THE_ROXY_THEATRE);
+        return Utils.stringEquals(mXmlName, AmpYaRxV577.XML_MONO_MOVIE, AmpYaRxV577.XML_THE_ROXY_THEATRE);
     }
 
 
@@ -1072,22 +1046,22 @@ public class DialogCinemaDsp3d {
 
     public BaseEntity getEntityFromName() {
         switch (mViewId) {
-            case R.id.cv_movie_actiongame: return mMain.getAmp().getConfigEntertainment().getActionGame();
-            case R.id.cv_movie_adventure: return mMain.getAmp().getConfigMovie().getAdventure();
-            case R.id.cv_movie_drama: return mMain.getAmp().getConfigMovie().getDrama();
-            case R.id.cv_music_musicvideo: return mMain.getAmp().getConfigEntertainment().getMusicVideo();
-            case R.id.cv_movie_roleplaygame: return mMain.getAmp().getConfigEntertainment().getRoleplayingGame();
-            case R.id.cv_movie_sci_fi: return mMain.getAmp().getConfigMovie().getSciFi();
-            case R.id.cv_movie_spectacle: return mMain.getAmp().getConfigMovie().getSpectacle();
-            case R.id.cv_movie_sports: return mMain.getAmp().getConfigEntertainment().getSports();
-            case R.id.cv_movie_standard: return mMain.getAmp().getConfigMovie().getStandard();
-            case R.id.cv_movie_monomovie: return mMain.getAmp().getConfigMovie().getMonoMovie();
-            case R.id.cv_music_theroxytheatre: return mMain.getAmp().getConfigLiveClub().getTheRoxyTheatre();
-            case R.id.cv_music_chamber: return mMain.getAmp().getConfigClassical().getChamber();
-            case R.id.cv_music_thebottomline: return mMain.getAmp().getConfigLiveClub().getTheBottomLine();
-            case R.id.cv_music_hallinmunich: return mMain.getAmp().getConfigClassical().getHallInMunich();
-            case R.id.cv_music_hallinvienna: return mMain.getAmp().getConfigClassical().getHallInVienna();
-            case R.id.cv_music_cellarclub: return mMain.getAmp().getConfigLiveClub().getCellarClub();
+            case R.id.cv_movie_actiongame: return MainActivity.getAmp().getConfigEntertainment().getActionGame();
+            case R.id.cv_movie_adventure: return MainActivity.getAmp().getConfigMovie().getAdventure();
+            case R.id.cv_movie_drama: return MainActivity.getAmp().getConfigMovie().getDrama();
+            case R.id.cv_music_musicvideo: return MainActivity.getAmp().getConfigEntertainment().getMusicVideo();
+            case R.id.cv_movie_roleplaygame: return MainActivity.getAmp().getConfigEntertainment().getRoleplayingGame();
+            case R.id.cv_movie_sci_fi: return MainActivity.getAmp().getConfigMovie().getSciFi();
+            case R.id.cv_movie_spectacle: return MainActivity.getAmp().getConfigMovie().getSpectacle();
+            case R.id.cv_movie_sports: return MainActivity.getAmp().getConfigEntertainment().getSports();
+            case R.id.cv_movie_standard: return MainActivity.getAmp().getConfigMovie().getStandard();
+            case R.id.cv_movie_monomovie: return MainActivity.getAmp().getConfigMovie().getMonoMovie();
+            case R.id.cv_music_theroxytheatre: return MainActivity.getAmp().getConfigLiveClub().getTheRoxyTheatre();
+            case R.id.cv_music_chamber: return MainActivity.getAmp().getConfigClassical().getChamber();
+            case R.id.cv_music_thebottomline: return MainActivity.getAmp().getConfigLiveClub().getTheBottomLine();
+            case R.id.cv_music_hallinmunich: return MainActivity.getAmp().getConfigClassical().getHallInMunich();
+            case R.id.cv_music_hallinvienna: return MainActivity.getAmp().getConfigClassical().getHallInVienna();
+            case R.id.cv_music_cellarclub: return MainActivity.getAmp().getConfigLiveClub().getCellarClub();
         }
         return null;
     }

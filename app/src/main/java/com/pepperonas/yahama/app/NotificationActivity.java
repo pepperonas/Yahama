@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.pepperonas.yahama.app.dialogs.DialogVolumeSlider;
 import com.pepperonas.yahama.app.utility.Setup;
 
 /**
@@ -46,18 +45,8 @@ public class NotificationActivity extends Activity {
             if (action.equalsIgnoreCase("launch")) {
                 Log.i(TAG, "launch");
                 launchApp();
-            } else if (action.equalsIgnoreCase("volume")) {
-                Log.i(TAG, "volume");
-                DialogVolumeSlider dsv = new DialogVolumeSlider(this);
-                dsv.show();
             }
         }
-    }
-
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
     }
 
 
@@ -67,6 +56,5 @@ public class NotificationActivity extends Activity {
         startActivity(intent);
         finish();
     }
-
 
 }

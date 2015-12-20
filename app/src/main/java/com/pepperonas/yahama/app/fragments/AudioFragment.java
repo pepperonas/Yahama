@@ -16,6 +16,7 @@
 
 package com.pepperonas.yahama.app.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -43,7 +44,6 @@ import com.pepperonas.yahama.app.utility.Commands;
 import com.pepperonas.yahama.app.utility.Const;
 import com.pepperonas.yahama.app.utility.Setup;
 
-
 /**
  * @author Martin Pfeffer (pepperonas)
  */
@@ -70,7 +70,6 @@ public class AudioFragment
             }
         }
     };
-
 
     private SeekBar mInvisibleVolSlider;
     private DialogVolumeSlider mDialogVolumeSlider;
@@ -120,6 +119,7 @@ public class AudioFragment
         ensureRemoveAds();
     }
 
+
     private void ensureRemoveAds() {
         AdView adView = (AdView) getActivity().findViewById(R.id.adView);
         if (!Setup.getAdvertising()) {
@@ -146,7 +146,7 @@ public class AudioFragment
                 mMain.setTemporaryTitleUpdate(volumeMsg);
                 if (mDialogVolumeSlider != null) mDialogVolumeSlider.showSeekBarValue(volumeMsg);
 
-                mMain.runCtrlrTask(
+                mMain.runCtrlrTask                                           (
                         false,
                         Commands.SET_VOL((int) (vol * 10)),
                         Const.M_VOLUME_SET + String.valueOf((int) (vol * 10)));
@@ -186,19 +186,22 @@ public class AudioFragment
         CardView cvTrebleDown = (CardView) mMain.findViewById(R.id.cv_treble_down);
         CardView cvTrebleUp = (CardView) mMain.findViewById(R.id.cv_treble_up);
 
-        setCardLevel(Setup.getTheme() == 0 ? Setup.COLOR_ACCENT
-                                           : Setup.COLOR_ACCENT_LIGHT,
-                     cvPlayerPause, cvVolumeDown, cvSlider, cvBassDown, cvTrebleDown);
+        setCardLevel
+                (Setup.getTheme() == 0 ? Setup.COLOR_ACCENT
+                                       : Setup.COLOR_ACCENT_LIGHT,
+                 cvPlayerStop, cvPlayerPause, cvVolumeDown, cvSlider, cvBassDown, cvTrebleDown);
 
-        setCardLevel(Setup.getTheme() == 0 ? Setup.COLOR_ACCENT
-                                           : Setup.COLOR_ACCENT_LIGHT,
-                     cvPlayerPlay, cvVolumeUp, cvSlider, cvBassUp, cvTrebleUp);
+        setCardLevel
+                (Setup.getTheme() == 0 ? Setup.COLOR_ACCENT
+                                       : Setup.COLOR_ACCENT_LIGHT,
+                 cvPlayerPlay, cvVolumeUp, cvSlider, cvBassUp, cvTrebleUp);
 
-        setCardClickListener(cvPlayerStop, cvPlayerPause, cvPlayerPlay,
-                             cvVolumeDown, cvVolumeUp,
-                             cvSlider,
-                             cvBassDown, cvBassUp,
-                             cvTrebleDown, cvTrebleUp);
+        setCardClickListener
+                (cvPlayerStop, cvPlayerPause, cvPlayerPlay,
+                 cvVolumeDown, cvVolumeUp,
+                 cvSlider,
+                 cvBassDown, cvBassUp,
+                 cvTrebleDown, cvTrebleUp);
     }
 
 
@@ -261,12 +264,17 @@ public class AudioFragment
 
 
     private void setCardClickListener(CardView... cards) {
-        for (CardView c : cards) c.setOnClickListener(this);
+        for (CardView c : cards) {
+            c.setOnClickListener(this);
+        }
     }
 
 
     private void setCardLevel(int level, CardView... cards) {
-        for (CardView c : cards) c.getForeground().setLevel(level);
+        for (CardView c : cards)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                c.getForeground().setLevel(level);
+            }
     }
 
 
@@ -326,7 +334,7 @@ public class AudioFragment
 
             case R.id.cv_bass_down:
                 volBass = MainActivity.getAmp().getBass();
-                mMain.runCtrlrTask(
+                mMain.runCtrlrTask                                      (
                         false,
                         Commands.SET_BASS_OR_TREBLE("Bass", (volBass) - 5),
                         Const.M_BASS_SET + String.valueOf((volBass - 5)));
@@ -342,7 +350,7 @@ public class AudioFragment
 
             case R.id.cv_bass_up:
                 volBass = MainActivity.getAmp().getBass();
-                mMain.runCtrlrTask(
+                mMain.runCtrlrTask                                      (
                         false,
                         Commands.SET_BASS_OR_TREBLE("Bass", (volBass) + 5),
                         Const.M_BASS_SET + String.valueOf((volBass + 5)));
@@ -359,7 +367,7 @@ public class AudioFragment
 
             case R.id.cv_treble_down:
                 volTreble = MainActivity.getAmp().getTreble();
-                mMain.runCtrlrTask(
+                mMain.runCtrlrTask                                          (
                         false,
                         Commands.SET_BASS_OR_TREBLE("Treble", (volTreble) - 5),
                         Const.M_TREBLE_SET + String.valueOf((volTreble - 5)));
@@ -375,7 +383,7 @@ public class AudioFragment
 
             case R.id.cv_treble_up:
                 volTreble = MainActivity.getAmp().getTreble();
-                mMain.runCtrlrTask(
+                mMain.runCtrlrTask                                          (
                         false,
                         Commands.SET_BASS_OR_TREBLE("Treble", (volTreble) + 5),
                         Const.M_TREBLE_SET + String.valueOf((volTreble + 5)));
@@ -497,6 +505,5 @@ public class AudioFragment
 
         mMain.runCtrlrTask(false, action, Const.DO_NOT_UPDATE, trailer);
     }
-
 
 }

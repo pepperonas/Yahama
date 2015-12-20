@@ -29,7 +29,7 @@ import com.pepperonas.andbasx.AndBasx;
 /**
  * @author Martin Pfeffer (pepperonas)
  */
-public class YahamaApp extends Application {
+public class YaAmpApp extends Application {
 
     private Tracker mTracker;
 

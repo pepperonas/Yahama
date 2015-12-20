@@ -35,6 +35,11 @@
             android:key="@string/PR_KEY_VOL_STEPS"
             android:title="@string/pref_title_vol_steps"/>
 
+        <CheckBoxPreference
+            android:key="@string/PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY"
+            android:title="@string/pref_title_close_volume_dialog_automatically"
+            android:summary="@string/pref_summary_close_volume_dialog_automatically"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

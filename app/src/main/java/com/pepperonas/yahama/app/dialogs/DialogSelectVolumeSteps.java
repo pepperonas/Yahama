@@ -29,28 +29,26 @@ import com.pepperonas.yahama.app.utility.Setup;
  */
 public class DialogSelectVolumeSteps {
 
-
     public DialogSelectVolumeSteps(final MainActivity main, final SettingsFragment sf) {
         new MaterialDialog.Builder(main)
                 .title(R.string.dialog_title_volume_steps)
                 .items(R.array.dialog_items_select_vol_steps)
                 .alwaysCallSingleChoiceCallback()
-                .itemsCallbackSingleChoice(
-                        Setup.getVolumeStepsPos(),
-                        new MaterialDialog.ListCallbackSingleChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                storeValue(which, text, main);
-                                sf.updateSummaries();
-                                return true;
-                            }
-                        })
+                .itemsCallbackSingleChoice
+                        (Setup.getVolumeStepsPos(),
+                         new MaterialDialog.ListCallbackSingleChoice() {
+                             @Override
+                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                 storeValue(which, text, main);
+                                 sf.updateSummaries();
+                                 return true;
+                             }
+                         })
                 .show();
     }
 
 
     private void storeValue(int which, CharSequence text, MainActivity main) {
-        Setup.setVolumeSteps( (int) (Float.valueOf(
-                text.toString().replace(" " + main.getString(R.string.dB), "")) * 10), which);
+        Setup.setVolumeSteps((int) (Float.valueOf(text.toString().replace(" " + main.getString(R.string.dB), "")) * 10), which);
     }
 }

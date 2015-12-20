@@ -29,23 +29,22 @@ import com.pepperonas.yahama.app.utility.Setup;
  */
 public class DialogSelectNavDrawerDetail {
 
-
     public DialogSelectNavDrawerDetail(final MainActivity main, final SettingsFragment sf) {
         new MaterialDialog.Builder(main)
                 .title(R.string.dialog_title_select_nav_drawer_detail)
                 .items(R.array.dialog_items_select_nav_drawer_detail)
                 .alwaysCallSingleChoiceCallback()
-                .itemsCallbackSingleChoice(
-                        Setup.getNavDrawerDetailPos(),
-                        new MaterialDialog.ListCallbackSingleChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                Setup.setNavDrawerDetail( text.toString(), which);
-                                if (main.getAmp().isOn()) main.runConnectionTask(false);
-                                sf.updateSummaries();
-                                return true;
-                            }
-                        })
+                .itemsCallbackSingleChoice
+                        (Setup.getNavDrawerDetailPos(),
+                         new MaterialDialog.ListCallbackSingleChoice() {
+                             @Override
+                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                 Setup.setNavDrawerDetail(text.toString(), which);
+                                 if (MainActivity.getAmp().isOn()) main.runConnectionTask(false);
+                                 sf.updateSummaries();
+                                 return true;
+                             }
+                         })
                 .show();
     }
 }

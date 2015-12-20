@@ -47,8 +47,8 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.vending.billing.IInAppBillingService;
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -56,7 +56,7 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.pepperonas.aesprefs.AesPrefs;
-import com.pepperonas.yahama.app.custom.FadeAnitmation;
+import com.pepperonas.andbasx.animation.FadeAnimation;
 import com.pepperonas.yahama.app.custom.NotificationPanel;
 import com.pepperonas.yahama.app.data.AmpYaRxV577;
 import com.pepperonas.yahama.app.data.entity.AudioEntityAdvanced;
@@ -106,6 +106,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * @author Martin Pfeffer (pepperonas)
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -120,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     private String mLastSelection = "";
     private TextView mTvNavViewTitle, mTvNavViewSubtitle;
 
-    private FloatingActionsMenu mFabMenu;
+    private FloatingActionMenu mFabMenu;
     private FloatingActionButton mFabPower, mFabMute;
 
     private FrameLayout mMainFrame;
@@ -154,6 +157,22 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    BroadcastReceiver mNotificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("mute")) {
+                Log.d(TAG, "onReceive  " + "mute");
+                mFabMute.callOnClick();
+                mNotificationPanel.update();
+            } else if (intent.getAction().equals("close")) {
+                Log.d(TAG, "onReceive  " + "close");
+                finish();
+            }
+        }
+    };
+    private FloatingActionButton mFabSleeptimer;
+    private FloatingActionButton mFabDeviceInfo;
 
 
     @Override
@@ -197,37 +216,118 @@ public class MainActivity extends AppCompatActivity {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("mute");
-        filter.addAction("play");
-        filter.addAction("pause");
+        filter.addAction("close");
         // Add other actions as needed
 
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals("mute")) {
-                    Log.d(TAG, "onReceive  " + "mute");
-                    mFabMute.callOnClick();
-                    mNotificationPanel.update();
-
-                } else if (intent.getAction().equals("play")) {
-                    Log.d(TAG, "onReceive  " + "play");
-                    runCtrlrTask(false, Commands.PLAYBACK_CONTROL(AmpYaRxV577.PC_PLAY));
-
-                } else if (intent.getAction().equals("pause")) {
-                    Log.d(TAG, "onReceive  " + "pause");
-                    runCtrlrTask(false, Commands.PLAYBACK_CONTROL(AmpYaRxV577.PC_PAUSE));
-
-                }
-            }
-        };
-
-        registerReceiver(receiver, filter);
+        registerReceiver(mNotificationReceiver, filter);
     }
 
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
+    protected void onResume() {
+        super.onResume();
+
+        if (Setup.getShowNotification()) {
+            mNotificationPanel = new NotificationPanel(this);
+        }
+
+        // a proper connection is mandatory
+        if (!Utils.isConnected(MainActivity.this)) return;
+
+        mDriverTimer = new Timer();
+        mDriverTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.post(mDriverRunnable);
+            }
+        }, 0, Const.DRIVER_REFRESH_RATE);
+    }
+
+
+    @Override
+    protected void onPause() {
+        if (mStartedSpotify) {
+            mStartedSpotify = false;
+            selectNavViewItem(mNavView.getMenu().getItem(0).getSubMenu().getItem(mLastSelectedNavItemPos));
+        }
+
+        try {
+
+            stopDriver();
+
+            dismissProgessDialog();
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error in onPause - Msg: " + e.getMessage());
+        }
+
+        super.onPause();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        if (mNotificationPanel != null) {
+            mNotificationPanel.cancel();
+        }
+
+        if (mNotificationReceiver != null) {
+            unregisterReceiver(mNotificationReceiver);
+        }
+
+        super.onDestroy();
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mHandler.removeCallbacks(mDriverRunnable);
+        outState.putInt("selection", mLastSelectedNavItemPos);
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mLastSelectedNavItemPos = savedInstanceState.getInt("selection");
+
+        if (mLastSelectedNavItemPos < 5) {
+            selectNavViewItem(mNavView.getMenu().getItem(0).getSubMenu().getItem(mLastSelectedNavItemPos));
+        } else if (mLastSelectedNavItemPos == 5) {
+            selectNavViewItem(mNavView.getMenu().getItem(1).getSubMenu().getItem(0));
+        } else {
+            selectNavViewItem(mNavView.getMenu().getItem(0).getSubMenu().getItem(0));
+        }
+    }
+
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int action = event.getAction();
+
+        switch (event.getKeyCode()) {
+
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (action == KeyEvent.ACTION_DOWN) {
+                    mInvisibleVolSlider.incrementProgressBy(Setup.getVolumeSteps());
+                }
+                return true;
+
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (action == KeyEvent.ACTION_DOWN) {
+                    mInvisibleVolSlider.incrementProgressBy(Setup.getVolumeSteps() * -1);
+                }
+                return true;
+        }
+        return super.dispatchKeyEvent(event);
     }
 
 
@@ -283,6 +383,12 @@ public class MainActivity extends AppCompatActivity {
 
         initNavDrawer();
 
+        if (getIntent() != null) {
+            if (getIntent().getBooleanExtra("theme_changed", false)) {
+                makeFragmentTransaction(SettingsFragment.newInstance(0));
+                return;
+            }
+        }
         makeFragmentTransaction(AudioFragment.newInstance(0));
     }
 
@@ -400,111 +506,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void runConnectionTask(boolean showDialog) {new ConnectionTask(showDialog).execute(Utils.getCurrentNetwork());}
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (Setup.getShowNotification()) {
-            mNotificationPanel = new NotificationPanel(this);
-        }
-
-        // a proper connection is mandatory
-        if (!Utils.isConnected(MainActivity.this)) return;
-
-        mDriverTimer = new Timer();
-        mDriverTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.post(mDriverRunnable);
-            }
-        }, 0, Const.DRIVER_REFRESH_RATE);
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (mStartedSpotify) {
-            mStartedSpotify = false;
-            selectNavViewItem(mNavView.getMenu().getItem(0).getSubMenu().getItem(mLastSelectedNavItemPos));
-        }
-
-        try {
-
-            stopDriver();
-
-            dismissProgessDialog();
-
-        } catch (Exception e) {
-            Log.e(TAG, "Error in onPause - Msg: " + e.getMessage());
-        }
-
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (mNotificationPanel != null) {
-            mNotificationPanel.cancel();
-        }
-    }
-
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mHandler.removeCallbacks(mDriverRunnable);
-        outState.putInt("selection", mLastSelectedNavItemPos);
-    }
-
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mLastSelectedNavItemPos = savedInstanceState.getInt("selection");
-
-        if (mLastSelectedNavItemPos < 5) {
-            selectNavViewItem(mNavView.getMenu().getItem(0).getSubMenu().getItem(mLastSelectedNavItemPos));
-        } else if (mLastSelectedNavItemPos == 5) {
-            selectNavViewItem(mNavView.getMenu().getItem(1).getSubMenu().getItem(0));
-        } else {
-            selectNavViewItem(mNavView.getMenu().getItem(0).getSubMenu().getItem(0));
-        }
-    }
-
-
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        int action = event.getAction();
-
-        switch (event.getKeyCode()) {
-
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                if (action == KeyEvent.ACTION_DOWN) {
-                    mInvisibleVolSlider.incrementProgressBy(Setup.getVolumeSteps());
-                }
-                return true;
-
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-                if (action == KeyEvent.ACTION_DOWN) {
-                    mInvisibleVolSlider.incrementProgressBy(Setup.getVolumeSteps() * -1);
-                }
-                return true;
-        }
-        return super.dispatchKeyEvent(event);
-    }
 
 
     public void runCtrlrTask(boolean showProgress, String... s) {
@@ -988,22 +989,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void initConfigLiveClub(String s) {
         if (s.contains("<" + AmpYaRxV577.XML_CELLAR_CLUB + ">")) {
-            String cellar = s.split("<" + AmpYaRxV577.XML_CELLAR_CLUB + ">")[1].split(
-                    "</" + AmpYaRxV577.XML_CELLAR_CLUB                               )[0];
+            String cellar = s.split("<" + AmpYaRxV577.XML_CELLAR_CLUB + ">")[1]
+                    .split("</" + AmpYaRxV577.XML_CELLAR_CLUB)[0];
 
             initAudioRoom(mAmp.getConfigLiveClub().getCellarClub(), cellar);
         }
 
         if (s.contains("<" + AmpYaRxV577.XML_THE_BOTTOM_LINE + ">")) {
-            String bottom = s.split("<" + AmpYaRxV577.XML_THE_BOTTOM_LINE + ">")[1].split(
-                    "</" + AmpYaRxV577.XML_THE_BOTTOM_LINE                               )[0];
+            String bottom = s.split("<" + AmpYaRxV577.XML_THE_BOTTOM_LINE + ">")[1]
+                    .split("</" + AmpYaRxV577.XML_THE_BOTTOM_LINE)[0];
 
             initAudioRoom(mAmp.getConfigLiveClub().getTheBottomLine(), bottom);
         }
 
         if (s.contains("<" + AmpYaRxV577.XML_THE_ROXY_THEATRE + ">")) {
-            String roxy = s.split("<" + AmpYaRxV577.XML_THE_ROXY_THEATRE + ">")[1].split(
-                    "</" + AmpYaRxV577.XML_THE_ROXY_THEATRE                             )[0];
+            String roxy = s.split("<" + AmpYaRxV577.XML_THE_ROXY_THEATRE + ">")[1]
+                    .split("</" + AmpYaRxV577.XML_THE_ROXY_THEATRE)[0];
 
             initAudioRoomAdvanced(mAmp.getConfigLiveClub().getTheRoxyTheatre(), roxy);
         }
@@ -1011,8 +1012,8 @@ public class MainActivity extends AppCompatActivity {
         mAmp.getConfigLiveClub().dbgMsg();
 
         if (s.contains(Const.M_DIALOG_SHOW_DSP_CONFIG)) {
-            new DialogCinemaDsp3d(this, Integer.parseInt                           (s.split(
-                    Const.M_DIALOG_SHOW_DSP_CONFIG              )[1].split("</")[0]));
+            new DialogCinemaDsp3d(this, Integer
+                    .parseInt(s.split(Const.M_DIALOG_SHOW_DSP_CONFIG)[1].split("</")[0]));
         }
     }
 
@@ -1303,58 +1304,59 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 Log.d(TAG, "onTouch  " + "");
-                if (mFabMenu.isExpanded()) {
-                    mFabMenu.collapse();
+                if (mFabMenu.isOpened()) {
+                    mFabMenu.close(true);
                     return true;
                 }
                 return false;
             }
         });
 
-        mFabMenu = (FloatingActionsMenu) findViewById(R.id.fab_menu);
+        mFabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
+        mFabMenu.setMenuButtonColorNormal(getResources().getColor
+                (Setup.getTheme() != 0 ? R.color.fabMenuBgColor_light
+                                       : R.color.fabMenuBgColor));
 
         mFabPower = (FloatingActionButton) findViewById(R.id.fab_action_power);
         mFabMute = (FloatingActionButton) findViewById(R.id.fab_action_mute);
-        FloatingActionButton fabSleeptimer = (FloatingActionButton) findViewById(R.id.fab_action_sleeptimer);
-        FloatingActionButton fabDeviceInfo = (FloatingActionButton) findViewById(R.id.fab_action_device_info);
+        mFabSleeptimer = (FloatingActionButton) findViewById(R.id.fab_action_sleeptimer);
+        mFabDeviceInfo = (FloatingActionButton) findViewById(R.id.fab_action_device_info);
 
-        final FadeAnitmation fadeAnitmation =
-                new FadeAnitmation(mMainFrame, 1.0f, 0.1f, 400L, 0);
+        final FadeAnimation fadeAnitmation =
+                new FadeAnimation(mMainFrame, 1.0f, 0.1f, 400L, 0);
 
-        mFabMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+        mFabMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
             @Override
-            public void onMenuExpanded() {
-                reinitFab();
-                fadeAnitmation.fadeOut();
-            }
-
-
-            @Override
-            public void onMenuCollapsed() {
-                reinitFab();
-                fadeAnitmation.fadeIn();
+            public void onMenuToggle(boolean opened) {
+                if (opened) {
+                    reinitFab();
+                    fadeAnitmation.fadeOut();
+                } else {
+                    reinitFab();
+                    fadeAnitmation.fadeIn();
+                }
             }
         });
 
         mFabMute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ControllerTask(false).execute(
-                        Commands.TOGGLE_MUTE                               (mAmp.isMute() ? AmpYaRxV577.OFF
-                                                           : AmpYaRxV577.ON),
-                        Const.M_MUTE,
-                        mAmp.isMute() ? "false"
-                                      : "true"   );
+                new ControllerTask(false).execute
+                        (Commands.TOGGLE_MUTE
+                                 (mAmp.isMute() ? AmpYaRxV577.OFF
+                                                : AmpYaRxV577.ON),
+                         Const.M_MUTE,
+                         mAmp.isMute() ? "false"
+                                       : "true");
 
                 setTemporaryTitleUpdate(mAmp.isMute() ? getString(R.string.toolbar_info_unmute)
                                                       : getString(R.string.toolbar_info_mute));
 
-                mFabMenu.collapse();
+                mFabMenu.close(true);
 
                 mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
                 mTitleWriterHandler.postDelayed(mTitleWriterRunnable, Const.DELAY_TITLE_RESET);
 
-                //                updateNotificationDelayed();
             }
         });
 
@@ -1362,13 +1364,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mAmp.isOn()) closeAppDelayed();
-                else mFabMenu.collapse();
+                else mFabMenu.close(true);
 
-                new ControllerTask(false).execute     (
-                        Commands.SET_POWER                             (mAmp.isOn() ? AmpYaRxV577.STANDBY
-                                                       : AmpYaRxV577.ON),
-                        mAmp.isOn() ? Const.M_POWER_OFF
-                                    : Const.M_POWER_ON);
+                new ControllerTask(false).execute
+                        (Commands.SET_POWER(mAmp.isOn() ? AmpYaRxV577.STANDBY : AmpYaRxV577.ON),
+                         mAmp.isOn() ? Const.M_POWER_OFF
+                                     : Const.M_POWER_ON);
             }
 
 
@@ -1384,11 +1385,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        fabSleeptimer.setIconDrawable                                                 (
-                new IconicsDrawable(this, CommunityMaterial.Icon.cmd_timer)
-                        .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
+        mFabSleeptimer.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_timer)
+                                                .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
-        fabSleeptimer.setOnClickListener(new View.OnClickListener() {
+        mFabSleeptimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DialogSleeptimer(MainActivity.this);
@@ -1397,11 +1397,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        fabDeviceInfo.setIconDrawable                                                 (
-                new IconicsDrawable(this, GoogleMaterial.Icon.gmd_info_outline)
-                        .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
+        mFabDeviceInfo.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_info_outline)
+                                                .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
-        fabDeviceInfo.setOnClickListener(new View.OnClickListener() {
+        mFabDeviceInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DialogDeviceInfo(MainActivity.this, mAmp.dbgMsg());
@@ -1413,48 +1412,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //    public static void updateNotificationDelayed() {
-    //        final Handler handler = new Handler();
-    //        handler.postDelayed(new Runnable() {
-    //            @Override
-    //            public void run() {
-    //                mNotificationPanel.update();
-    //            }
-    //        }, 400);
-    //    }
-
-
     private void closeFabMenuDelayed() {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mFabMenu.collapse();
+                mFabMenu.close(true);
             }
         }, 400);
     }
 
 
     private void reinitFab() {
-        mFabPower.setIconDrawable                                                     (
-                new IconicsDrawable(this, CommunityMaterial.Icon.cmd_power)
-                        .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
+        mFabPower.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_power)
+                                           .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
-        mFabPower.setColorNormal                    (getResources().getColor(
-                mAmp.isOn() ? R.color.fabPowerRed
-                            : R.color.fabPowerGreen                         ));
+        mFabPower.setColorNormal(getResources().getColor(mAmp.isOn() ? R.color.fabPowerRed
+                                                                     : R.color.fabPowerGreen));
 
-        mFabPower.setTitle(mAmp.isOn() ? getString(R.string.fab_action_power_off)
-                                       : getString(R.string.fab_action_power_on));
+        mFabPower.setLabelText(mAmp.isOn() ? getString(R.string.fab_action_power_off)
+                                           : getString(R.string.fab_action_power_on));
 
 
-        mFabMute.setIconDrawable                                                      (
-                new IconicsDrawable(this, mAmp.isMute() ? GoogleMaterial.Icon.gmd_volume_up
-                                                        : GoogleMaterial.Icon.gmd_volume_off)
-                        .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
+        mFabMute.setImageDrawable(new IconicsDrawable(this, mAmp.isMute() ? GoogleMaterial.Icon.gmd_volume_up
+                                                                          : GoogleMaterial.Icon.gmd_volume_off)
+                                          .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
-        mFabMute.setTitle(mAmp.isMute() ? getString(R.string.fab_action_unmute)
-                                        : getString(R.string.fab_action_mute));
+        mFabMute.setLabelText(mAmp.isMute() ? getString(R.string.fab_action_unmute)
+                                            : getString(R.string.fab_action_mute));
+
+        int normalFabBgColor = getResources().getColor
+                (Setup.getTheme() != 0 ? R.color.fabBgColor_light
+                                       : R.color.fabBgColor);
+
+        mFabMute.setColorNormal(normalFabBgColor);
+        mFabDeviceInfo.setColorNormal(normalFabBgColor);
+        mFabSleeptimer.setColorNormal(normalFabBgColor);
     }
 
 

@@ -19,8 +19,8 @@ package com.pepperonas.yahama.app.utility;
 import android.content.Context;
 
 import com.pepperonas.aesprefs.AesPrefs;
+import com.pepperonas.andbasx.base.Loader;
 import com.pepperonas.yahama.app.R;
-
 
 /**
  * @author Martin Pfeffer (pepperonas)
@@ -56,14 +56,14 @@ public class Setup {
 
 
     public static int getNotificationIconColor() {
-        return AesPrefs.getBoolean("dark_notification", true) ? R.color.notification_icon_color
-                                                              : R.color.notification_icon_color_light;
+        return AesPrefs.getBoolean("dark_notification", true) ? R.color.notification_icon_color_light
+                                                              : R.color.notification_icon_color;
     }
 
 
     public static int getNotificationBackground() {
-        return AesPrefs.getBoolean("dark_notification", true) ? R.color.notification_background
-                                                              : R.color.notification_background_light;
+        return Loader.getColor(AesPrefs.getBoolean("dark_notification", true) ? R.color.notification_background_light
+                                                                              : R.color.notification_background);
     }
 
 
@@ -227,8 +227,18 @@ public class Setup {
         AesPrefs.putBoolean("show_dsp_info", showDspInfo);
     }
 
+
     public static boolean getShowDspInfo() {
         return AesPrefs.getBoolean("show_dsp_info", true);
     }
 
+
+    public static void setCloseVolumeDialogAutomatically(boolean b) {
+        AesPrefs.putBoolean(R.string.PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY, b);
+    }
+
+
+    public static boolean getCloseVolumeDialogAutomatically() {
+        return AesPrefs.getBoolean(R.string.PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY, true);
+    }
 }

@@ -23,6 +23,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
@@ -45,15 +46,34 @@ import com.pepperonas.yahama.app.utils.Utils;
  */
 public class SettingsFragment
         extends com.github.machinarius.preferencefragment.PreferenceFragment
-        implements Preference.OnPreferenceClickListener {
+        implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
     private static final String TAG = "SettingsFragment";
 
     private MainActivity mMain;
-    private int iconSize;
-    private int iconColor;
+
+    private static final int ICON_SIZE = 24;
+    private int mIconColor;
 
     private IInAppBillingService mService;
+
+    private long mLastBuildVersionClicked;
+    private long mHiddenCounter;
+
+    SharedPreferences.OnSharedPreferenceChangeListener mChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(AesPrefs.getEncryptedKey("theme"))) {
+                if (mMain != null && mMain.getIntent() != null) {
+                    Intent relaunch = mMain.getIntent();
+                    mMain.finish();
+                    relaunch.putExtra("theme_changed", true);
+                    mMain.startActivity(relaunch);
+                    mMain.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        }
+    };
 
     private ServiceConnection mServiceConn = new ServiceConnection() {
         @Override
@@ -67,8 +87,6 @@ public class SettingsFragment
             mService = IInAppBillingService.Stub.asInterface(service);
         }
     };
-    private long mLastBuildVersionClicked;
-    private long mHiddenCounter;
 
 
     public static SettingsFragment newInstance(int i) {
@@ -88,45 +106,46 @@ public class SettingsFragment
 
         addPreferencesFromResource(R.xml.fragment_preference);
 
-        int highlightColor = Setup.getTheme()
-                             == 0 ? R.color.colorAccent
-                                  : R.color.colorAccent_light;
-        iconColor = Setup.getTheme()
-                    == 0 ? R.color.primary_text_default_material_dark
-                         : R.color.primary_text_default_material_light;
-        iconSize = 24;
+        int highlightColor = Setup.getTheme() == 0 ? R.color.colorAccent
+                                                   : R.color.colorAccent_light;
+
+        mIconColor = Setup.getTheme() == 0 ? R.color.primary_text_default_material_dark_failsafe
+                                           : R.color.primary_text_default_material_light_failsafe;
 
         if (Setup.getShowPremium()) {
             Preference getPremium = findPreference(getString(R.string.PR_KEY_GET_PREMIUM));
             getPremium.setOnPreferenceClickListener(this);
-            getPremium.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_star, highlightColor, iconSize));
+            getPremium.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_star, highlightColor, ICON_SIZE));
         } else hidePremiumCategory();
 
-        Preference volSteps = findPreference(getString(R.string.PR_KEY_VOL_STEPS));
-        volSteps.setOnPreferenceClickListener(this);
-        volSteps.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_vector_point, iconColor, iconSize));
+        /**
+         * Preferences
+         * */
+        Preference p = findPreference(getString(R.string.PR_KEY_VOL_STEPS));
+        p.setOnPreferenceClickListener(this);
+        p.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_vector_point, mIconColor, ICON_SIZE));
 
-        Preference theme = findPreference(getString(R.string.PR_KEY_THEME));
-        theme.setOnPreferenceClickListener(this);
-        theme.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_brush, iconColor, iconSize));
+        p = findPreference(getString(R.string.PR_KEY_THEME));
+        p.setOnPreferenceClickListener(this);
+        p.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_brush, mIconColor, ICON_SIZE));
 
-        Preference detailInNavDrawer = findPreference(getString(R.string.PR_KEY_DETAIL_IN_NAV_DRAWER));
-        detailInNavDrawer.setOnPreferenceClickListener(this);
-        detailInNavDrawer.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_playlist_minus, iconColor, iconSize));
+        p = findPreference(getString(R.string.PR_KEY_DETAIL_IN_NAV_DRAWER));
+        p.setOnPreferenceClickListener(this);
+        p.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_playlist_minus, mIconColor, ICON_SIZE));
 
-        Preference buildVersion = findPreference(getString(R.string.PR_KEY_BUILD_VERSION));
-        buildVersion.setOnPreferenceClickListener(this);
-        buildVersion.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_leaf, iconColor, iconSize));
+        p = findPreference(getString(R.string.PR_KEY_BUILD_VERSION));
+        p.setOnPreferenceClickListener(this);
+        p.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_leaf, mIconColor, ICON_SIZE));
+
+        /**
+         * CheckBoxPreference
+         * */
+        CheckBoxPreference cbxp = (CheckBoxPreference) findPreference(getString(R.string.PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY));
+        cbxp.setOnPreferenceChangeListener(this);
+        cbxp.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_message_text_outline, mIconColor, ICON_SIZE));
 
         initInAppBillings();
 
-    }
-
-
-    private void initInAppBillings() {
-        Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
-        serviceIntent.setPackage("com.android.vending");
-        getActivity().bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
     }
 
 
@@ -137,36 +156,95 @@ public class SettingsFragment
         mMain.setTitle(getString(R.string.settings));
 
         updateSummaries();
-
-        AesPrefs.registerOnSharedPreferenceChangeListener(
-                new SharedPreferences.OnSharedPreferenceChangeListener() {
-                    @Override
-                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                        if (key.equals(AesPrefs.getEncryptedKey("theme"))) {
-                            mMain.recreate();
-                        }
-                    }
-                });
+        AesPrefs.registerOnSharedPreferenceChangeListener(mChangeListener);
     }
 
 
     @Override
-    public boolean onPreferenceClick(Preference preference) {
-        if (preference.getKey().equals(getString(R.string.PR_KEY_GET_PREMIUM))) {
+    public void onDestroy() {
+        if (mService != null) {
+            getActivity().unbindService(mServiceConn);
+        }
+
+        AesPrefs.unregisterOnSharedPreferenceChangeListener(mChangeListener);
+
+        super.onDestroy();
+    }
+
+
+    @Override
+    public boolean onPreferenceClick(Preference p) {
+        if (p.getKey().equals(getString(R.string.PR_KEY_GET_PREMIUM))) {
             if (Setup.getPremium()) {
                 hidePremiumCategory();
                 Setup.setShowPremium(false);
             } else new DialogGetPremium(mMain, SettingsFragment.this, mMain);
-        } else if (preference.getKey().equals(getString(R.string.PR_KEY_VOL_STEPS))) {
+        } else if (p.getKey().equals(getString(R.string.PR_KEY_VOL_STEPS))) {
             new DialogSelectVolumeSteps(mMain, this);
-        } else if (preference.getKey().equals(getString(R.string.PR_KEY_THEME))) {
-            new DialogSelectTheme(mMain, this);
-        } else if (preference.getKey().equals(getString(R.string.PR_KEY_DETAIL_IN_NAV_DRAWER))) {
+        } else if (p.getKey().equals(getString(R.string.PR_KEY_THEME))) {
+            new DialogSelectTheme(mMain);
+        } else if (p.getKey().equals(getString(R.string.PR_KEY_DETAIL_IN_NAV_DRAWER))) {
             new DialogSelectNavDrawerDetail(mMain, this);
-        } else if (preference.getKey().equals(getString(R.string.PR_KEY_BUILD_VERSION))) {
+        } else if (p.getKey().equals(getString(R.string.PR_KEY_BUILD_VERSION))) {
             checkClickTimer();
         }
+
         return true;
+    }
+
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference.getKey().equals(getString(R.string.PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY))) {
+            Setup.setCloseVolumeDialogAutomatically((Boolean) newValue);
+        }
+
+        return true;
+    }
+
+
+    public void updateSummaries() {
+
+        if (Setup.getPremium() && Setup.getShowPremium()) {
+            Preference getPremium = findPreference(getString(R.string.PR_KEY_GET_PREMIUM));
+            getPremium.setIcon(Utils.getIconic(mMain, CommunityMaterial.Icon.cmd_checkbox_marked_outline, mIconColor, ICON_SIZE));
+
+            getPremium.setTitle(getString(R.string.premium_unlocked_title));
+            getPremium.setSummary(getString(R.string.premium_unlocked_summary));
+        }
+
+        /**
+         * Preferences
+         * */
+        Preference p = findPreference(getString(R.string.PR_KEY_VOL_STEPS));
+        int volStepPos = Setup.getVolumeStepsPos();
+        String[] volStepsItems = getResources().getStringArray(R.array.dialog_items_select_vol_steps);
+        p.setSummary(getString(R.string.plus_minus) + "" + volStepsItems[volStepPos]);
+
+        p = findPreference(getString(R.string.PR_KEY_THEME));
+        int themePos = Setup.getTheme();
+        p.setSummary(themePos == 0 ? getString(R.string.dark) : getString(R.string.light));
+
+        p = findPreference(getString(R.string.PR_KEY_DETAIL_IN_NAV_DRAWER));
+        String detailInfo = Setup.getNavDrawerDetail(mMain);
+        p.setSummary(detailInfo);
+
+        p = findPreference(getString(R.string.PR_KEY_BUILD_VERSION));
+        String bv = Utils.getAppVersionName(mMain);
+        p.setSummary(bv);
+
+        /**
+         * CheckBoxPreference
+         * */
+        CheckBoxPreference cbxp = (CheckBoxPreference) findPreference(getString(R.string.PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY));
+        cbxp.setChecked(Setup.getCloseVolumeDialogAutomatically());
+    }
+
+
+    private void initInAppBillings() {
+        Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
+        serviceIntent.setPackage("com.android.vending");
+        getActivity().bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
     }
 
 
@@ -186,55 +264,15 @@ public class SettingsFragment
     }
 
 
-    private void hidePremiumCategory() {
-        PreferenceScreen screen = (PreferenceScreen) findPreference(getString(R.string.PR_SCREEN_KEY));
-        PreferenceCategory premiumCategory = (PreferenceCategory) findPreference(getString(R.string.PR_CAT_KEY_GET_PREMIUM));
-        screen.removePreference(premiumCategory);
-    }
-
-
-    public void updateSummaries() {
-
-        if (Setup.getPremium() && Setup.getShowPremium()) {
-            Preference getPremium = findPreference(getString(R.string.PR_KEY_GET_PREMIUM));
-            getPremium.setIcon(
-                    Utils.getIconic(mMain, CommunityMaterial.Icon.cmd_checkbox_marked_outline, iconColor, iconSize));
-
-            getPremium.setTitle(getString(R.string.premium_unlocked_title));
-            getPremium.setSummary(getString(R.string.premium_unlocked_summary));
-        }
-
-        Preference volSteps = findPreference(getString(R.string.PR_KEY_VOL_STEPS));
-        int volStepPos = Setup.getVolumeStepsPos();
-        String[] volStepsItems = getResources().getStringArray(R.array.dialog_items_select_vol_steps);
-        volSteps.setSummary(getString(R.string.plus_minus) + "" + volStepsItems[volStepPos]);
-
-        Preference theme = findPreference(getString(R.string.PR_KEY_THEME));
-        int themePos = Setup.getTheme();
-        theme.setSummary(themePos == 0 ? getString(R.string.dark) : getString(R.string.light));
-
-        Preference detailInNavDrawer = findPreference(getString(R.string.PR_KEY_DETAIL_IN_NAV_DRAWER));
-        String detailInfo = Setup.getNavDrawerDetail(mMain);
-        detailInNavDrawer.setSummary(detailInfo);
-
-        Preference buildVersion = findPreference(getString(R.string.PR_KEY_BUILD_VERSION));
-        String bv = Utils.getAppVersionName(mMain);
-        buildVersion.setSummary(bv);
-
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mService != null) {
-            getActivity().unbindService(mServiceConn);
-        }
-    }
-
-
     public IInAppBillingService getIabService() {
         return mService;
+    }
+
+
+    private void hidePremiumCategory() {
+        PreferenceScreen screen = (PreferenceScreen) findPreference(getString(R.string.PR_SCREEN_KEY));
+        PreferenceCategory category = (PreferenceCategory) findPreference(getString(R.string.PR_CAT_KEY_GET_PREMIUM));
+        screen.removePreference(category);
     }
 
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="custom_title_card" parent="CardView.Light">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/labelcard_large_height</item>
+        <item name="android:layout_marginLeft">@dimen/gap_card_to_card_smaller_h</item>
+        <item name="android:layout_marginRight">@dimen/gap_card_to_card_smaller_h</item>
+        <item name="android:layout_marginBottom">@dimen/gap_labelcard_to_actioncard_v</item>
+    </style>
+
+</resources>

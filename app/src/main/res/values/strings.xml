@@ -73,6 +73,7 @@
     <string name="dialog_title_theme">Theme</string>
     <string name="pref_title_get_premium">Premium upgrade</string>
     <string name="pref_title_vol_steps">Volume steps</string>
+    <string name="pref_title_close_volume_dialog_automatically">Volume dialog</string>
     <string name="dialog_title_volume_steps">Volume steps</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>
@@ -109,5 +110,7 @@
     <string name="sb_hold_to_configure_dsp">Touch long to configure the DSP.</string>
     <string name="dialog_get_premium_msg">- Ad-free\n- Get Yahama for your desktop\n- Support my work</string>
     <string name="select_icon">Choose your icon</string>
+    <string name="title_activity_volume_slider" translatable="false">-</string>
+    <string name="pref_summary_close_volume_dialog_automatically">Dismiss after 5 sec.</string>
 
 </resources>

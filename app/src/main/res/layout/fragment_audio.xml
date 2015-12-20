@@ -35,9 +35,7 @@
         <!--PLAYER-->
         <android.support.v7.widget.CardView
             android:id="@+id/cv_player"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/labelcard_large_height"
-            android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+            style="@style/custom_title_card"
             app:cardCornerRadius="@dimen/card_corner_radius">
 
             <TextView
@@ -61,12 +59,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_player_stop"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                android:layout_weight="1"
+                style="@style/custom_action_card"
                 app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <ImageView
@@ -79,13 +72,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_player_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                android:layout_weight="1"
+                style="@style/custom_action_card"
                 app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <ImageView
@@ -98,12 +85,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_player_play"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                android:layout_weight="1"
+                style="@style/custom_action_card"
                 app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <ImageView
@@ -133,9 +115,7 @@
         <!--VOLUME-->
         <android.support.v7.widget.CardView
             android:id="@+id/cv_volume"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/labelcard_large_height"
-            android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+            style="@style/custom_title_card"
             app:cardCornerRadius="@dimen/card_corner_radius">
 
             <TextView
@@ -159,12 +139,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_volume_down"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                android:layout_weight="1"
+                style="@style/custom_action_card"
                 app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <ImageView
@@ -177,13 +152,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_volume_up"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                android:layout_weight="1"
+                style="@style/custom_action_card"
                 app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <ImageView
@@ -197,12 +166,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_slider"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actioncard_large_height"
-                android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                android:clickable="true"
-                android:foreground="@drawable/card_foreground"
-                android:layout_weight="1"
+                style="@style/custom_action_card"
                 app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <ImageView
@@ -231,10 +195,7 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_bass"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/labelcard_large_height"
-                    android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
-                    android:layout_weight="1"
+                    style="@style/custom_title_card"
                     app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
@@ -259,12 +220,7 @@
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/cv_bass_down"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/actioncard_large_height"
-                        android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                        android:clickable="true"
-                        android:foreground="@drawable/card_foreground"
-                        android:layout_weight="1"
+                        style="@style/custom_action_card"
                         app:cardCornerRadius="@dimen/card_corner_radius">
 
                         <ImageView
@@ -277,12 +233,7 @@
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/cv_bass_up"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/actioncard_large_height"
-                        android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                        android:clickable="true"
-                        android:foreground="@drawable/card_foreground"
-                        android:layout_weight="1"
+                        style="@style/custom_action_card"
                         app:cardCornerRadius="@dimen/card_corner_radius">
 
                         <ImageView
@@ -305,10 +256,7 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_treble"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/labelcard_large_height"
-                    android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
-                    android:layout_weight="1"
+                    style="@style/custom_title_card"
                     app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
@@ -332,12 +280,7 @@
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/cv_treble_down"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/actioncard_large_height"
-                        android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                        android:clickable="true"
-                        android:foreground="@drawable/card_foreground"
-                        android:layout_weight="1"
+                        style="@style/custom_action_card"
                         app:cardCornerRadius="@dimen/card_corner_radius">
 
                         <ImageView
@@ -350,12 +293,7 @@
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/cv_treble_up"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/actioncard_large_height"
-                        android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                        android:clickable="true"
-                        android:foreground="@drawable/card_foreground"
-                        android:layout_weight="1"
+                        style="@style/custom_action_card"
                         app:cardCornerRadius="@dimen/card_corner_radius">
 
                         <ImageView
@@ -367,7 +305,9 @@
                     </android.support.v7.widget.CardView>
 
                 </LinearLayout>
+
             </LinearLayout>
+
         </LinearLayout>
 
 
@@ -381,7 +321,8 @@
             android:layout_marginBottom="@dimen/gap_switch_to_switch_v"
             android:switchPadding="@dimen/text_padding_switch"
             android:layout_gravity="right"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
 
         <Switch
             android:id="@+id/sw_speaker_a"

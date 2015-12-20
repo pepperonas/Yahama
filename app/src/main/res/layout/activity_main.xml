@@ -23,7 +23,7 @@
     android:id="@+id/navDrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pepperonas.yaamp.app.MainActivity"
+    tools:context="com.pepperonas.yahama.app.MainActivity"
     >
 
     <android.support.design.widget.CoordinatorLayout
@@ -55,61 +55,53 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/toolbar"/>
 
-            <com.getbase.floatingactionbutton.FloatingActionsMenu
+            <com.github.clans.fab.FloatingActionMenu
                 android:id="@+id/fab_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="false"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="false"
-                fab:fab_addButtonColorNormal="?attr/td_fab_menu_normal"
-                fab:fab_addButtonColorPressed="?attr/td_fab_menu_pressed"
-                fab:fab_addButtonPlusIconColor="@color/fabMenuPlus"
-                fab:fab_labelStyle="@style/menu_labels_style"
-                fab:fab_expandDirection="down"
                 android:layout_below="@+id/toolbar"
                 android:layout_marginTop="-35dp"
-                fab:fab_labelsPosition="left"
                 android:layout_alignParentLeft="false"
-                android:layout_marginRight="16dp">
+                android:layout_marginRight="16dp"
+                fab:fab_colorNormal="?attr/td_fab_menu_normal"
+                fab:menu_openDirection="down">
 
-                <com.getbase.floatingactionbutton.FloatingActionButton
+                <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/fab_action_power"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     fab:fab_colorNormal="?attr/td_fab_normal"
-                    fab:fab_title="@string/fab_action_power_on"
-                    fab:fab_size="mini"
-                    fab:fab_colorPressed="@color/white_pressed"/>
+                    fab:fab_label="@string/fab_action_power_on"
+                    fab:fab_size="mini"/>
 
-                <com.getbase.floatingactionbutton.FloatingActionButton
+                <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/fab_action_mute"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     fab:fab_colorNormal="?attr/td_fab_normal"
-                    fab:fab_title="@string/fab_action_mute"
-                    fab:fab_size="mini"
-                    fab:fab_colorPressed="@color/white_pressed"/>
+                    fab:fab_label="@string/fab_action_mute"
+                    fab:fab_size="mini"/>
 
-                <com.getbase.floatingactionbutton.FloatingActionButton
+                <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/fab_action_sleeptimer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     fab:fab_colorNormal="?attr/td_fab_normal"
-                    fab:fab_title="@string/fab_action_set_timer"
-                    fab:fab_size="mini"
-                    fab:fab_colorPressed="@color/white_pressed"/>
+                    fab:fab_label="@string/fab_action_set_timer"
+                    fab:fab_size="mini"/>
 
-                <com.getbase.floatingactionbutton.FloatingActionButton
+                <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/fab_action_device_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     fab:fab_colorNormal="?attr/td_fab_normal"
-                    fab:fab_title="@string/fab_action_show_device_info"
-                    fab:fab_size="mini"
-                    fab:fab_colorPressed="@color/white_pressed"/>
+                    fab:fab_label="@string/fab_action_show_device_info"
+                    fab:fab_size="mini"/>
 
-            </com.getbase.floatingactionbutton.FloatingActionsMenu>
+            </com.github.clans.fab.FloatingActionMenu>
 
             <FrameLayout
                 android:id="@+id/fl_interceptor"

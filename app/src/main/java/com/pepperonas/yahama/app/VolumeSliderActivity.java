@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package com.pepperonas.yahama.app.dialogs;
+package com.pepperonas.yahama.app;
 
-import android.app.Activity;
-import android.content.DialogInterface;
+import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.pepperonas.yahama.app.MainActivity;
-import com.pepperonas.yahama.app.NotificationActivity;
-import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.data.AmpYaRxV577;
 import com.pepperonas.yahama.app.utility.Const;
 import com.pepperonas.yahama.app.utility.Setup;
@@ -34,15 +33,47 @@ import com.pepperonas.yahama.app.utility.Setup;
 /**
  * @author Martin Pfeffer (pepperonas)
  */
-public class DialogVolumeSlider {
+public class VolumeSliderActivity extends AppCompatActivity {
+
+    private static final String TAG = "VolumeSliderActivity";
 
     private TextView mTvVolume;
-    private MaterialDialog mDialog;
 
 
-    public DialogVolumeSlider(final Activity act) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
-        final Handler handler = new Handler();
+        if (Setup.getTheme() != 0) {
+            setTheme(R.style.AppTheme_Dialog_Light);
+        } else {
+            setTheme(R.style.AppTheme_Dialog);
+        }
+
+        super.onCreate(savedInstanceState);
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int screenWidth = (int) (metrics.widthPixels * 0.8f);
+
+        setContentView(R.layout.activity_volume_slider);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.dimAmount = 0.67f;
+        getWindow().setAttributes(layoutParams);
+
+        //        getWindow().setLayout(screenWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
+        getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        LinearLayout container = (LinearLayout) findViewById(R.id.activity_dialog_volume_slider_container);
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
+            }
+        });
+
+        final Handler h = new Handler();
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -50,37 +81,14 @@ public class DialogVolumeSlider {
                     // only if active
                     return;
                 }
-                mDialog.dismiss();
+                finish();
             }
         };
-
-        mDialog = new MaterialDialog.Builder(act)
-                .customView(R.layout.dialog_volume_slider, true)
-                .dismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        if (act instanceof NotificationActivity) {
-
-                            // disabled background fading when dialog is shown
-                            mDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-
-                            act.finish();
-                        }
-                    }
-                })
-                .showListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialog) {
-                        fireClosingTimer(handler, runnable);
-                    }
-                })
-                .build();
-
-        mTvVolume = (TextView) mDialog.findViewById(R.id.dialog_volume_textview);
-        mTvVolume.setText(MainActivity.getVolumeMessage(act, AmpYaRxV577
+        mTvVolume = (TextView) findViewById(R.id.activity_dialog_volume_textview);
+        mTvVolume.setText(MainActivity.getVolumeMessage(this, AmpYaRxV577
                 .getVolume_dB(MainActivity.getInvisibleVolSeekBar().getProgress())));
 
-        SeekBar volumeSlider = (SeekBar) mDialog.findViewById(R.id.dialog_volume_slider);
+        SeekBar volumeSlider = (SeekBar) findViewById(R.id.activity_dialog_volume_slider);
         volumeSlider.setMax((int) AmpYaRxV577.MAX_VOL_SLIDER);
         volumeSlider.setProgress(MainActivity.getInvisibleVolSeekBar().getProgress());
 
@@ -88,10 +96,10 @@ public class DialogVolumeSlider {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 MainActivity.getInvisibleVolSeekBar().setProgress(progress);
-                mTvVolume.setText(MainActivity.getVolumeMessage(act, AmpYaRxV577
+                mTvVolume.setText(MainActivity.getVolumeMessage(VolumeSliderActivity.this, AmpYaRxV577
                         .getVolume_dB(MainActivity.getInvisibleVolSeekBar().getProgress())));
 
-                fireClosingTimer(handler, runnable);
+                fireClosingTimer(h, runnable);
             }
 
 
@@ -105,22 +113,13 @@ public class DialogVolumeSlider {
             public void onStopTrackingTouch(SeekBar seekBar) { }
         });
 
-        fireClosingTimer(handler, runnable);
-
+        fireClosingTimer(h, runnable);
     }
 
 
     private void fireClosingTimer(Handler h, Runnable runnable) {
         h.removeCallbacks(runnable);
         h.postDelayed(runnable, Const.DELAY_DISMISS_VOLUME_DIALOG);
-    }
-
-
-    public void show() { mDialog.show(); }
-
-
-    public void showSeekBarValue(String msg) {
-        if (mTvVolume != null) mTvVolume.setText(msg);
     }
 
 }

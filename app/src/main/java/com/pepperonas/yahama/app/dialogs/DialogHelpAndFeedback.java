@@ -31,10 +31,9 @@ import com.pepperonas.yahama.app.R;
  */
 public class DialogHelpAndFeedback {
 
-
     public DialogHelpAndFeedback(final Context ctx) {
         new MaterialDialog.Builder(ctx)
-                .title(R.string.dialog_title_help_and_feedback)
+                .title(R.string.u_dialog_title_help_and_feedback)
                 .customView(R.layout.dialog_help_and_feedback, true)
                 .positiveText(R.string.ok)
                 .autoDismiss(true)

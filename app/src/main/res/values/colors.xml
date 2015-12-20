@@ -27,6 +27,8 @@
     <color name="colorAccentLighter">@color/pinkA1</color>
     <color name="colorAccentDark">@color/pinkA3</color>
     <color name="primaryText">@color/grey_2</color>
+    <color name="fabMenuBgColor">@color/pinkA3</color>
+    <color name="fabBgColor">@color/pinkA1</color>
 
     <!--Primary & Accent Light-->
     <color name="primaryColor_light">@color/deep_orange_5</color>
@@ -35,7 +37,8 @@
     <color name="colorAccentLighter_light">@color/indigoA1</color>
     <color name="colorAccentDark_light">@color/indigoA4</color>
     <color name="primaryText_light">@color/grey_9</color>
-
+    <color name="fabMenuBgColor_light">@color/indigoA4</color>
+    <color name="fabBgColor_light">@color/indigoA1</color>
 
     <!--Navigation Drawer Icons-->
     <color name="navdrawer_icon">@color/primary_text_default_material_dark</color>
@@ -55,8 +58,9 @@
 
     <!--FAB-->
     <color name="black_semi_transparent">#B2000000</color>
+    <color name="white_semi_transparent">#9fffffff</color>
     <color name="half_black">#808080</color>
-    <color name="white_pressed">#f1f1f1</color>
+    <color name="white_pressed">#cdcdcd</color>
     <color name="label_card_text_color">@color/white</color>
 
     <color name="fabMenuPlus">@color/grey_1</color>
@@ -73,10 +77,15 @@
     <color name="fabPowerGreen">@color/greenA4</color>
 
     <!--NOTIFICATION-->
-    <color name="notification_background">#121314</color>
+    <color name="notification_background">#de000000</color>
     <color name="notification_icon_color">#ffffff</color>
 
-    <color name="notification_background_light">#ffffff</color>
-    <color name="notification_icon_color_light">#121314</color>
+    <color name="notification_background_light">#ffffffff</color>
+    <color name="notification_icon_color_light">@color/grey_8</color>
+
+    <color name="primary_text_default_material_dark_failsafe">#ffffffff</color>
+    <color name="secondary_text_default_material_dark_failsafe">#b3ffffff</color>
+    <color name="primary_text_default_material_light_failsafe">#de000000</color>
+    <color name="secondary_text_default_material_light_failsafe">#8a000000</color>
 
 </resources>

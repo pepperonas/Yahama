@@ -18,20 +18,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/dialog_volume_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/dialog_volume_textview"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/volume_slider_margin_top"
+        android:layout_marginBottom="16dp"/>
 
     <SeekBar
         android:id="@+id/dialog_volume_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/gap_card_to_next_section_v"
+        android:layout_marginBottom="@dimen/volume_slider_margin_bottom"
         android:layout_gravity="center_horizontal"
         android:indeterminate="false"
         android:max="800"/>

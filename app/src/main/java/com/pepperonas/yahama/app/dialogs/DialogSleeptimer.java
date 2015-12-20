@@ -37,16 +37,15 @@ import com.pepperonas.yahama.app.utils.Utils;
  */
 public class DialogSleeptimer {
 
-
     public DialogSleeptimer(final MainActivity main) {
         new MaterialDialog.Builder(main)
                 .title(R.string.dialog_title_sleeptimer)
                 .items(R.array.dialog_items_sleeptimer)
                 .icon(new IconicsDrawable(main, CommunityMaterial.Icon.cmd_timer)
                               .colorRes(Setup.getDialogIconColor()).sizeDp(Const.DIALOG_ICON_SIZE))
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
-                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         int mins;
                         switch (which) {
                             case 0:
@@ -91,7 +90,6 @@ public class DialogSleeptimer {
                         View snackbarView = sb.getView();
                         snackbarView.setBackgroundColor(Color.BLACK);
                         sb.show();
-                        return true;
                     }
                 })
                 .dismissListener(new DialogInterface.OnDismissListener() {
@@ -99,7 +97,6 @@ public class DialogSleeptimer {
                     public void onDismiss(DialogInterface dialog) {
                     }
                 })
-                .positiveText(R.string.choose)
                 .negativeText(R.string.cancel)
                 .show();
     }

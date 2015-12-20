@@ -14,28 +14,28 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                  android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:paddingTop="@dimen/layout_padding_t"
-                  android:paddingLeft="@dimen/layout_padding_l_r"
-                  android:paddingRight="@dimen/layout_padding_l_r"
-                  android:paddingBottom="@dimen/layout_padding_b">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/layout_padding_t"
+        android:paddingLeft="@dimen/layout_padding_l_r"
+        android:paddingRight="@dimen/layout_padding_l_r"
+        android:paddingBottom="@dimen/layout_padding_b">
 
 
         <!--SWITCHES-->
         <android.support.v7.widget.CardView
             android:id="@+id/cv_direct_and_straight"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/labelcard_large_height"
-            android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+            style="@style/custom_title_card"
             card_view:cardCornerRadius="@dimen/card_corner_radius">
 
             <TextView
@@ -114,9 +114,7 @@
             <!--CHANNEL-->
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_music"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/labelcard_large_height"
-                android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+                style="@style/custom_title_card"
                 card_view:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
@@ -140,13 +138,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_music_2ch"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_music_2ch"
@@ -163,14 +156,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_music_surround_decoder"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_music_surround_decoder"
@@ -186,13 +173,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_music_7ch"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_music_7ch"
@@ -219,13 +201,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_music_cellarclub"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_music_cellarclub"
@@ -241,14 +218,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_music_chamber"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_music_chamber"
@@ -264,13 +235,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_music_hallinmunich"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_music_hallinmunich"
@@ -296,13 +262,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_music_hallinvienna"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_music_hallinvienna"
@@ -318,14 +279,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_music_musicvideo"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_music_musicvideo"
@@ -340,13 +295,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_music_thebottomline"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_music_thebottomline"
@@ -374,13 +324,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_music_theroxytheatre"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_music_theroxytheatre"
@@ -418,9 +363,7 @@
             <!--MOVIE-->
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_movie"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/labelcard_large_height"
-                android:layout_marginBottom="@dimen/gap_labelcard_to_actioncard_v"
+                style="@style/custom_title_card"
                 card_view:cardCornerRadius="@dimen/card_corner_radius">
 
                 <TextView
@@ -444,13 +387,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_movie_actiongame"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_movie_actiongame"
@@ -466,14 +404,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_movie_adventure"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_movie_adventure"
@@ -489,13 +421,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_movie_drama"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_movie_drama"
@@ -521,13 +448,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_movie_monomovie"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_movie_monomovie"
@@ -543,14 +465,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_movie_roleplaygame"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_movie_roleplaygame"
@@ -566,13 +482,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_movie_sci_fi"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_movie_sci_fi"
@@ -600,13 +511,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_movie_spectacle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_movie_spectacle"
@@ -622,14 +528,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_movie_sports"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:layout_marginRight="@dimen/gap_card_to_card_smaller_h"
-                    android:clickable="true"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_movie_sport"
@@ -645,13 +545,8 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_movie_standard"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/actioncard_large_height"
-                    android:clickable="true"
-                    android:layout_marginLeft="@dimen/gap_card_to_card_smaller_h"
-                    android:foreground="@drawable/card_foreground"
-                    card_view:cardCornerRadius="@dimen/card_corner_radius"
-                    android:layout_weight="1">
+                    style="@style/custom_action_card"
+                    app:cardCornerRadius="@dimen/card_corner_radius">
 
                     <TextView
                         android:id="@+id/tv_movie_standard"
@@ -670,4 +565,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </ScrollView>

@@ -83,6 +83,8 @@
     <string name="dialog_title_theme">Theme</string>
     <string name="pref_title_get_premium">Upgrade auf Premium</string>
     <string name="pref_title_vol_steps">Lautstärkeschritte</string>
+    <string name="pref_title_close_volume_dialog_automatically">Lautstärkedialog</string>
+    <string name="pref_summary_close_volume_dialog_automatically">Nach 5 Sek. schließen</string>
     <string name="dialog_title_volume_steps">Lautstärkeschritte</string>
     <string name="dark">Dunkel</string>
     <string name="light">Hell</string>
