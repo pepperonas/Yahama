@@ -134,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
     private Handler mHandler = new Handler();
     private Handler mTitleWriterHandler = new Handler();
 
-    private static long mLastExecution = 0L;
-    private static long mDeltaConnection = 0L;
+    private long mLastExecution = 0L;
+    private long mDeltaConnection = 0L;
 
     private static AmpYaRxV577 mAmp;
 
@@ -740,11 +740,13 @@ public class MainActivity extends AppCompatActivity {
 
             if (nullCheck(resp)) return "";
 
-            assert resp != null;
-            String s = resp.toString();
+            if (resp != null) {
+                String s = resp.toString();
 
-            for (String param : params) s += param;
-            return s;
+                for (String param : params) s += param;
+                return s;
+            }
+            return "error";
         }
 
 
@@ -1486,13 +1488,6 @@ public class MainActivity extends AppCompatActivity {
         mHandler.removeCallbacks(mDriverRunnable);
         mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
         if (mDriverTimer != null) mDriverTimer.cancel();
-    }
-
-
-    public void raiseProgressDialog() {
-        mProgressDialog = new MaterialDialog.Builder(MainActivity.this)
-                .progress(true, 0)
-                .show();
     }
 
 
