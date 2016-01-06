@@ -1136,7 +1136,7 @@ public class MainActivity extends AppCompatActivity {
         if (mFragment instanceof AudioFragment) {
             AudioFragment af = (AudioFragment) mFragment;
             af.setMain(MainActivity.this);
-            af.updateSwitches        (
+            af.updateSwitches(
                     mAmp.isEnhancer(),
                     mAmp.isSpeakerA(),
                     mAmp.isSpeakerB());
@@ -1145,7 +1145,7 @@ public class MainActivity extends AppCompatActivity {
         if (mFragment instanceof DspFragment) {
             DspFragment dspf = (DspFragment) mFragment;
             dspf.setMain(MainActivity.this);
-            dspf.updateSwitches          (
+            dspf.updateSwitches(
                     mAmp.isDirect(),
                     mAmp.isStraight(),
                     mAmp.isExtraBass(),
