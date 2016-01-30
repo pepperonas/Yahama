@@ -87,5 +87,7 @@
     <color name="secondary_text_default_material_dark_failsafe">#b3ffffff</color>
     <color name="primary_text_default_material_light_failsafe">#de000000</color>
     <color name="secondary_text_default_material_light_failsafe">#8a000000</color>
+    <color name="settings_icons_light">@color/grey_200</color>
+    <color name="settings_icons_dark">@color/grey_800</color>
 
 </resources>

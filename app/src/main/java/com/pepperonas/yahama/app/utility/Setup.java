@@ -234,11 +234,11 @@ public class Setup {
 
 
     public static void setCloseVolumeDialogAutomatically(boolean b) {
-        AesPrefs.putBoolean(R.string.PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY, b);
+        AesPrefs.putBooleanRes(R.string.PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY, b);
     }
 
 
     public static boolean getCloseVolumeDialogAutomatically() {
-        return AesPrefs.getBoolean(R.string.PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY, true);
+        return AesPrefs.getBooleanRes(R.string.PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY, true);
     }
 }

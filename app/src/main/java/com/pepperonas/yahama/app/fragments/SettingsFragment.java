@@ -29,10 +29,18 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 
 import com.android.vending.billing.IInAppBillingService;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.pepperonas.aesprefs.AesPrefs;
+import com.pepperonas.andbasx.system.SystemUtils;
+import com.pepperonas.andbasx.system.UsabilityUtils;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
+import com.pepperonas.yahama.app.YaAmpApp;
+import com.pepperonas.yahama.app.config.Analyst;
 import com.pepperonas.yahama.app.dialogs.DialogGetPremium;
 import com.pepperonas.yahama.app.dialogs.DialogPromotion;
 import com.pepperonas.yahama.app.dialogs.DialogSelectNavDrawerDetail;
@@ -54,6 +62,8 @@ public class SettingsFragment
 
     private static final int ICON_SIZE = 24;
     private int mIconColor;
+
+    private Tracker mTracker;
 
     private IInAppBillingService mService;
 
@@ -109,13 +119,13 @@ public class SettingsFragment
         int highlightColor = Setup.getTheme() == 0 ? R.color.colorAccent
                                                    : R.color.colorAccent_light;
 
-        mIconColor = Setup.getTheme() == 0 ? R.color.primary_text_default_material_dark_failsafe
-                                           : R.color.primary_text_default_material_light_failsafe;
+        mIconColor = Setup.getTheme() == 0 ? R.color.settings_icons_light
+                                           : R.color.settings_icons_dark;
 
         if (Setup.getShowPremium()) {
             Preference getPremium = findPreference(getString(R.string.PR_KEY_GET_PREMIUM));
             getPremium.setOnPreferenceClickListener(this);
-            getPremium.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_star, highlightColor, ICON_SIZE));
+            getPremium.setIcon(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_star).colorRes(highlightColor).sizeDp(ICON_SIZE));
         } else hidePremiumCategory();
 
         /**
@@ -123,26 +133,34 @@ public class SettingsFragment
          * */
         Preference p = findPreference(getString(R.string.PR_KEY_VOL_STEPS));
         p.setOnPreferenceClickListener(this);
-        p.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_vector_point, mIconColor, ICON_SIZE));
+        p.setIcon(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_vector_point).colorRes(mIconColor).sizeDp(ICON_SIZE));
 
         p = findPreference(getString(R.string.PR_KEY_THEME));
         p.setOnPreferenceClickListener(this);
-        p.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_brush, mIconColor, ICON_SIZE));
+        p.setIcon(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_brush).colorRes(mIconColor).sizeDp(ICON_SIZE));
 
         p = findPreference(getString(R.string.PR_KEY_DETAIL_IN_NAV_DRAWER));
         p.setOnPreferenceClickListener(this);
-        p.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_playlist_minus, mIconColor, ICON_SIZE));
+        p.setIcon(new IconicsDrawable(getContext(), GoogleMaterial.Icon.gmd_lightbulb_outline).colorRes(mIconColor).sizeDp(ICON_SIZE));
+
+        p = findPreference(getString(R.string.RATE_APP));
+        p.setOnPreferenceClickListener(this);
+        p.setIcon(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_star).colorRes(mIconColor).sizeDp(ICON_SIZE));
+
+        p = findPreference(getString(R.string.SHARE_APP));
+        p.setOnPreferenceClickListener(this);
+        p.setIcon(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_tag_faces).colorRes(mIconColor).sizeDp(ICON_SIZE));
 
         p = findPreference(getString(R.string.PR_KEY_BUILD_VERSION));
         p.setOnPreferenceClickListener(this);
-        p.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_leaf, mIconColor, ICON_SIZE));
+        p.setIcon(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_leaf).colorRes(mIconColor).sizeDp(ICON_SIZE));
 
         /**
          * CheckBoxPreference
          * */
         CheckBoxPreference cbxp = (CheckBoxPreference) findPreference(getString(R.string.PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY));
         cbxp.setOnPreferenceChangeListener(this);
-        cbxp.setIcon(Utils.getIconic(getActivity(), CommunityMaterial.Icon.cmd_message_text_outline, mIconColor, ICON_SIZE));
+        cbxp.setIcon(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_message_text_outline).colorRes(mIconColor).sizeDp(ICON_SIZE));
 
         initInAppBillings();
 
@@ -155,6 +173,8 @@ public class SettingsFragment
         mMain = (MainActivity) getActivity();
         mMain.setTitle(getString(R.string.settings));
 
+        initAnalytics();
+
         updateSummaries();
         AesPrefs.registerOnSharedPreferenceChangeListener(mChangeListener);
     }
@@ -165,6 +185,8 @@ public class SettingsFragment
         if (mService != null) {
             getActivity().unbindService(mServiceConn);
         }
+
+        doAnalyticsOnLifecycle("onDestroy");
 
         AesPrefs.unregisterOnSharedPreferenceChangeListener(mChangeListener);
 
@@ -187,6 +209,10 @@ public class SettingsFragment
             new DialogSelectNavDrawerDetail(mMain, this);
         } else if (p.getKey().equals(getString(R.string.PR_KEY_BUILD_VERSION))) {
             checkClickTimer();
+        } else if (p.getKey().equals(getString(R.string.RATE_APP))) {
+            onRate();
+        } else if (p.getKey().equals(getString(R.string.SHARE_APP))) {
+            onShare();
         }
 
         return true;
@@ -207,7 +233,7 @@ public class SettingsFragment
 
         if (Setup.getPremium() && Setup.getShowPremium()) {
             Preference getPremium = findPreference(getString(R.string.PR_KEY_GET_PREMIUM));
-            getPremium.setIcon(Utils.getIconic(mMain, CommunityMaterial.Icon.cmd_checkbox_marked_outline, mIconColor, ICON_SIZE));
+            getPremium.setIcon(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_checkbox_marked_outline).colorRes(mIconColor).sizeDp(ICON_SIZE));
 
             getPremium.setTitle(getString(R.string.premium_unlocked_title));
             getPremium.setSummary(getString(R.string.premium_unlocked_summary));
@@ -275,4 +301,61 @@ public class SettingsFragment
         screen.removePreference(category);
     }
 
+
+    /**
+     * On rate.
+     */
+    private void onRate() {
+        UsabilityUtils.launchAppStore(getActivity(), "com.pepperonas.yahama.app");
+        doAnalyticsOnAction("onRate");
+    }
+
+
+    /**
+     * On share.
+     */
+    private void onShare() {
+        UsabilityUtils.launchShareAppIntent(getActivity(), "com.pepperonas.yahama.app", getString(R.string.share_app_intro_text));
+        doAnalyticsOnAction("onShare");
+    }
+
+
+    /**
+     * Init analytics.
+     */
+    private void initAnalytics() {
+        YaAmpApp application = (YaAmpApp) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+        if (mTracker != null) {
+            mTracker.setScreenName("FragmentSettings");
+            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        }
+    }
+
+
+    /**
+     * Do analytics on action.
+     *
+     * @param action the action
+     */
+    private void doAnalyticsOnAction(String action) {
+        mTracker.send(new HitBuilders.EventBuilder()
+                              .setCategory("Action")
+                              .setCustomDimension(Analyst.ANDROID_ID, SystemUtils.getAndroidId())
+                              .setAction(action)
+                              .build());
+    }
+
+
+    /**
+     * Do analytics on lifecycle.
+     *
+     * @param method the method
+     */
+    private void doAnalyticsOnLifecycle(String method) {
+        mTracker.send(new HitBuilders.EventBuilder()
+                              .setCategory("Lifecycle")
+                              .setLabel(method)
+                              .build());
+    }
 }

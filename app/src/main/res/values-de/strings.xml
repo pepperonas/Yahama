@@ -68,6 +68,9 @@
     <string name="pref_category_design_title">Design</string>
     <string name="pref_category_others_title">Sonstiges</string>
 
+    <string name="pref_title_rate_app">App bewerten</string>
+    <string name="pref_title_share_app">Einem Freund empfehlen</string>
+
     <string name="undo">Rückgängig</string>
     <string name="sleep_timer_set_start">Abschaltung in</string>
     <string name="sleep_timer_set_end">min.</string>
@@ -122,5 +125,7 @@
     <string name="sb_hold_to_configure_dsp">Durch langes Berühren kann der DSP konfiguriert werden.</string>
     <string name="dialog_get_premium_msg">- Werbefrei\n- Kostenlose Desktop-App\n- Unterstützung meiner Arbeit</string>
     <string name="select_icon">Icon auswählen</string>
+
+    <string name="share_app_intro_text">Hey, schau\' dir diese App an</string>
 
 </resources>

@@ -34,7 +34,6 @@ import com.pepperonas.yahama.app.utility.Commands;
 import com.pepperonas.yahama.app.utility.Const;
 import com.pepperonas.yahama.app.utility.Setup;
 
-
 /**
  * @author Martin Pfeffer (pepperonas)
  */
@@ -113,7 +112,7 @@ public class InputFragment extends Fragment implements View.OnClickListener {
                 cvTuner, cvAux, cvUsb);
 
         setCardLevel(Setup.getTheme() == 0 ? Setup.COLOR_ACCENT
-                                                        : Setup.COLOR_ACCENT_LIGHT,
+                                           : Setup.COLOR_ACCENT_LIGHT,
                      cvAv1, cvAv2, cvAv3, cvAv4, cvAv5, cvAv6,
                      cvHdmi1, cvHdmi2, cvHdmi3, cvHdmi4, cvHdmi5, cvHdmi5, cvHdmi6,
                      cvTuner, cvAux, cvUsb);
@@ -229,6 +228,5 @@ public class InputFragment extends Fragment implements View.OnClickListener {
         mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
         mTitleWriterHandler.postDelayed(mTitleWriterRunnable, Const.DELAY_TITLE_RESET);
     }
-
 
 }

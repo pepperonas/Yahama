@@ -43,8 +43,6 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.Toast;
 
-import com.mikepenz.community_material_typeface_library.CommunityMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.pepperonas.yahama.app.R;
 
 import java.io.BufferedReader;
@@ -200,9 +198,9 @@ public class Utils {
     }
 
 
-    public static IconicsDrawable getIconic(Context ctx, CommunityMaterial.Icon icon, int color, int size) {
-        return new IconicsDrawable(ctx, icon).colorRes(color).sizeDp(size);
-    }
+//    public static IconicsDrawable getIconic(Context ctx, CommunityMaterial.Icon icon, int color, int size) {
+//        return new IconicsDrawable(ctx, icon).colorRes(color).sizeDp(size);
+//    }
 
 
     public static boolean isConnected(Context ctx) {

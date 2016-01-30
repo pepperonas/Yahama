@@ -67,7 +67,6 @@ public class NotificationPanel {
                 .setOngoing(Setup.getNotificationOngoing());
 
         mRemoteViews = new RemoteViews(ctx.getPackageName(), R.layout.notification_view);
-        mRemoteViews.setInt(R.id.notification_layout, "setBackgroundColor", Setup.getNotificationBackground());
 
         initMute();
         initClose();

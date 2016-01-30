@@ -16,15 +16,18 @@
   -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:key="@string/PR_SCREEN_KEY">
+                  android:key="@string/PR_SCREEN_KEY"
+    >
 
     <PreferenceCategory
         android:key="@string/PR_CAT_KEY_GET_PREMIUM"
-        android:title="@string/pref_category_premium_title">
+        android:title="@string/pref_category_premium_title"
+        >
 
         <Preference
             android:key="@string/PR_KEY_GET_PREMIUM"
-            android:title="@string/pref_title_get_premium"/>
+            android:title="@string/pref_title_get_premium"
+            />
 
     </PreferenceCategory>
 
@@ -33,12 +36,14 @@
 
         <Preference
             android:key="@string/PR_KEY_VOL_STEPS"
-            android:title="@string/pref_title_vol_steps"/>
+            android:title="@string/pref_title_vol_steps"
+            />
 
         <CheckBoxPreference
             android:key="@string/PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY"
             android:title="@string/pref_title_close_volume_dialog_automatically"
-            android:summary="@string/pref_summary_close_volume_dialog_automatically"/>
+            android:summary="@string/pref_summary_close_volume_dialog_automatically"
+            />
 
     </PreferenceCategory>
 
@@ -47,11 +52,13 @@
 
         <Preference
             android:key="@string/PR_KEY_THEME"
-            android:title="@string/pref_title_theme"/>
+            android:title="@string/pref_title_theme"
+            />
 
         <Preference
             android:key="@string/PR_KEY_DETAIL_IN_NAV_DRAWER"
-            android:title="@string/pref_title_detail_in_nav_drawer"/>
+            android:title="@string/pref_title_detail_in_nav_drawer"
+            />
 
     </PreferenceCategory>
 
@@ -59,8 +66,21 @@
         android:title="@string/pref_category_others_title">
 
         <Preference
+            android:key="@string/RATE_APP"
+            android:title="@string/pref_title_rate_app"
+            android:summary="@string/empty"
+            />
+
+        <Preference
+            android:key="@string/SHARE_APP"
+            android:title="@string/pref_title_share_app"
+            android:summary="@string/empty"
+            />
+
+        <Preference
             android:key="@string/PR_KEY_BUILD_VERSION"
-            android:title="@string/pref_title_build_version"/>
+            android:title="@string/pref_title_build_version"
+            />
 
     </PreferenceCategory>
 

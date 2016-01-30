@@ -192,6 +192,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        mLastSelection = getString(R.string.audio);
+
         mTvNavViewTitle = (TextView) findViewById(R.id.nav_view_header_title);
         mTvNavViewSubtitle = (TextView) findViewById(R.id.nav_view_header_subtitle);
         setNavViewSubtitle(getString(R.string.not_connected));
@@ -1234,30 +1236,35 @@ public class MainActivity extends AppCompatActivity {
         switch (menuItem.getItemId()) {
 
             case R.id.audio:
+                mLastSelection = getString(R.string.audio);
                 if (mFragment instanceof AudioFragment) return true;
                 makeFragmentTransaction(AudioFragment.newInstance(0));
                 mLastSelectedNavItemPos = 0;
                 return true;
 
             case R.id.dsp:
+                mLastSelection = getString(R.string.dsp);
                 if (mFragment instanceof DspFragment) return true;
                 makeFragmentTransaction(DspFragment.newInstance(1));
                 mLastSelectedNavItemPos = 1;
                 return true;
 
             case R.id.input:
+                mLastSelection = getString(R.string.input);
                 if (mFragment instanceof InputFragment) return true;
                 makeFragmentTransaction(InputFragment.newInstance(2));
                 mLastSelectedNavItemPos = 2;
                 return true;
 
             case R.id.webradio:
+                mLastSelection = getString(R.string.webradio);
                 if (mFragment instanceof WebradioFragment) return true;
                 makeFragmentTransaction(WebradioFragment.newInstance(3));
                 mLastSelectedNavItemPos = 3;
                 return true;
 
             case R.id.spotify:
+                mLastSelection = getString(R.string.spotify);
                 mStartedSpotify = true;
                 mLastSelectedNavItemPos = 0;
                 setTitle(getString(R.string.spotify));
@@ -1270,6 +1277,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.settings:
+                mLastSelection = getString(R.string.settings);
                 if (mFragment instanceof SettingsFragment) return true;
                 makeFragmentTransaction(SettingsFragment.newInstance(5));
                 mLastSelectedNavItemPos = 5;
@@ -1507,6 +1515,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void setTitle(String title) {
         if (mToolbar == null) initToolbar();
+
+        if (title.contains("android.support")) {
+            title = mLastSelection;
+        }
 
         mToolbar.setTitle(title);
         mLastSelection = title;

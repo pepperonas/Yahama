@@ -16,5 +16,16 @@
 #   public *;
 #}
 -keep class com.mikepenz.** { *; }
--keep class com.google.** { *; }
--dontwarn com.google.**
+#-keep class com.google.** { *; }
+#-dontwarn com.google.**
+-assumenosideeffects class android.util.Log {
+    public static int d(...);
+    public static int e(...);
+    public static int v(...);
+    public static int w(...);
+}
+-dontwarn android.support.**
+-keep class android.support.** { *; }
+-keep interface android.support.** { *; }
+-keep class com.google.android.gms.** { *; }
+-dontwarn com.google.android.gms.**

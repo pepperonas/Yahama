@@ -113,4 +113,9 @@
     <string name="title_activity_volume_slider" translatable="false">-</string>
     <string name="pref_summary_close_volume_dialog_automatically">Dismiss after 5 sec.</string>
 
+    <string name="pref_title_rate_app">Rate app</string>
+    <string name="pref_title_share_app">Tell a friend</string>
+
+    <string name="share_app_intro_text">Hey, check out this app</string>
+
 </resources>
