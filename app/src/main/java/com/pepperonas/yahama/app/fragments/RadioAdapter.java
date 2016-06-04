@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Martin Pfeffer
+ * Copyright (c) 2016 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import android.widget.TextView;
 import com.pepperonas.yahama.app.BuildConfig;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
-import com.pepperonas.yahama.app.data.RadioContent;
+import com.pepperonas.yahama.app.model.RadioContent;
 import com.pepperonas.yahama.app.utility.Commands;
 import com.pepperonas.yahama.app.utility.Const;
 

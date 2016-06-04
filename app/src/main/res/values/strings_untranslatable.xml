@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2016 Martin Pfeffer
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <string name="app_name" translatable="false">YaAmp</string>
+    <string name="empty" translatable="false" />
+    <!--KEYS-->
+    <string name="PR_SCREEN_KEY" translatable="false">preference_screen</string>
+    <string name="PR_CAT_KEY_GET_PREMIUM" translatable="false">get_premium_categorie</string>
+    <string name="PR_KEY_GET_PREMIUM" translatable="false">get_premium</string>
+    <string name="PR_KEY_VOL_STEPS" translatable="false">volume_steps</string>
+    <string name="PR_KEY_DETAIL_IN_NAV_DRAWER" translatable="false">detail_in_nav_drawer</string>
+    <string name="PR_KEY_BUILD_VERSION" translatable="false">build_version</string>
+    <string name="DETAIL_DIVIDER" translatable="false">&#160;/&#160;</string>
+    <string name="PR_KEY_THEME" translatable="false">active_theme</string>
+    <string name="PR_KEY_CLOSE_VOL_DIALOG_AUTOMATICALLY" translatable="false">close_vol_dialog_automatically</string>
+    <string name="RATE_APP" translatable="false">rate_app</string>
+    <string name="SHARE_APP" translatable="false">share_app</string>
+    <string name="app_description" translatable="false">is a lightweight third party controller app for various Yamaha amplifiers.</string>
+    <string name="web_presentation_info" translatable="false">
+    <![CDATA[
+    Designed by <b>pepperonas</b>.
+    <br>
+    <font color="#f50057"><a href="https://www.pepperonas.com">Website</a></font>&nbsp;&nbsp;
+    <font color="#f50057"><a href="https://play.google.com/store/apps/developer?id=pepperonas">Google Play</a></font>&nbsp;&nbsp;
+    <font color="#f50057"><a href="https://plus.google.com/communities/100642582416636996643">Google+</a></font>&nbsp;&nbsp;
+    <font color="#f50057"><a href="https://github.com/pepperonas">GitHub</a></font>&nbsp;&nbsp;
+    ]]></string>
+    <string name="translate_native_info" translatable="false">
+    <![CDATA[
+    Translate this app into your native language:
+    <br>
+    <font color="#f50057">
+    <a href="https://pepperonas.oneskyapp.com">https://pepperonas.oneskyapp.com</a>
+    </font>&nbsp;&nbsp;
+    ]]></string>
+    <string name="copyright" translatable="false">
+    <![CDATA[NOTE: Product names, logos, brands, and other trademarks featured or referred to within this app and services are the property of their respective trademark holders. These trademark holders are not affiliated with our products, or our website. They do not sponsor or endorse our materials.&nbsp;&nbsp;
+    ]]></string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3236103587680169/3955864734</string>
+    <string name="plus_minus" translatable="false">±</string>
+    <string name="dB" translatable="false">dB</string>
+    <string name="no_radio_data" translatable="false">---</string>
+    <string name="spec_adaptive_drc" translatable="false">Adaptive DRC</string>
+    <string name="spec_3dCinemaDrc" translatable="false">3D Cinema DRC</string>
+    <string name="spec_enhancer" translatable="false">Enhancer</string>
+    <string name="spec_extra_bass" translatable="false">Extra Bass</string>
+    <string name="direct" translatable="false">Direct</string>
+    <string name="dsp" translatable="false">DSP</string>
+    <string name="av_1" translatable="false">AV1</string>
+    <string name="av_2" translatable="false">AV2</string>
+    <string name="av_3" translatable="false">AV3</string>
+    <string name="av_4" translatable="false">AV4</string>
+    <string name="av_5" translatable="false">AV5</string>
+    <string name="av_6" translatable="false">AV6</string>
+    <string name="hdmi_1" translatable="false">HDMI1</string>
+    <string name="hdmi_2" translatable="false">HDMI2</string>
+    <string name="hdmi_3" translatable="false">HDMI3</string>
+    <string name="hdmi_4" translatable="false">HDMI4</string>
+    <string name="hdmi_5" translatable="false">HDMI5</string>
+    <string name="hdmi_6" translatable="false">HDMI6</string>
+    <string name="av" translatable="false">AV</string>
+    <string name="aux" translatable="false">AUX</string>
+    <string name="usb" translatable="false">USB</string>
+    <string name="hdmi" translatable="false">HDMI</string>
+    <string name="audio" translatable="false">Audio</string>
+    <string name="spotify" translatable="false">Spotify</string>
+    <string name="music_2ch" translatable="false">2ch Stereo</string>
+    <string name="music_7ch" translatable="false">7ch Stereo</string>
+    <string name="channel_straight" translatable="false">Straight</string>
+    <string name="straight" translatable="false">Straight</string>
+    <string name="music_surround_decoder" translatable="false">Surround Decoder</string>
+    <string name="vol" translatable="false">Vol.</string>
+    <string name="pref_title_build_version" translatable="false">Build-Version</string>
+    <string name="speaker_a" translatable="false">Speaker A</string>
+    <string name="speaker_b" translatable="false">Speaker B</string>
+    <string name="chamber" translatable="false">Chamber</string>
+    <string name="cellar_club" translatable="false">Cellar Club</string>
+    <string name="hall_in_munich" translatable="false">Hall in Munich</string>
+    <string name="hall_in_vienna" translatable="false">Hall in Vienna</string>
+    <string name="the_bottom_line" translatable="false">The Bottom Line</string>
+    <string name="the_roxy_theatre" translatable="false">The Roxy Theatre</string>
+    <string name="actiongame" translatable="false">Action Game</string>
+    <string name="adventure" translatable="false">Adventure</string>
+    <string name="drama" translatable="false">Drama</string>
+    <string name="mono_movie" translatable="false">Mono Movie</string>
+    <string name="music_video" translatable="false">Music Video</string>
+    <string name="spectacle" translatable="false">Spectacle</string>
+    <string name="standard" translatable="false">Standard</string>
+    <string name="role_play_game" translatable="false">Role Play Game</string>
+    <string name="sci_fi" translatable="false">Sci-Fi</string>
+    <string name="sports" translatable="false">Sports</string>
+    <string name="dsp_lvl" translatable="false">DSP Level</string>
+    <string name="init_dly" translatable="false">Init. Delay</string>
+    <string name="room_size" translatable="false">Room Size</string>
+    <string name="liveness" translatable="false">Liveness</string>
+    <string name="revTime" translatable="false">revTime</string>
+    <string name="revDly" translatable="false">revDly</string>
+    <string name="revLvl" translatable="false">revLvl</string>
+    <string name="sur_back_room_size" translatable="false">surBackRoomSize</string>
+    <string name="sur_back_init_dly" translatable="false">surBackInitDly</string>
+    <string name="sur_room_size" translatable="false">surRoomSize</string>
+    <string name="sur_init_dly" translatable="false">surInitDly</string>
+    <string name="sur_back_liveness" translatable="false">surBackLiveness</string>
+    <string name="sur_liveness" translatable="false">surLiveness</string>
+    <string name="enter_promo_code" translatable="false">PROMOTION</string>
+    <string name="u_dialog_title_help_and_feedback" translatable="false"><![CDATA[Help & Feedback]]></string>
+
+</resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Martin Pfeffer
+ * Copyright (c) 2016 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,24 +25,24 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
-import com.pepperonas.yahama.app.data.AmpYaRxV577;
-import com.pepperonas.yahama.app.data.entity.BaseEntity;
-import com.pepperonas.yahama.app.data.movie.entertainment.ActionGame;
-import com.pepperonas.yahama.app.data.movie.entertainment.MusicVideo;
-import com.pepperonas.yahama.app.data.movie.entertainment.RoleplayingGame;
-import com.pepperonas.yahama.app.data.movie.entertainment.Sports;
-import com.pepperonas.yahama.app.data.movie.movie.Adventure;
-import com.pepperonas.yahama.app.data.movie.movie.Drama;
-import com.pepperonas.yahama.app.data.movie.movie.MonoMovie;
-import com.pepperonas.yahama.app.data.movie.movie.SciFi;
-import com.pepperonas.yahama.app.data.movie.movie.Spectacle;
-import com.pepperonas.yahama.app.data.movie.movie.Standard;
-import com.pepperonas.yahama.app.data.music.CellarClub;
-import com.pepperonas.yahama.app.data.music.Chamber;
-import com.pepperonas.yahama.app.data.music.HallInMunich;
-import com.pepperonas.yahama.app.data.music.HallInVienna;
-import com.pepperonas.yahama.app.data.music.TheBottomLine;
-import com.pepperonas.yahama.app.data.music.TheRoxyTheatre;
+import com.pepperonas.yahama.app.model.AmpYaRxV577;
+import com.pepperonas.yahama.app.model.entity.BaseEntity;
+import com.pepperonas.yahama.app.model.movie.entertainment.ActionGame;
+import com.pepperonas.yahama.app.model.movie.entertainment.MusicVideo;
+import com.pepperonas.yahama.app.model.movie.entertainment.RoleplayingGame;
+import com.pepperonas.yahama.app.model.movie.entertainment.Sports;
+import com.pepperonas.yahama.app.model.movie.movie.Adventure;
+import com.pepperonas.yahama.app.model.movie.movie.Drama;
+import com.pepperonas.yahama.app.model.movie.movie.MonoMovie;
+import com.pepperonas.yahama.app.model.movie.movie.SciFi;
+import com.pepperonas.yahama.app.model.movie.movie.Spectacle;
+import com.pepperonas.yahama.app.model.movie.movie.Standard;
+import com.pepperonas.yahama.app.model.music.CellarClub;
+import com.pepperonas.yahama.app.model.music.Chamber;
+import com.pepperonas.yahama.app.model.music.HallInMunich;
+import com.pepperonas.yahama.app.model.music.HallInVienna;
+import com.pepperonas.yahama.app.model.music.TheBottomLine;
+import com.pepperonas.yahama.app.model.music.TheRoxyTheatre;
 import com.pepperonas.yahama.app.utility.Commands;
 import com.pepperonas.yahama.app.utils.Utils;
 

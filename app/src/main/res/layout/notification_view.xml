@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2015 Martin Pfeffer
+  ~ Copyright (c) 2016 Martin Pfeffer
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@
     <ImageButton
         android:id="@+id/ntfctn_btn_mute"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clickable="true"
         android:src="@drawable/ic_close_circle_outline_white_24dp"
         android:background="@color/transparent"
@@ -37,7 +37,7 @@
     <ImageButton
         android:id="@+id/ntfctn_btn_volume"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clickable="true"
         android:src="@drawable/ic_close_circle_outline_white_24dp"
         android:background="@color/transparent"
@@ -46,7 +46,7 @@
     <ImageButton
         android:id="@+id/ntfctn_btn_launcher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clickable="true"
         android:src="@drawable/ic_close_circle_outline_white_24dp"
         android:background="@color/transparent"
@@ -55,7 +55,7 @@
     <ImageButton
         android:id="@+id/ntfctn_btn_close"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clickable="true"
         android:src="@drawable/ic_close_circle_outline_white_24dp"
         android:background="@color/transparent"

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Martin Pfeffer
+ * Copyright (c) 2016 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.pepperonas.yahama.app.data.AmpYaRxV577;
+import com.pepperonas.yahama.app.model.AmpYaRxV577;
 import com.pepperonas.yahama.app.utility.Const;
 import com.pepperonas.yahama.app.utility.Setup;
 

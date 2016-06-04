@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Martin Pfeffer
+ * Copyright (c) 2016 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
-import com.pepperonas.yahama.app.data.AmpYaRxV577;
+import com.pepperonas.yahama.app.model.AmpYaRxV577;
 import com.pepperonas.yahama.app.dialogs.DialogVolumeSlider;
 import com.pepperonas.yahama.app.utility.Commands;
 import com.pepperonas.yahama.app.utility.Const;

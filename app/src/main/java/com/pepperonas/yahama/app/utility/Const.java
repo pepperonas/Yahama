@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Martin Pfeffer
+ * Copyright (c) 2016 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ public class Const {
 
     public static final long DELAY_BETWEEN_COMMANDS = 50L;
 
-    public static final int DEFAULT_TIMEOUT_FOR_LOOKUP = 100;
+    public static final int DEFAULT_TIMEOUT_FOR_LOOKUP = 200;
 
     public static final int OVERSCROLL_TOP = 0;
     public static final int OVERSCROLL_RIGHT = 1;

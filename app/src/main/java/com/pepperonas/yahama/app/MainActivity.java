@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Martin Pfeffer
+ * Copyright (c) 2016 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -58,13 +59,6 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.pepperonas.aesprefs.AesPrefs;
 import com.pepperonas.andbasx.animation.FadeAnimation;
 import com.pepperonas.yahama.app.custom.NotificationPanel;
-import com.pepperonas.yahama.app.data.AmpYaRxV577;
-import com.pepperonas.yahama.app.data.entity.AudioEntityAdvanced;
-import com.pepperonas.yahama.app.data.entity.AudioRoom;
-import com.pepperonas.yahama.app.data.entity.AudioRoomAdvanced;
-import com.pepperonas.yahama.app.data.entity.Entertainment;
-import com.pepperonas.yahama.app.data.entity.SurroundEntity;
-import com.pepperonas.yahama.app.data.movie.movie.Standard;
 import com.pepperonas.yahama.app.dialogs.DialogCinemaDsp3d;
 import com.pepperonas.yahama.app.dialogs.DialogDeviceInfo;
 import com.pepperonas.yahama.app.dialogs.DialogError;
@@ -83,6 +77,13 @@ import com.pepperonas.yahama.app.inab.IabHelper;
 import com.pepperonas.yahama.app.inab.IabResult;
 import com.pepperonas.yahama.app.inab.Inventory;
 import com.pepperonas.yahama.app.inab.Purchase;
+import com.pepperonas.yahama.app.model.AmpYaRxV577;
+import com.pepperonas.yahama.app.model.entity.AudioEntityAdvanced;
+import com.pepperonas.yahama.app.model.entity.AudioRoom;
+import com.pepperonas.yahama.app.model.entity.AudioRoomAdvanced;
+import com.pepperonas.yahama.app.model.entity.Entertainment;
+import com.pepperonas.yahama.app.model.entity.SurroundEntity;
+import com.pepperonas.yahama.app.model.movie.movie.Standard;
 import com.pepperonas.yahama.app.utility.Commands;
 import com.pepperonas.yahama.app.utility.Const;
 import com.pepperonas.yahama.app.utility.Setup;
@@ -147,6 +148,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean mStartedSpotify = false;
 
+    private FloatingActionButton mFabSleeptimer;
+    private FloatingActionButton mFabDeviceInfo;
+
     private IabHelper mHelper;
 
     private Runnable mTitleWriterRunnable = new Runnable() {
@@ -158,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    BroadcastReceiver mNotificationReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mNotificationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("mute")) {
@@ -171,8 +175,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-    private FloatingActionButton mFabSleeptimer;
-    private FloatingActionButton mFabDeviceInfo;
 
 
     @Override
@@ -257,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
 
             stopDriver();
 
-            dismissProgessDialog();
+            dismissProgressDialog();
 
         } catch (Exception e) {
             Log.e(TAG, "Error in onPause - Msg: " + e.getMessage());
@@ -301,12 +303,27 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         mLastSelectedNavItemPos = savedInstanceState.getInt("selection");
 
-        if (mLastSelectedNavItemPos < 5) {
-            selectNavViewItem(mNavView.getMenu().getItem(0).getSubMenu().getItem(mLastSelectedNavItemPos));
-        } else if (mLastSelectedNavItemPos == 5) {
-            selectNavViewItem(mNavView.getMenu().getItem(1).getSubMenu().getItem(0));
-        } else {
-            selectNavViewItem(mNavView.getMenu().getItem(0).getSubMenu().getItem(0));
+        if (mNavView == null) {
+            mNavView = (NavigationView) findViewById(R.id.navigation_view);
+        }
+
+        if (mNavView != null && mNavView.getMenu() != null) {
+            if (mLastSelectedNavItemPos < 5) {
+                selectNavViewItem(mNavView.getMenu().getItem(0).getSubMenu().getItem(mLastSelectedNavItemPos));
+            } else if (mLastSelectedNavItemPos == 5) {
+                selectNavViewItem(mNavView.getMenu().getItem(1).getSubMenu().getItem(0));
+            } else {
+                selectNavViewItem(mNavView.getMenu().getItem(0).getSubMenu().getItem(0));
+            }
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.navDrawerLayout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         }
     }
 
@@ -365,10 +382,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "doAnalytics tracker: " + tracker.toString());
 
         tracker.send(new HitBuilders.EventBuilder()
-                             .setCategory("General")
-                             .setAction(action)
-                             .setLabel("x")
-                             .build());
+                .setCategory("General")
+                .setAction(action)
+                .setLabel("x")
+                .build());
     }
 
 
@@ -431,7 +448,7 @@ public class MainActivity extends AppCompatActivity {
             while ((read = is.read(bytes)) != -1) {
                 fos.write(bytes, 0, read);
             }
-            if (fos != null) fos.close();
+            fos.close();
             is.close();
 
             AesPrefs.put("custom_icon_path", path.getAbsolutePath());
@@ -507,7 +524,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void runConnectionTask(boolean showDialog) {new ConnectionTask(showDialog).execute(Utils.getCurrentNetwork());}
+    public void runConnectionTask(boolean showDialog) {
+        new ConnectionTask(showDialog).execute(Utils.getCurrentNetwork());
+    }
 
 
     public void runCtrlrTask(boolean showProgress, String... s) {
@@ -563,8 +582,8 @@ public class MainActivity extends AppCompatActivity {
 
             int lastByte = 0;
             while (deviceInfo[0].isEmpty()
-                   && deviceInfo[1].isEmpty()
-                   && lastByte < 256) {
+                    && deviceInfo[1].isEmpty()
+                    && lastByte < 256) {
                 deviceInfo = checkIp(networkAddress, lastByte);
 
                 if (!deviceInfo[0].isEmpty() && !deviceInfo[1].isEmpty()) {
@@ -652,7 +671,7 @@ public class MainActivity extends AppCompatActivity {
 
         private void onConnectFailed() {
             Log.e(TAG, "AmpConnectorTask FAILED: " + mAmp.getDeviceName() + " / " + mAmp.getIp() + "\n" +
-                       "t.o.e.: " + (System.currentTimeMillis() - mDeltaConnection));
+                    "t.o.e.: " + (System.currentTimeMillis() - mDeltaConnection));
 
             setNavViewSubtitle(getString(R.string.not_connected));
             new DialogLookupFailed(MainActivity.this);
@@ -661,13 +680,13 @@ public class MainActivity extends AppCompatActivity {
 
         private void onConnectPassed() {
             Log.d(TAG, "AmpConnectorTask PASSED: " + mAmp.getDeviceName() + " / " + mAmp.getIp() + "\n" +
-                       "t.o.e.: " + (System.currentTimeMillis() - mDeltaConnection));
+                    "t.o.e.: " + (System.currentTimeMillis() - mDeltaConnection));
 
             if (!mAmp.getDeviceName().isEmpty()) setNavViewTitle(mAmp.getDeviceName());
 
             setNavViewSubtitle(getString(R.string.connected) +
-                               getString(R.string.DETAIL_DIVIDER) +
-                               getNavDrawerDetail());
+                    getString(R.string.DETAIL_DIVIDER) +
+                    getNavDrawerDetail());
         }
 
     }
@@ -689,12 +708,12 @@ public class MainActivity extends AppCompatActivity {
 
             if (!mAmp.isOn()) {
                 setNavViewSubtitle(getString(R.string.powered_off) +
-                                   getString(R.string.DETAIL_DIVIDER) +
-                                   mAmp.getIp());
+                        getString(R.string.DETAIL_DIVIDER) +
+                        mAmp.getIp());
             } else {
                 setNavViewSubtitle(getString(R.string.connected) +
-                                   getString(R.string.DETAIL_DIVIDER) +
-                                   getNavDrawerDetail());
+                        getString(R.string.DETAIL_DIVIDER) +
+                        getNavDrawerDetail());
             }
 
         }
@@ -774,7 +793,7 @@ public class MainActivity extends AppCompatActivity {
             if (s.isEmpty()) return;
 
             if (s.contains(AmpYaRxV577.RESPONSE_SUCCESS)
-                && !s.contains("<List_Info>")) {
+                    && !s.contains("<List_Info>")) {
 
                 initAudioSetup(s);
 
@@ -935,7 +954,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (s.contains("<" + AmpYaRxV577.XML_ROLEPLAYING_GAME + ">")) {
-            String roleplay = s.split("<" + AmpYaRxV577.XML_ROLEPLAYING_GAME + ">")[1].split("</" + AmpYaRxV577.XML_ROLEPLAYING_GAME)[0];
+            String roleplay = s.split("<" + AmpYaRxV577.XML_ROLEPLAYING_GAME + ">")[1].split("</" + AmpYaRxV577
+                    .XML_ROLEPLAYING_GAME)[0];
             initEntertainment(mAmp.getConfigEntertainment().getRoleplayingGame(), roleplay);
         }
 
@@ -969,12 +989,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void initConfigClassical(String s) {
         if (s.contains("<" + AmpYaRxV577.XML_HALL_IN_MUNICH + ">")) {
-            String munich = s.split("<" + AmpYaRxV577.XML_HALL_IN_MUNICH + ">")[1].split("</" + AmpYaRxV577.XML_HALL_IN_MUNICH)[0];
+            String munich = s.split("<" + AmpYaRxV577.XML_HALL_IN_MUNICH + ">")[1].split("</" + AmpYaRxV577.XML_HALL_IN_MUNICH)
+                    [0];
             initAudioRoom(mAmp.getConfigClassical().getHallInMunich(), munich);
         }
 
         if (s.contains("<" + AmpYaRxV577.XML_HALL_IN_VIENNA + ">")) {
-            String vienna = s.split("<" + AmpYaRxV577.XML_HALL_IN_VIENNA + ">")[1].split("</" + AmpYaRxV577.XML_HALL_IN_VIENNA)[0];
+            String vienna = s.split("<" + AmpYaRxV577.XML_HALL_IN_VIENNA + ">")[1].split("</" + AmpYaRxV577.XML_HALL_IN_VIENNA)
+                    [0];
             initAudioRoom(mAmp.getConfigClassical().getHallInVienna(), vienna);
         }
 
@@ -1196,10 +1218,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media
+                                .EXTERNAL_CONTENT_URI);
                         pickIntent.setType("image/*");
 
-                        Intent chooserIntent = Intent.createChooser(MainActivity.this.getIntent(), getString(R.string.select_icon));
+                        Intent chooserIntent = Intent.createChooser(MainActivity.this.getIntent(), getString(R.string
+                                .select_icon));
                         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
                         startActivityForResult(chooserIntent, Const.REQ_CODE_SELECT_PICTURE);
@@ -1272,7 +1296,9 @@ public class MainActivity extends AppCompatActivity {
                 Utils.launchSpotify(MainActivity.this);
                 new Handler().postDelayed(new Runnable() {
                     @Override
-                    public void run() { runCtrlrTask(false, Commands.PLAYBACK_CONTROL(AmpYaRxV577.PC_PLAY)); }
+                    public void run() {
+                        runCtrlrTask(false, Commands.PLAYBACK_CONTROL(AmpYaRxV577.PC_PLAY));
+                    }
                 }, 300);
                 return true;
 
@@ -1325,7 +1351,7 @@ public class MainActivity extends AppCompatActivity {
         mFabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
         mFabMenu.setMenuButtonColorNormal(getResources().getColor
                 (Setup.getTheme() != 0 ? R.color.fabMenuBgColor_light
-                                       : R.color.fabMenuBgColor));
+                        : R.color.fabMenuBgColor));
 
         mFabPower = (FloatingActionButton) findViewById(R.id.fab_action_power);
         mFabMute = (FloatingActionButton) findViewById(R.id.fab_action_mute);
@@ -1353,14 +1379,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new ControllerTask(false).execute
                         (Commands.TOGGLE_MUTE
-                                 (mAmp.isMute() ? AmpYaRxV577.OFF
+                                        (mAmp.isMute() ? AmpYaRxV577.OFF
                                                 : AmpYaRxV577.ON),
-                         Const.M_MUTE,
-                         mAmp.isMute() ? "false"
-                                       : "true");
+                                Const.M_MUTE,
+                                mAmp.isMute() ? "false"
+                                        : "true");
 
                 setTemporaryTitleUpdate(mAmp.isMute() ? getString(R.string.toolbar_info_unmute)
-                                                      : getString(R.string.toolbar_info_mute));
+                        : getString(R.string.toolbar_info_mute));
 
                 mFabMenu.close(true);
 
@@ -1378,8 +1404,8 @@ public class MainActivity extends AppCompatActivity {
 
                 new ControllerTask(false).execute
                         (Commands.SET_POWER(mAmp.isOn() ? AmpYaRxV577.STANDBY : AmpYaRxV577.ON),
-                         mAmp.isOn() ? Const.M_POWER_OFF
-                                     : Const.M_POWER_ON);
+                                mAmp.isOn() ? Const.M_POWER_OFF
+                                        : Const.M_POWER_ON);
             }
 
 
@@ -1396,7 +1422,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mFabSleeptimer.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_timer)
-                                                .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
+                .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
         mFabSleeptimer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1408,7 +1434,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mFabDeviceInfo.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_info_outline)
-                                                .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
+                .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
         mFabDeviceInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1435,25 +1461,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void reinitFab() {
         mFabPower.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_power)
-                                           .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
+                .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
         mFabPower.setColorNormal(getResources().getColor(mAmp.isOn() ? R.color.fabPowerRed
-                                                                     : R.color.fabPowerGreen));
+                : R.color.fabPowerGreen));
 
         mFabPower.setLabelText(mAmp.isOn() ? getString(R.string.fab_action_power_off)
-                                           : getString(R.string.fab_action_power_on));
+                : getString(R.string.fab_action_power_on));
 
 
         mFabMute.setImageDrawable(new IconicsDrawable(this, mAmp.isMute() ? GoogleMaterial.Icon.gmd_volume_up
-                                                                          : GoogleMaterial.Icon.gmd_volume_off)
-                                          .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
+                : GoogleMaterial.Icon.gmd_volume_off)
+                .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
         mFabMute.setLabelText(mAmp.isMute() ? getString(R.string.fab_action_unmute)
-                                            : getString(R.string.fab_action_mute));
+                : getString(R.string.fab_action_mute));
 
         int normalFabBgColor = getResources().getColor
                 (Setup.getTheme() != 0 ? R.color.fabBgColor_light
-                                       : R.color.fabBgColor);
+                        : R.color.fabBgColor);
 
         mFabMute.setColorNormal(normalFabBgColor);
         mFabDeviceInfo.setColorNormal(normalFabBgColor);
@@ -1499,9 +1525,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void dismissProgessDialog() {
+    private void dismissProgressDialog() {
         if (mProgressDialog != null
-            && mProgressDialog.isShowing()) {
+                && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
     }
@@ -1568,7 +1594,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static String getVolumeMessage(Context ctx, float vol) {return ctx.getString(R.string.vol) + " " + vol + " " + ctx.getString(R.string.dB);}
+    public static String getVolumeMessage(Context ctx, float vol) {
+        return ctx.getString(R.string.vol) + " " + vol + " " + ctx.getString(R.string.dB);
+    }
 
 
     public String getNavDrawerDetail() {
@@ -1582,14 +1610,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public NavigationView getNavView() { return mNavView; }
+    public NavigationView getNavView() {
+        return mNavView;
+    }
 
 
-    public Fragment getActiveFragment() { return mFragment; }
+    public Fragment getActiveFragment() {
+        return mFragment;
+    }
 
 
     private void loadIabHelper() {
-        mHelper = new IabHelper(this, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxr6JxgVWhboWdXpOP+2ocNPGtjW7HweEyy/z2w4lBRrJVR2HZ6ra8zP/ZSNodIZN128+xTmXeEXHsdY8JFCTsuNmzHTDHXbSm+n1+Eu8YP377BEPAZZd26Lu6kGp6KhwTt2OS8w+zrApRIlIQm8yLRvdmNCdWwYYjixgq9472tOWghM40aT5gSMqt568PImZsRRsX8jt4BDG+bm7aDLmt0A4OrLIYqC5i8IoE1/4oJCF0TKyvd2RQECIDFbaQvHgpZafhrpawISqoSvw2o2BHWqgzsrGRDJklYXwVOP1KocIgop+ofoWl0Vo/DYW66CM7Jh1RPRz2XZzH8lcWyiHmQIDAQAB");
+        mHelper = new IabHelper(this, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxr6JxgVWhboWdXpOP+2ocNPGtjW7HweEyy" +
+                "/z2w4lBRrJVR2HZ6ra8zP/ZSNodIZN128+xTmXeEXHsdY8JFCTsuNmzHTDHXbSm+n1+Eu8YP377BEPAZZd26Lu6kGp6KhwTt2OS8w" +
+                "+zrApRIlIQm8yLRvdmNCdWwYYjixgq9472tOWghM40aT5gSMqt568PImZsRRsX8jt4BDG+bm7aDLmt0A4OrLIYqC5i8IoE1" +
+                "/4oJCF0TKyvd2RQECIDFbaQvHgpZafhrpawISqoSvw2o2BHWqgzsrGRDJklYXwVOP1KocIgop+ofoWl0Vo" +
+                "/DYW66CM7Jh1RPRz2XZzH8lcWyiHmQIDAQAB");
 
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
 
@@ -1635,7 +1671,7 @@ public class MainActivity extends AppCompatActivity {
             // haben wir das Premium-Upgrade? (einmaliger Kauf)
             Purchase premiumPurchase = inventory.getPurchase("premium");
             if (premiumPurchase != null
-                && premiumPurchase.getDeveloperPayload().equals("bGoa+V7g/yqDXvKRqq+JThzv+zcvlzTlz546tvc§zHGztfrr/khu")) {
+                    && premiumPurchase.getDeveloperPayload().equals("bGoa+V7g/yqDXvKRqq+JThzv+zcvlzTlz546tvc§zHGztfrr/khu")) {
                 Setup.setPremium(true);
             }
             // Käufe ermitteln
