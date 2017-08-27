@@ -1,14 +1,14 @@
-buildscript {
-    repositories {
-        jcenter()
-        maven { url "https://jitpack.io" }
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+apply plugin: 'com.android.application'
+
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+    maven { url 'https://maven.google.com' }
+    flatDir {
+        // get dependencies from app/libs (.aar-packages)
+        dirs 'libs'
     }
 }
-
-apply plugin: 'com.android.application'
 
 
 def getDate() {
@@ -25,16 +25,16 @@ repositories {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         applicationId "com.pepperonas.yahama.app"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 26
         versionCode 21
-        versionName "0.2.1"
-        project.ext.set("archivesBaseName", "yaamp");
+        versionName "0.2.2"
+        project.ext.set("archivesBaseName", "yaamp")
     }
 
     compileOptions {
@@ -51,16 +51,16 @@ android {
             minifyEnabled true
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        def fileName = outputFile.name.replace(".apk", ".apk");
-                        fileName = fileName.replace("release", "release" + "-" + defaultConfig.versionName + getDate());
-                        output.outputFile = new File(outputFile.parent, fileName)
-                    }
-                }
-            }
+//            applicationVariants.all { variant ->
+//                variant.outputs.each { output ->
+//                    def outputFile = output.outputFile
+//                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                        def fileName = outputFile.name.replace(".apk", ".apk");
+//                        fileName = fileName.replace("release", "release" + "-" + defaultConfig.versionName + getDate());
+//                        output.outputFile = new File(outputFile.parent, fileName)
+//                    }
+//                }
+//            }
         }
     }
     dexOptions {
@@ -70,31 +70,26 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.github.pepperonas:andbasx:0.1.7'
+    compile 'com.github.pepperonas:andbasx:0.3.0'
     compile 'com.github.pepperonas:appregistry:0.0.7'
     compile 'com.github.pepperonas:aesprefs:0.0.4'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.google.android.gms:play-services-ads:9.0.2'
-    compile 'com.google.android.gms:play-services-auth:9.0.2'
-    compile 'com.google.android.gms:play-services-gcm:9.0.2'
-    compile 'com.google.android.gms:play-services-analytics:9.0.2'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:cardview-v7:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:multidex:1.0.2'
+    compile 'com.google.android.gms:play-services-ads:11.2.0'
+    compile 'com.google.android.gms:play-services-auth:11.2.0'
+    compile 'com.google.android.gms:play-services-gcm:11.2.0'
+    compile 'com.google.android.gms:play-services-analytics:11.2.0'
+    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:design:26.0.1'
+    compile 'com.android.support:cardview-v7:26.0.1'
+    compile 'com.android.support:recyclerview-v7:26.0.1'
     compile 'com.github.clans:fab:1.6.2'
     compile 'de.hdodenhof:circleimageview:1.2.1'
-    compile 'com.mikepenz:iconics-core:2.5.5@aar'
-    compile 'com.mikepenz:google-material-typeface:2.1.0.1.original@aar'
+    compile 'com.mikepenz:iconics-core:2.8.3@aar'
+    compile 'com.mikepenz:google-material-typeface:3.0.1.0.original@aar'
     compile 'com.mikepenz:fontawesome-typeface:4.4.0@aar'
     compile 'com.mikepenz:octicons-typeface:3.0.1@aar'
     compile 'com.mikepenz:meteocons-typeface:1.1.3@aar'
-    compile 'com.mikepenz:community-material-typeface:1.1.72@aar'
+    compile 'com.mikepenz:community-material-typeface:1.8.36.1@aar'
     compile 'com.github.machinarius:preferencefragment:0.1.1'
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
-        transitive = true
-    }
-    compile('com.github.afollestad.material-dialogs:commons:0.8.5.3@aar') {
-        transitive = true
-    }
+    compile 'com.github.pepperonas:materialdialog:0.3.4'
 }

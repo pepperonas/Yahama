@@ -16,14 +16,14 @@
 
 package com.pepperonas.yahama.app.dialogs;
 
-import android.content.DialogInterface;
+import android.app.AlertDialog;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.utility.Const;
@@ -40,18 +40,16 @@ public class DialogRadioStation {
         new MaterialDialog.Builder(main)
                 .title(R.string.dialog_title_device_info)
                 .icon(new IconicsDrawable(main, GoogleMaterial.Icon.gmd_info_outline)
-                              .colorRes(Setup.getDialogIconColor()).sizeDp(Const.DIALOG_ICON_SIZE))
-                .customView(R.layout.dialog_radio_station, true)
-                .showListener(new DialogInterface.OnShowListener() {
+                        .colorRes(Setup.getDialogIconColor()).sizeDp(Const.DIALOG_ICON_SIZE))
+                .customView(R.layout.dialog_radio_station)
+                .showListener(new MaterialDialog.ShowListener() {
                     @Override
-                    public void onShow(DialogInterface dialog) {
-                        MaterialDialog d = (MaterialDialog) dialog;
-
-
-                        ImageButton imgBtnFavorite = (ImageButton) d.findViewById(R.id.img_btn_dialog_station_favorite);
-                        TextView tvStation = (TextView) d.findViewById(R.id.tv_dialog_station_station);
-                        TextView tvArtist = (TextView) d.findViewById(R.id.tv_dialog_station_artist);
-                        TextView tvTrack = (TextView) d.findViewById(R.id.tv_dialog_station_track);
+                    public void onShow(AlertDialog dialog) {
+                        super.onShow(dialog);
+                        ImageButton imgBtnFavorite = dialog.findViewById(R.id.img_btn_dialog_station_favorite);
+                        TextView tvStation = dialog.findViewById(R.id.tv_dialog_station_station);
+                        TextView tvArtist = dialog.findViewById(R.id.tv_dialog_station_artist);
+                        TextView tvTrack = dialog.findViewById(R.id.tv_dialog_station_track);
 
                         imgBtnFavorite.setImageDrawable(
                                 main.getResources().getDrawable(R.drawable.ic_launcher));
@@ -64,14 +62,11 @@ public class DialogRadioStation {
                         song = song.replaceAll("&(?!amp;)", "&amp;");
 
                         Log.d(TAG, "onShow  song=" + song);
-
-
                     }
                 })
                 .positiveText(R.string.ok)
                 .build()
                 .show();
     }
-
 
 }

@@ -16,7 +16,7 @@
 
 package com.pepperonas.yahama.app.dialogs;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 
@@ -28,16 +28,15 @@ public class DialogLookupFailed {
     public DialogLookupFailed(final MainActivity main) {
         new MaterialDialog.Builder(main)
                 .title(R.string.dialog_title_lookup_failed)
-                .content(R.string.dialog_content_lookup_failed)
+                .message(R.string.dialog_content_lookup_failed)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .buttonCallback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
                         main.recreate();
                     }
-
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {

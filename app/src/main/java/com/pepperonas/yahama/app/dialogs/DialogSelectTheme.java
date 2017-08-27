@@ -18,7 +18,7 @@ package com.pepperonas.yahama.app.dialogs;
 
 import android.view.View;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.utility.Setup;
@@ -30,20 +30,15 @@ public class DialogSelectTheme {
 
     public DialogSelectTheme(final MainActivity main) {
         new MaterialDialog.Builder(main)
-                .title(R.string.dialog_title_theme)
-                .items(R.array.dialog_items_select_theme)
-                .alwaysCallSingleChoiceCallback()
-                .itemsCallbackSingleChoice
-                        (Setup.getTheme(),
-                         new MaterialDialog.ListCallbackSingleChoice() {
-                             @Override
-                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                 if (Setup.getTheme() != which) {
-                                     Setup.setTheme(which);
-                                     return true;
-                                 } else return false;
-                             }
-                         })
+                .title(null)
+                .listItems(true, main.getResources().getStringArray(R.array.dialog_items_select_theme))
+                .itemClickListener(new MaterialDialog.ItemClickListener() {
+                    @Override
+                    public void onClick(View v, int position, long id) {
+                        super.onClick(v, position, id);
+                        Setup.setTheme(position);
+                    }
+                })
                 .show();
     }
 }

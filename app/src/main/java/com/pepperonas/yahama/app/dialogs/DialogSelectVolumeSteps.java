@@ -18,7 +18,7 @@ package com.pepperonas.yahama.app.dialogs;
 
 import android.view.View;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.fragments.SettingsFragment;
@@ -31,22 +31,18 @@ public class DialogSelectVolumeSteps {
 
     public DialogSelectVolumeSteps(final MainActivity main, final SettingsFragment sf) {
         new MaterialDialog.Builder(main)
-                .title(R.string.dialog_title_volume_steps)
-                .items(R.array.dialog_items_select_vol_steps)
-                .alwaysCallSingleChoiceCallback()
-                .itemsCallbackSingleChoice
-                        (Setup.getVolumeStepsPos(),
-                         new MaterialDialog.ListCallbackSingleChoice() {
-                             @Override
-                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                 storeValue(which, text, main);
-                                 sf.updateSummaries();
-                                 return true;
-                             }
-                         })
+                .title(null)
+                .listItems(true, main.getResources().getStringArray(R.array.dialog_items_select_vol_steps))
+                .itemClickListener(new MaterialDialog.ItemClickListener() {
+                    @Override
+                    public void onClick(View v, int position, long id) {
+                        super.onClick(v, position, id);
+                        storeValue(position, main.getResources().getStringArray(R.array.dialog_items_select_vol_steps)[position], main);
+                        sf.updateSummaries();
+                    }
+                })
                 .show();
     }
-
 
     private void storeValue(int which, CharSequence text, MainActivity main) {
         Setup.setVolumeSteps((int) (Float.valueOf(text.toString().replace(" " + main.getString(R.string.dB), "")) * 10), which);

@@ -16,6 +16,7 @@
 
 package com.pepperonas.yahama.app;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -46,7 +47,6 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.vending.billing.IInAppBillingService;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static AmpYaRxV577 mAmp;
 
-    private static MaterialDialog mProgressDialog;
+    private static ProgressDialog mProgressDialog;
 
     private static NotificationPanel mNotificationPanel;
 
@@ -176,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (Setup.getTheme() != 0) {
@@ -196,8 +195,8 @@ public class MainActivity extends AppCompatActivity {
 
         mLastSelection = getString(R.string.audio);
 
-        mTvNavViewTitle = (TextView) findViewById(R.id.nav_view_header_title);
-        mTvNavViewSubtitle = (TextView) findViewById(R.id.nav_view_header_subtitle);
+        mTvNavViewTitle = findViewById(R.id.nav_view_header_title);
+        mTvNavViewSubtitle = findViewById(R.id.nav_view_header_subtitle);
         setNavViewSubtitle(getString(R.string.not_connected));
 
         mAmp = new AmpYaRxV577();
@@ -206,8 +205,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (Utils.isConnected(MainActivity.this)) {
             startApp();
-        } else new DialogWifiDisabled(MainActivity.this).showDialog();
-
+        } else {
+            new DialogWifiDisabled(MainActivity.this).showDialog();
+        }
 
         ensureAdvertising();
 
@@ -217,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
 
         doAnalytics("MainActivity", "Starting...");
 
-
         IntentFilter filter = new IntentFilter();
         filter.addAction("mute");
         filter.addAction("close");
@@ -225,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
 
         registerReceiver(mNotificationReceiver, filter);
     }
-
 
     @Override
     protected void onResume() {
@@ -247,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
         }, 0, Const.DRIVER_REFRESH_RATE);
     }
 
-
     @Override
     protected void onPause() {
         if (mStartedSpotify) {
@@ -268,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-
     @Override
     protected void onDestroy() {
         if (mNotificationPanel != null) {
@@ -282,13 +278,11 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -297,14 +291,13 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("selection", mLastSelectedNavItemPos);
     }
 
-
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mLastSelectedNavItemPos = savedInstanceState.getInt("selection");
 
         if (mNavView == null) {
-            mNavView = (NavigationView) findViewById(R.id.navigation_view);
+            mNavView = findViewById(R.id.navigation_view);
         }
 
         if (mNavView != null && mNavView.getMenu() != null) {
@@ -318,15 +311,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.navDrawerLayout);
+        DrawerLayout drawer = findViewById(R.id.navDrawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else super.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
     }
-
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -349,16 +342,14 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchKeyEvent(event);
     }
 
-
     private void storeCurrentVersion() {
         AesPrefs.put("current_version", Utils.getAppVersionName(this));
     }
 
-
     private void ensureAdvertising() {
-        if (Setup.getInstallationDate() == -1) Setup.setInstallationDate(System.currentTimeMillis());
-
-        else if (!Setup.getPremium()) {
+        if (Setup.getInstallationDate() == -1) {
+            Setup.setInstallationDate(System.currentTimeMillis());
+        } else if (!Setup.getPremium()) {
             long delta = System.currentTimeMillis() - Setup.getInstallationDate();
             if (delta > (Constants.WEEK_IN_MS)) {
 
@@ -368,9 +359,10 @@ public class MainActivity extends AppCompatActivity {
                     new DialogPurchasePremium(MainActivity.this);
                 }
             }
-        } else Setup.setAdvertising(false);
+        } else {
+            Setup.setAdvertising(false);
+        }
     }
-
 
     private void doAnalytics(String screenName, String action) {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
@@ -388,14 +380,13 @@ public class MainActivity extends AppCompatActivity {
                 .build());
     }
 
-
     private void startApp() {
 
         runConnectionTask(true);
 
         initToolbar();
 
-        mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
+        mMainFrame = findViewById(R.id.main_frame);
         initFab();
 
         initNavView();
@@ -410,7 +401,6 @@ public class MainActivity extends AppCompatActivity {
         }
         makeFragmentTransaction(AudioFragment.newInstance(0));
     }
-
 
     /**
      * if enable-wifi-request is successfull, we will proceed here
@@ -431,7 +421,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-
 
     private void storeIcon(Intent data) {
         Log.d(TAG, "onActivityResult  " + "icon selected...");
@@ -458,9 +447,8 @@ public class MainActivity extends AppCompatActivity {
         loadIconFromStorage();
     }
 
-
     private void loadIconFromStorage() {
-        ImageView iv = (ImageView) findViewById(R.id.iv_logo);
+        ImageView iv = findViewById(R.id.iv_logo);
         try {
             File f = new File(AesPrefs.get("custom_icon_path", ""));
             Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
@@ -469,7 +457,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     private void processPurchase(int resultCode, Intent data) {
         int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
@@ -494,13 +481,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void waitForWifi() {
-        mProgressDialog = new MaterialDialog.Builder(MainActivity.this)
-                .title(R.string.progress_dialog_title_waiting_for_wifi)
-                .content(R.string.progress_dialog_content_waiting_for_wifi)
-                .progress(true, 0)
-                .show();
+        mProgressDialog = ProgressDialog.show(this, getString(R.string.progress_dialog_title_waiting_for_wifi),
+                getString(R.string.progress_dialog_content_waiting_for_wifi), true);
+        //        mProgressDialog.show();
 
         // creating a thread to wait until the connection is established
         Thread t = new Thread() {
@@ -523,11 +507,9 @@ public class MainActivity extends AppCompatActivity {
         t.start();
     }
 
-
     public void runConnectionTask(boolean showDialog) {
-        new ConnectionTask(showDialog).execute(Utils.getCurrentNetwork());
+        new ConnectionTask(showDialog).execute(Utils.getCurrentNetwork(this));
     }
-
 
     public void runCtrlrTask(boolean showProgress, String... s) {
         if (System.currentTimeMillis() > (mLastExecution + Const.DELAY_BETWEEN_COMMANDS)) {
@@ -536,30 +518,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public class ConnectionTask extends AsyncTask<String, Void, String> {
 
         boolean showDialog;
 
-
         public ConnectionTask(boolean showDialog) {
             this.showDialog = showDialog;
         }
-
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             mDeltaConnection = System.currentTimeMillis();
             if (showDialog) {
-                mProgressDialog = new MaterialDialog.Builder(MainActivity.this)
-                        .title(R.string.progress_dialog_title_lookup)
-                        .content(R.string.progress_dialog_content_lookup)
-                        .progress(true, 0)
-                        .show();
+                mProgressDialog = ProgressDialog.show(MainActivity.this, getString(R.string.progress_dialog_title_lookup), getString(R.string.progress_dialog_content_lookup), true);
             }
         }
-
 
         @Override
         protected String doInBackground(String... params) {
@@ -583,7 +557,7 @@ public class MainActivity extends AppCompatActivity {
             int lastByte = 0;
             while (deviceInfo[0].isEmpty()
                     && deviceInfo[1].isEmpty()
-                    && lastByte < 256) {
+                    && lastByte < 255) {
                 deviceInfo = checkIp(networkAddress, lastByte);
 
                 if (!deviceInfo[0].isEmpty() && !deviceInfo[1].isEmpty()) {
@@ -597,7 +571,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return "failed";
         }
-
 
         /**
          * @return deviceInfo:
@@ -613,6 +586,9 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 URL url = new URL("http://" + _deviceIp + AmpYaRxV577.PORT + AmpYaRxV577.AV_SPECS);
+
+                Log.i(TAG, "checking IP: " + url.toString());
+
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestProperty("Accept", "application/xml");
                 con.setDoOutput(true);
@@ -643,7 +619,6 @@ public class MainActivity extends AppCompatActivity {
             return deviceInfo;
         }
 
-
         private String extractDeviceName(HttpURLConnection con) {
             if (con.getHeaderField(0) != null) {
                 String _deviceName = con.getHeaderField(0);
@@ -654,7 +629,6 @@ public class MainActivity extends AppCompatActivity {
             return "";
         }
 
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -663,11 +637,12 @@ public class MainActivity extends AppCompatActivity {
 
             if (s.equals("passed")) {
                 onConnectPassed();
-            } else onConnectFailed();
+            } else {
+                onConnectFailed();
+            }
 
             mDeltaConnection = 0;
         }
-
 
         private void onConnectFailed() {
             Log.e(TAG, "AmpConnectorTask FAILED: " + mAmp.getDeviceName() + " / " + mAmp.getIp() + "\n" +
@@ -676,7 +651,6 @@ public class MainActivity extends AppCompatActivity {
             setNavViewSubtitle(getString(R.string.not_connected));
             new DialogLookupFailed(MainActivity.this);
         }
-
 
         private void onConnectPassed() {
             Log.d(TAG, "AmpConnectorTask PASSED: " + mAmp.getDeviceName() + " / " + mAmp.getIp() + "\n" +
@@ -690,7 +664,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
     final Runnable mDriverRunnable = new Runnable() {
         @Override
@@ -719,17 +692,14 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     public class ControllerTask extends AsyncTask<String, Void, String> {
 
         boolean showDialog;
         long sTime;
 
-
         public ControllerTask(boolean showDialog) {
             this.showDialog = showDialog;
         }
-
 
         @Override
         protected void onPreExecute() {
@@ -737,11 +707,9 @@ public class MainActivity extends AppCompatActivity {
             sTime = System.currentTimeMillis();
 
             if (showDialog) {
-                mProgressDialog = new MaterialDialog.Builder(
-                        MainActivity.this).progress(true, 0).show();
+                mProgressDialog.show();
             }
         }
-
 
         @Override
         protected String doInBackground(String... params) {
@@ -770,7 +738,6 @@ public class MainActivity extends AppCompatActivity {
             return "error";
         }
 
-
         private boolean nullCheck(StringBuilder resp) {
             if (resp == null) {
                 Log.e(TAG, "Error in doInBackground - Msg: NULL");
@@ -778,7 +745,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         }
-
 
         @Override
         protected void onPostExecute(String s) {
@@ -809,7 +775,6 @@ public class MainActivity extends AppCompatActivity {
 
             Log.wtf(TAG, "Controller t.o.e.: " + (System.currentTimeMillis() - sTime) + " ms.");
 
-
             if (s.contains("<" + AmpYaRxV577.XML_INPUT_NET_RADIO + "><List_Info>")) {
                 initRadioList(s);
             }
@@ -820,7 +785,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-
 
     private void initRadioList(String info) {
 
@@ -840,7 +804,6 @@ public class MainActivity extends AppCompatActivity {
         runCtrlrTask(false, Commands.PLAY_INFO(AmpYaRxV577.XML_INPUT_NET_RADIO));
     }
 
-
     private void initRadioTrackInfo(String info) {
         String[] params = info.split("<Meta_Info>");
         Log.d(TAG, "INIT RADIO TRACK INFO");
@@ -851,7 +814,6 @@ public class MainActivity extends AppCompatActivity {
         getAmp().getRadioStation().setStation(station);
         getAmp().getRadioStation().setAlbum(album);
     }
-
 
     private void initSpotifyTrackInfo(String info) {
 
@@ -867,7 +829,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "initTrackInfo  " + station + " | " + song + " | " + artist + " | " + track + " | " + album);
     }
-
 
     private void initAudioSetup(String s) {
         if (s.contains(Const.M_GET_INFO)) {
@@ -900,8 +861,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (s.contains(Const.M_GET_INFO)) {
-            if (s.contains("<Power_Control><Power>On")) mAmp.setOn(true);
-            else mAmp.setOn(false);
+            if (s.contains("<Power_Control><Power>On")) {
+                mAmp.setOn(true);
+            } else {
+                mAmp.setOn(false);
+            }
         }
 
         if (s.contains(Const.M_ENHANCER_SET)) {
@@ -919,9 +883,7 @@ public class MainActivity extends AppCompatActivity {
             boolean spkrBset = (s.split(Const.M_SPKR_B_SET)[1]).equals("true");
             mAmp.setSpeakerB(spkrBset);
         }
-
     }
-
 
     private void initSurroundPrograms(String s) {
         if (s.contains("<Sound_Program_Param><CLASSICAL>")) {
@@ -940,7 +902,6 @@ public class MainActivity extends AppCompatActivity {
             initConfigEntertainment(s);
         }
     }
-
 
     private void initConfigEntertainment(String s) {
         if (s.contains("<" + AmpYaRxV577.SPORTS + ">")) {
@@ -971,7 +932,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void initEntertainment(Entertainment e, String arg) {
         try {
             e.setDspLvl(Integer.parseInt(arg.split("<DSP_Lvl><Val>")[1].split("</")[0]));
@@ -985,7 +945,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "initEntertainment ArrayIndexOutOfBoundsException " + ex.getMessage());
         }
     }
-
 
     private void initConfigClassical(String s) {
         if (s.contains("<" + AmpYaRxV577.XML_HALL_IN_MUNICH + ">")) {
@@ -1011,7 +970,6 @@ public class MainActivity extends AppCompatActivity {
             new DialogCinemaDsp3d(this, Integer.parseInt(s.split(Const.M_DIALOG_SHOW_DSP_CONFIG)[1].split("</")[0]));
         }
     }
-
 
     private void initConfigLiveClub(String s) {
         if (s.contains("<" + AmpYaRxV577.XML_CELLAR_CLUB + ">")) {
@@ -1043,7 +1001,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void initConfigMovie(String s) {
 
         if (s.contains("<" + AmpYaRxV577.STANDARD + ">")) {
@@ -1060,7 +1017,6 @@ public class MainActivity extends AppCompatActivity {
             String scifi = s.split("<" + AmpYaRxV577.XML_SCIFI + ">")[1].split("</" + AmpYaRxV577.XML_SCIFI)[0];
             initSurroundEnitiy(mAmp.getConfigMovie().getSciFi(), scifi);
         }
-
 
         if (s.contains("<" + AmpYaRxV577.ADVENTURE + ">")) {
             String adventure = s.split("<" + AmpYaRxV577.ADVENTURE + ">")[1].split("</" + AmpYaRxV577.ADVENTURE)[0];
@@ -1084,7 +1040,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void initStandard(Standard standard, String arg) {
         try {
             standard.setDspLvl(Integer.parseInt(arg.split("<DSP_Lvl><Val>")[1].split("</")[0]));
@@ -1099,7 +1054,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void initAudioAdvanced(AudioEntityAdvanced aea, String arg) {
         try {
             aea.setDspLvl(Integer.parseInt(arg.split("<DSP_Lvl><Val>")[1].split("</")[0]));
@@ -1112,7 +1066,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "initEntertainment ArrayIndexOutOfBoundsException " + ex.getMessage());
         }
     }
-
 
     private void initSurroundEnitiy(SurroundEntity se, String arg) {
         try {
@@ -1128,7 +1081,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void initAudioRoom(AudioRoom ar, String arg) {
         try {
             ar.setDspLvl(Integer.parseInt(arg.split("<DSP_Lvl><Val>")[1].split("</")[0]));
@@ -1139,7 +1091,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "initEntertainment ArrayIndexOutOfBoundsException " + ex.getMessage());
         }
     }
-
 
     private void initAudioRoomAdvanced(AudioRoomAdvanced ar, String arg) {
         try {
@@ -1154,7 +1105,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "initEntertainment ArrayIndexOutOfBoundsException " + ex.getMessage());
         }
     }
-
 
     public void updateSwitches() {
         if (mFragment instanceof AudioFragment) {
@@ -1178,7 +1128,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public void updateVolumeSlider(float volume) {
         if (mFragment instanceof AudioFragment) {
             AudioFragment af = (AudioFragment) mFragment;
@@ -1187,9 +1136,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void initNavDrawer() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.navDrawerLayout);
+        mDrawerLayout = findViewById(R.id.navDrawerLayout);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close) {
 
@@ -1202,18 +1150,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
             }
 
-
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
 
-                ImageView iv = (ImageView) findViewById(R.id.iv_logo);
+                ImageView iv = findViewById(R.id.iv_logo);
                 iv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1238,9 +1184,8 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
-
     private void initNavView() {
-        mNavView = (NavigationView) findViewById(R.id.navigation_view);
+        mNavView = findViewById(R.id.navigation_view);
 
         mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -1254,7 +1199,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public boolean selectNavViewItem(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
@@ -1317,7 +1261,6 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-
     private void makeFragmentTransaction(Fragment fragment) {
         mFragment = fragment;
         android.support.v4.app.FragmentTransaction fragmentTransaction;
@@ -1333,9 +1276,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-
     private void initFab() {
-        FrameLayout interceptorFrame = (FrameLayout) findViewById(R.id.fl_interceptor);
+        FrameLayout interceptorFrame = findViewById(R.id.fl_interceptor);
         interceptorFrame.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -1348,15 +1290,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mFabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
+        mFabMenu = findViewById(R.id.fab_menu);
         mFabMenu.setMenuButtonColorNormal(getResources().getColor
                 (Setup.getTheme() != 0 ? R.color.fabMenuBgColor_light
                         : R.color.fabMenuBgColor));
 
-        mFabPower = (FloatingActionButton) findViewById(R.id.fab_action_power);
-        mFabMute = (FloatingActionButton) findViewById(R.id.fab_action_mute);
-        mFabSleeptimer = (FloatingActionButton) findViewById(R.id.fab_action_sleeptimer);
-        mFabDeviceInfo = (FloatingActionButton) findViewById(R.id.fab_action_device_info);
+        mFabPower = findViewById(R.id.fab_action_power);
+        mFabMute = findViewById(R.id.fab_action_mute);
+        mFabSleeptimer = findViewById(R.id.fab_action_sleeptimer);
+        mFabDeviceInfo = findViewById(R.id.fab_action_device_info);
 
         final FadeAnimation fadeAnitmation =
                 new FadeAnimation(mMainFrame, 1.0f, 0.1f, 400L, 0);
@@ -1399,15 +1341,17 @@ public class MainActivity extends AppCompatActivity {
         mFabPower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mAmp.isOn()) closeAppDelayed();
-                else mFabMenu.close(true);
+                if (mAmp.isOn()) {
+                    closeAppDelayed();
+                } else {
+                    mFabMenu.close(true);
+                }
 
                 new ControllerTask(false).execute
                         (Commands.SET_POWER(mAmp.isOn() ? AmpYaRxV577.STANDBY : AmpYaRxV577.ON),
                                 mAmp.isOn() ? Const.M_POWER_OFF
                                         : Const.M_POWER_ON);
             }
-
 
             private void closeAppDelayed() {
                 final Handler handler = new Handler();
@@ -1420,7 +1364,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         mFabSleeptimer.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_timer)
                 .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
@@ -1431,7 +1374,6 @@ public class MainActivity extends AppCompatActivity {
                 closeFabMenuDelayed();
             }
         });
-
 
         mFabDeviceInfo.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_info_outline)
                 .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
@@ -1447,7 +1389,6 @@ public class MainActivity extends AppCompatActivity {
         reinitFab();
     }
 
-
     private void closeFabMenuDelayed() {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -1458,7 +1399,6 @@ public class MainActivity extends AppCompatActivity {
         }, 400);
     }
 
-
     private void reinitFab() {
         mFabPower.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_power)
                 .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
@@ -1468,7 +1408,6 @@ public class MainActivity extends AppCompatActivity {
 
         mFabPower.setLabelText(mAmp.isOn() ? getString(R.string.fab_action_power_off)
                 : getString(R.string.fab_action_power_on));
-
 
         mFabMute.setImageDrawable(new IconicsDrawable(this, mAmp.isMute() ? GoogleMaterial.Icon.gmd_volume_up
                 : GoogleMaterial.Icon.gmd_volume_off)
@@ -1486,15 +1425,15 @@ public class MainActivity extends AppCompatActivity {
         mFabSleeptimer.setColorNormal(normalFabBgColor);
     }
 
-
     private InputStream checkConnection(HttpURLConnection con) throws IOException {
         InputStream is = null;
-        if (con.getResponseCode() < 300) is = con.getInputStream();
-        else if (con.getResponseCode() < 400) is = con.getInputStream();
-        else if (con.getResponseCode() >= 400) is = con.getErrorStream();
+        if (con.getResponseCode() < 300) {
+            is = con.getInputStream();
+        } else if (con.getResponseCode() < 400) {
+            is = con.getInputStream();
+        } else if (con.getResponseCode() >= 400) is = con.getErrorStream();
         return is;
     }
-
 
     private StringBuilder collectData(HttpURLConnection con, InputStream is) throws IOException {
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -1508,7 +1447,6 @@ public class MainActivity extends AppCompatActivity {
         return response;
     }
 
-
     private HttpURLConnection initHttpUrlConnection() throws IOException {
         URL url = new URL("http://" + mAmp.getIp() + AmpYaRxV577.PORT + AmpYaRxV577.AV_SPECS);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -1517,13 +1455,11 @@ public class MainActivity extends AppCompatActivity {
         return con;
     }
 
-
     private void stopDriver() {
         mHandler.removeCallbacks(mDriverRunnable);
         mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
         if (mDriverTimer != null) mDriverTimer.cancel();
     }
-
 
     private void dismissProgressDialog() {
         if (mProgressDialog != null
@@ -1532,12 +1468,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
     }
-
 
     public void setTitle(String title) {
         if (mToolbar == null) initToolbar();
@@ -1550,54 +1484,45 @@ public class MainActivity extends AppCompatActivity {
         mLastSelection = title;
     }
 
-
     public void setTemporaryTitleUpdate(String title) {
         mToolbar.setTitle(title);
     }
-
 
     public void setNavViewTitle(String title) {
         if (mTvNavViewTitle != null) {
             mTvNavViewTitle.setText(title);
         } else if (mNavView != null) {
-            mTvNavViewTitle = (TextView) mNavView.findViewById(R.id.nav_view_header_title);
+            mTvNavViewTitle = mNavView.findViewById(R.id.nav_view_header_title);
         }
     }
-
 
     public void setNavViewSubtitle(String title) {
         if (mTvNavViewSubtitle != null) {
             mTvNavViewSubtitle.setText(title);
         } else if (mNavView != null) {
-            mTvNavViewSubtitle = (TextView) mNavView.findViewById(R.id.nav_view_header_subtitle);
+            mTvNavViewSubtitle = mNavView.findViewById(R.id.nav_view_header_subtitle);
         }
     }
-
 
     public String getLastSelection() {
         return mLastSelection;
     }
 
-
     public void resetLastExecutionTimestamp() {
         mLastExecution = 0;
     }
-
 
     public static AmpYaRxV577 getAmp() {
         return mAmp;
     }
 
-
     public static SeekBar getInvisibleVolSeekBar() {
         return mInvisibleVolSlider;
     }
 
-
     public static String getVolumeMessage(Context ctx, float vol) {
         return ctx.getString(R.string.vol) + " " + vol + " " + ctx.getString(R.string.dB);
     }
-
 
     public String getNavDrawerDetail() {
         if (Setup.getNavDrawerDetail(this).equals(getString(R.string.input))) {
@@ -1609,16 +1534,13 @@ public class MainActivity extends AppCompatActivity {
         return getAmp().getIp();
     }
 
-
     public NavigationView getNavView() {
         return mNavView;
     }
 
-
     public Fragment getActiveFragment() {
         return mFragment;
     }
-
 
     private void loadIabHelper() {
         mHelper = new IabHelper(this, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxr6JxgVWhboWdXpOP+2ocNPGtjW7HweEyy" +
@@ -1647,7 +1569,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     /**
      * Listener wird aufgerufen, wenn Produktsuche erfolgt ist.

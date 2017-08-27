@@ -17,13 +17,13 @@
 package com.pepperonas.yahama.app.dialogs;
 
 import android.app.Activity;
-import android.content.DialogInterface;
+import android.app.AlertDialog;
 import android.os.Handler;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.NotificationActivity;
 import com.pepperonas.yahama.app.R;
@@ -38,7 +38,6 @@ public class DialogVolumeSlider {
 
     private TextView mTvVolume;
     private MaterialDialog mDialog;
-
 
     public DialogVolumeSlider(final Activity act) {
 
@@ -55,10 +54,11 @@ public class DialogVolumeSlider {
         };
 
         mDialog = new MaterialDialog.Builder(act)
-                .customView(R.layout.dialog_volume_slider, true)
-                .dismissListener(new DialogInterface.OnDismissListener() {
+                .customView(R.layout.dialog_volume_slider)
+                .dismissListener(new MaterialDialog.DismissListener() {
                     @Override
-                    public void onDismiss(DialogInterface dialog) {
+                    public void onDismiss() {
+                        super.onDismiss();
                         if (act instanceof NotificationActivity) {
 
                             // disabled background fading when dialog is shown
@@ -68,19 +68,24 @@ public class DialogVolumeSlider {
                         }
                     }
                 })
-                .showListener(new DialogInterface.OnShowListener() {
+                .showListener(new MaterialDialog.ShowListener() {
                     @Override
-                    public void onShow(DialogInterface dialog) {
+                    public void onShow(AlertDialog dialog) {
+                        super.onShow(dialog);
                         fireClosingTimer(handler, runnable);
                     }
                 })
                 .build();
 
-        mTvVolume = (TextView) mDialog.findViewById(R.id.dialog_volume_textview);
-        mTvVolume.setText(MainActivity.getVolumeMessage(act, AmpYaRxV577
-                .getVolume_dB(MainActivity.getInvisibleVolSeekBar().getProgress())));
+        mDialog.show();
 
-        SeekBar volumeSlider = (SeekBar) mDialog.findViewById(R.id.dialog_volume_slider);
+        mTvVolume = mDialog.findViewById(R.id.dialog_volume_textview);
+        if (mTvVolume != null) {
+            mTvVolume.setText(MainActivity.getVolumeMessage(act, AmpYaRxV577
+                    .getVolume_dB(MainActivity.getInvisibleVolSeekBar().getProgress())));
+        }
+
+        SeekBar volumeSlider = mDialog.findViewById(R.id.dialog_volume_slider);
         volumeSlider.setMax((int) AmpYaRxV577.MAX_VOL_SLIDER);
         volumeSlider.setProgress(MainActivity.getInvisibleVolSeekBar().getProgress());
 
@@ -94,12 +99,10 @@ public class DialogVolumeSlider {
                 fireClosingTimer(handler, runnable);
             }
 
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 MainActivity.getAmp().setMute(false);
             }
-
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) { }
@@ -109,15 +112,12 @@ public class DialogVolumeSlider {
 
     }
 
-
     private void fireClosingTimer(Handler h, Runnable runnable) {
         h.removeCallbacks(runnable);
         h.postDelayed(runnable, Const.DELAY_DISMISS_VOLUME_DIALOG);
     }
 
-
     public void show() { mDialog.show(); }
-
 
     public void showSeekBarValue(String msg) {
         if (mTvVolume != null) mTvVolume.setText(msg);

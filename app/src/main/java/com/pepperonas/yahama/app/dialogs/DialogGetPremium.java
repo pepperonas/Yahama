@@ -23,7 +23,7 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.os.RemoteException;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.fragments.SettingsFragment;
@@ -34,14 +34,13 @@ import com.pepperonas.yahama.app.utility.Const;
  */
 public class DialogGetPremium {
 
-
     public DialogGetPremium(final MainActivity main, final SettingsFragment sf, final Context ctx) {
         new MaterialDialog.Builder(ctx)
                 .title(R.string.dialog_title_get_premium)
-                .content(R.string.dialog_get_premium_msg)
+                .message(R.string.dialog_get_premium_msg)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .buttonCallback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
@@ -59,19 +58,14 @@ public class DialogGetPremium {
                             main.startIntentSenderForResult(
                                     pendingIntent.getIntentSender(),
                                     Const.REQ_CODE_PREMIUM_PURCHASE,
-                                    new Intent(),
-                                    0,
-                                    0,
-                                    0);
+                                    new Intent(), 0, 0, 0);
 
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         } catch (IntentSender.SendIntentException e) {
                             e.printStackTrace();
                         }
-
                     }
-
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {

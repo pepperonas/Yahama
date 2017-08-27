@@ -16,13 +16,13 @@
 
 package com.pepperonas.yahama.app.dialogs;
 
-import android.content.DialogInterface;
+import android.app.AlertDialog;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.model.AmpYaRxV577;
@@ -69,7 +69,6 @@ public class DialogCinemaDsp3d {
 
     private boolean mIsShown = false;
 
-
     public DialogCinemaDsp3d(MainActivity main, int viewId) {
 
         Log.i(TAG, "DialogCinemaDsp3dMovie ");
@@ -83,15 +82,14 @@ public class DialogCinemaDsp3d {
         mCategory = AmpYaRxV577.getCategory(mXmlName);
 
         MaterialDialog dlg = new MaterialDialog.Builder(mMain)
-                .customView(R.layout.dialog_cinema_dsp3d, true)
+                .customView(R.layout.dialog_cinema_dsp3d)
                 .positiveText(R.string.ok)
                 .neutralText(R.string.reset)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .buttonCallback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
                     }
-
 
                     @Override
                     public void onNeutral(MaterialDialog dialog) {
@@ -100,34 +98,33 @@ public class DialogCinemaDsp3d {
                         mMain.runCtrlrTask(false, Commands.RESET_3D_DSP(mCategory, getXmlName()));
                     }
 
-                }).showListener(new DialogInterface.OnShowListener() {
+                }).showListener(new MaterialDialog.ShowListener() {
                     @Override
-                    public void onShow(DialogInterface dialog) {
+                    public void onShow(AlertDialog dialog) {
+                        super.onShow(dialog);
                         MaterialDialog d = (MaterialDialog) dialog;
 
-                        mTvInfo = (TextView) d.findViewById(R.id.dialog_movie_textview);
+                        mTvInfo = d.findViewById(R.id.dialog_movie_textview);
                         mTvInfo.setText(getCardName());
 
-                        LinearLayout layout = (LinearLayout) d.findViewById(R.id.dsp3d_frame);
+                        LinearLayout layout = d.findViewById(R.id.dsp3d_frame);
 
                         BaseEntity be = getEntityFromName();
 
-                        if (isStandard()) initStandardLayout(be, layout);
-
-                        else if (isAudioRoom()) initAudioRoomLayout(be, layout);
-
-                        else if (isAudioAdvanced()) initAudioAdvancedLayout(be, layout);
-
-                        else if (isAudioRoomAdvanced()) initAudioRoomAdvancedLayout(be, layout);
-
-                        else if (isSurround()) initSurroundLayout(be, layout);
-
+                        if (isStandard()) {
+                            initStandardLayout(be, layout);
+                        } else if (isAudioRoom()) {
+                            initAudioRoomLayout(be, layout);
+                        } else if (isAudioAdvanced()) {
+                            initAudioAdvancedLayout(be, layout);
+                        } else if (isAudioRoomAdvanced()) {
+                            initAudioRoomAdvancedLayout(be, layout);
+                        } else if (isSurround()) initSurroundLayout(be, layout);
                     }
                 })
                 .build();
         dlg.show();
     }
-
 
     private void initStandardLayout(BaseEntity be, LinearLayout layout) {
         int _dspLvl = 0, _surInitDly = 0, _surRoomSize = 0,
@@ -157,7 +154,6 @@ public class DialogCinemaDsp3d {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
                     if (!mIsShown) return;
-
 
                     switch (ii) {
 
@@ -206,10 +202,8 @@ public class DialogCinemaDsp3d {
                     }
                 }
 
-
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {}
-
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {}
@@ -218,7 +212,6 @@ public class DialogCinemaDsp3d {
         }
 
         int x = 0;
-
 
         for (int i = 0; i < layout.getChildCount(); i += 2) {
             if (layout.getChildAt(i) instanceof TextView) {
@@ -284,7 +277,6 @@ public class DialogCinemaDsp3d {
         // now the slider will be active
         mIsShown = true;
     }
-
 
     private void initSurroundLayout(BaseEntity be, LinearLayout layout) {
 
@@ -379,7 +371,6 @@ public class DialogCinemaDsp3d {
 
                     if (!mIsShown) return;
 
-
                     switch (ii) {
 
                         case 0:
@@ -434,10 +425,8 @@ public class DialogCinemaDsp3d {
                     }
                 }
 
-
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {}
-
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {}
@@ -511,7 +500,6 @@ public class DialogCinemaDsp3d {
         // now the slider will be active
         mIsShown = true;
     }
-
 
     private void initAudioRoomLayout(final BaseEntity be, LinearLayout layout) {
 
@@ -587,16 +575,13 @@ public class DialogCinemaDsp3d {
                     }
                 }
 
-
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {}
-
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {}
             });
         }
-
 
         int x = 0;
 
@@ -643,7 +628,6 @@ public class DialogCinemaDsp3d {
         mIsShown = true;
     }
 
-
     private void initAudioRoomAdvancedLayout(BaseEntity be, LinearLayout layout) {
 
         int _dspLvl = 0, _initDly = 0, _roomSize = 0,
@@ -668,7 +652,6 @@ public class DialogCinemaDsp3d {
             _revLvl = ((TheRoxyTheatre) be).getRevLvl();
 
         }
-
 
         for (int i = 0; i < 7; i++) {
             final TextView tv = new TextView(mMain);
@@ -737,17 +720,14 @@ public class DialogCinemaDsp3d {
                     }
                 }
 
-
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {}
-
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {}
             });
 
         }
-
 
         int x = 0;
 
@@ -815,7 +795,6 @@ public class DialogCinemaDsp3d {
         // now the slider will be active
         mIsShown = true;
     }
-
 
     /**
      * Do not copy-paste from here!
@@ -894,17 +873,14 @@ public class DialogCinemaDsp3d {
                     }
                 }
 
-
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {}
-
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {}
             });
 
         }
-
 
         int x = 0;
 
@@ -965,103 +941,143 @@ public class DialogCinemaDsp3d {
         mIsShown = true;
     }
 
-
     private boolean isStandard() {
         return Utils.stringEquals(mXmlName, AmpYaRxV577.STANDARD);
     }
-
 
     private boolean isAudioAdvanced() {
         return Utils.stringEquals(mXmlName, AmpYaRxV577.CHAMBER);
     }
 
-
     private boolean isSurround() {
         return Utils.stringEquals
                 (mXmlName, AmpYaRxV577.SPECTACLE, AmpYaRxV577.XML_SCIFI,
-                 AmpYaRxV577.DRAMA, AmpYaRxV577.ADVENTURE,
-                 AmpYaRxV577.SPORTS, AmpYaRxV577.XML_MUSIC_VIDEO,
-                 AmpYaRxV577.XML_ACTION_GAME, AmpYaRxV577.XML_ROLEPLAYING_GAME);
+                        AmpYaRxV577.DRAMA, AmpYaRxV577.ADVENTURE,
+                        AmpYaRxV577.SPORTS, AmpYaRxV577.XML_MUSIC_VIDEO,
+                        AmpYaRxV577.XML_ACTION_GAME, AmpYaRxV577.XML_ROLEPLAYING_GAME);
     }
-
 
     private boolean isAudioRoom() {
         return Utils.stringEquals
                 (mXmlName, AmpYaRxV577.XML_CELLAR_CLUB, AmpYaRxV577.XML_THE_BOTTOM_LINE,
-                 AmpYaRxV577.XML_HALL_IN_MUNICH, AmpYaRxV577.XML_HALL_IN_VIENNA);
+                        AmpYaRxV577.XML_HALL_IN_MUNICH, AmpYaRxV577.XML_HALL_IN_VIENNA);
     }
-
 
     private boolean isAudioRoomAdvanced() {
         return Utils.stringEquals(mXmlName, AmpYaRxV577.XML_MONO_MOVIE, AmpYaRxV577.XML_THE_ROXY_THEATRE);
     }
 
-
     public String getCardName() {
         switch (mViewId) {
-            case R.id.cv_movie_actiongame: return mMain.getString(R.string.actiongame);
-            case R.id.cv_movie_adventure: return mMain.getString(R.string.adventure);
-            case R.id.cv_movie_drama: return mMain.getString(R.string.drama);
-            case R.id.cv_music_musicvideo: return mMain.getString(R.string.music_video);
-            case R.id.cv_movie_roleplaygame: return mMain.getString(R.string.role_play_game);
-            case R.id.cv_movie_sci_fi: return mMain.getString(R.string.sci_fi);
-            case R.id.cv_movie_spectacle: return mMain.getString(R.string.spectacle);
-            case R.id.cv_movie_sports: return mMain.getString(R.string.sports);
-            case R.id.cv_movie_standard: return mMain.getString(R.string.standard);
-            case R.id.cv_movie_monomovie: return mMain.getString(R.string.mono_movie);
-            case R.id.cv_music_theroxytheatre: return mMain.getString(R.string.the_roxy_theatre);
-            case R.id.cv_music_chamber: return mMain.getString(R.string.chamber);
-            case R.id.cv_music_thebottomline: return mMain.getString(R.string.the_bottom_line);
-            case R.id.cv_music_hallinmunich: return mMain.getString(R.string.hall_in_munich);
-            case R.id.cv_music_hallinvienna: return mMain.getString(R.string.hall_in_vienna);
-            case R.id.cv_music_cellarclub: return mMain.getString(R.string.cellar_club);
+            case R.id.cv_movie_actiongame:
+                return mMain.getString(R.string.actiongame);
+            case R.id.cv_movie_adventure:
+                return mMain.getString(R.string.adventure);
+            case R.id.cv_movie_drama:
+                return mMain.getString(R.string.drama);
+            case R.id.cv_music_musicvideo:
+                return mMain.getString(R.string.music_video);
+            case R.id.cv_movie_roleplaygame:
+                return mMain.getString(R.string.role_play_game);
+            case R.id.cv_movie_sci_fi:
+                return mMain.getString(R.string.sci_fi);
+            case R.id.cv_movie_spectacle:
+                return mMain.getString(R.string.spectacle);
+            case R.id.cv_movie_sports:
+                return mMain.getString(R.string.sports);
+            case R.id.cv_movie_standard:
+                return mMain.getString(R.string.standard);
+            case R.id.cv_movie_monomovie:
+                return mMain.getString(R.string.mono_movie);
+            case R.id.cv_music_theroxytheatre:
+                return mMain.getString(R.string.the_roxy_theatre);
+            case R.id.cv_music_chamber:
+                return mMain.getString(R.string.chamber);
+            case R.id.cv_music_thebottomline:
+                return mMain.getString(R.string.the_bottom_line);
+            case R.id.cv_music_hallinmunich:
+                return mMain.getString(R.string.hall_in_munich);
+            case R.id.cv_music_hallinvienna:
+                return mMain.getString(R.string.hall_in_vienna);
+            case R.id.cv_music_cellarclub:
+                return mMain.getString(R.string.cellar_club);
         }
         Log.w(TAG, "getCardName NO VALUE FOUND! ID=" + mViewId);
         return "";
     }
 
-
     public String getXmlName() {
         switch (mViewId) {
-            case R.id.cv_movie_actiongame: return AmpYaRxV577.XML_ACTION_GAME;
-            case R.id.cv_movie_adventure: return AmpYaRxV577.ADVENTURE;
-            case R.id.cv_movie_drama: return AmpYaRxV577.DRAMA;
-            case R.id.cv_music_musicvideo: return AmpYaRxV577.XML_MUSIC_VIDEO;
-            case R.id.cv_movie_roleplaygame: return AmpYaRxV577.XML_ROLEPLAYING_GAME;
-            case R.id.cv_movie_sci_fi: return AmpYaRxV577.XML_SCIFI;
-            case R.id.cv_movie_spectacle: return AmpYaRxV577.SPECTACLE;
-            case R.id.cv_movie_sports: return AmpYaRxV577.SPORTS;
-            case R.id.cv_movie_standard: return AmpYaRxV577.STANDARD;
-            case R.id.cv_movie_monomovie: return AmpYaRxV577.XML_MONO_MOVIE;
-            case R.id.cv_music_theroxytheatre: return AmpYaRxV577.XML_THE_ROXY_THEATRE;
-            case R.id.cv_music_chamber: return AmpYaRxV577.CHAMBER;
-            case R.id.cv_music_thebottomline: return AmpYaRxV577.XML_THE_BOTTOM_LINE;
-            case R.id.cv_music_hallinmunich: return AmpYaRxV577.XML_HALL_IN_MUNICH;
-            case R.id.cv_music_hallinvienna: return AmpYaRxV577.XML_HALL_IN_VIENNA;
-            case R.id.cv_music_cellarclub: return AmpYaRxV577.XML_CELLAR_CLUB;
+            case R.id.cv_movie_actiongame:
+                return AmpYaRxV577.XML_ACTION_GAME;
+            case R.id.cv_movie_adventure:
+                return AmpYaRxV577.ADVENTURE;
+            case R.id.cv_movie_drama:
+                return AmpYaRxV577.DRAMA;
+            case R.id.cv_music_musicvideo:
+                return AmpYaRxV577.XML_MUSIC_VIDEO;
+            case R.id.cv_movie_roleplaygame:
+                return AmpYaRxV577.XML_ROLEPLAYING_GAME;
+            case R.id.cv_movie_sci_fi:
+                return AmpYaRxV577.XML_SCIFI;
+            case R.id.cv_movie_spectacle:
+                return AmpYaRxV577.SPECTACLE;
+            case R.id.cv_movie_sports:
+                return AmpYaRxV577.SPORTS;
+            case R.id.cv_movie_standard:
+                return AmpYaRxV577.STANDARD;
+            case R.id.cv_movie_monomovie:
+                return AmpYaRxV577.XML_MONO_MOVIE;
+            case R.id.cv_music_theroxytheatre:
+                return AmpYaRxV577.XML_THE_ROXY_THEATRE;
+            case R.id.cv_music_chamber:
+                return AmpYaRxV577.CHAMBER;
+            case R.id.cv_music_thebottomline:
+                return AmpYaRxV577.XML_THE_BOTTOM_LINE;
+            case R.id.cv_music_hallinmunich:
+                return AmpYaRxV577.XML_HALL_IN_MUNICH;
+            case R.id.cv_music_hallinvienna:
+                return AmpYaRxV577.XML_HALL_IN_VIENNA;
+            case R.id.cv_music_cellarclub:
+                return AmpYaRxV577.XML_CELLAR_CLUB;
         }
         return "";
     }
 
-
     public BaseEntity getEntityFromName() {
         switch (mViewId) {
-            case R.id.cv_movie_actiongame: return MainActivity.getAmp().getConfigEntertainment().getActionGame();
-            case R.id.cv_movie_adventure: return MainActivity.getAmp().getConfigMovie().getAdventure();
-            case R.id.cv_movie_drama: return MainActivity.getAmp().getConfigMovie().getDrama();
-            case R.id.cv_music_musicvideo: return MainActivity.getAmp().getConfigEntertainment().getMusicVideo();
-            case R.id.cv_movie_roleplaygame: return MainActivity.getAmp().getConfigEntertainment().getRoleplayingGame();
-            case R.id.cv_movie_sci_fi: return MainActivity.getAmp().getConfigMovie().getSciFi();
-            case R.id.cv_movie_spectacle: return MainActivity.getAmp().getConfigMovie().getSpectacle();
-            case R.id.cv_movie_sports: return MainActivity.getAmp().getConfigEntertainment().getSports();
-            case R.id.cv_movie_standard: return MainActivity.getAmp().getConfigMovie().getStandard();
-            case R.id.cv_movie_monomovie: return MainActivity.getAmp().getConfigMovie().getMonoMovie();
-            case R.id.cv_music_theroxytheatre: return MainActivity.getAmp().getConfigLiveClub().getTheRoxyTheatre();
-            case R.id.cv_music_chamber: return MainActivity.getAmp().getConfigClassical().getChamber();
-            case R.id.cv_music_thebottomline: return MainActivity.getAmp().getConfigLiveClub().getTheBottomLine();
-            case R.id.cv_music_hallinmunich: return MainActivity.getAmp().getConfigClassical().getHallInMunich();
-            case R.id.cv_music_hallinvienna: return MainActivity.getAmp().getConfigClassical().getHallInVienna();
-            case R.id.cv_music_cellarclub: return MainActivity.getAmp().getConfigLiveClub().getCellarClub();
+            case R.id.cv_movie_actiongame:
+                return MainActivity.getAmp().getConfigEntertainment().getActionGame();
+            case R.id.cv_movie_adventure:
+                return MainActivity.getAmp().getConfigMovie().getAdventure();
+            case R.id.cv_movie_drama:
+                return MainActivity.getAmp().getConfigMovie().getDrama();
+            case R.id.cv_music_musicvideo:
+                return MainActivity.getAmp().getConfigEntertainment().getMusicVideo();
+            case R.id.cv_movie_roleplaygame:
+                return MainActivity.getAmp().getConfigEntertainment().getRoleplayingGame();
+            case R.id.cv_movie_sci_fi:
+                return MainActivity.getAmp().getConfigMovie().getSciFi();
+            case R.id.cv_movie_spectacle:
+                return MainActivity.getAmp().getConfigMovie().getSpectacle();
+            case R.id.cv_movie_sports:
+                return MainActivity.getAmp().getConfigEntertainment().getSports();
+            case R.id.cv_movie_standard:
+                return MainActivity.getAmp().getConfigMovie().getStandard();
+            case R.id.cv_movie_monomovie:
+                return MainActivity.getAmp().getConfigMovie().getMonoMovie();
+            case R.id.cv_music_theroxytheatre:
+                return MainActivity.getAmp().getConfigLiveClub().getTheRoxyTheatre();
+            case R.id.cv_music_chamber:
+                return MainActivity.getAmp().getConfigClassical().getChamber();
+            case R.id.cv_music_thebottomline:
+                return MainActivity.getAmp().getConfigLiveClub().getTheBottomLine();
+            case R.id.cv_music_hallinmunich:
+                return MainActivity.getAmp().getConfigClassical().getHallInMunich();
+            case R.id.cv_music_hallinvienna:
+                return MainActivity.getAmp().getConfigClassical().getHallInVienna();
+            case R.id.cv_music_cellarclub:
+                return MainActivity.getAmp().getConfigLiveClub().getCellarClub();
         }
         return null;
     }

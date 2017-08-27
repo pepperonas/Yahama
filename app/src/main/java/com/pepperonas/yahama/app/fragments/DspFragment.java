@@ -35,20 +35,19 @@ import android.widget.TextView;
 
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
-import com.pepperonas.yahama.app.model.AmpYaRxV577;
 import com.pepperonas.yahama.app.dialogs.DialogCinemaDsp3d7ch;
+import com.pepperonas.yahama.app.model.AmpYaRxV577;
 import com.pepperonas.yahama.app.utility.Commands;
 import com.pepperonas.yahama.app.utility.Const;
 import com.pepperonas.yahama.app.utility.Setup;
-
 
 /**
  * @author Martin Pfeffer (pepperonas)
  */
 public class DspFragment extends Fragment
         implements View.OnClickListener,
-                   View.OnLongClickListener,
-                   CompoundButton.OnCheckedChangeListener {
+        View.OnLongClickListener,
+        CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "DspFragment";
 
@@ -65,11 +64,9 @@ public class DspFragment extends Fragment
         }
     };
 
-
     public void setMain(MainActivity main) {
         this.mMain = main;
     }
-
 
     public static DspFragment newInstance(int i) {
         DspFragment fragment = new DspFragment();
@@ -80,7 +77,6 @@ public class DspFragment extends Fragment
 
         return fragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,7 +95,6 @@ public class DspFragment extends Fragment
         return v;
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -112,10 +107,9 @@ public class DspFragment extends Fragment
         showInfoSnackbarIfNeeded();
     }
 
-
     private void showInfoSnackbarIfNeeded() {
         if (!Setup.getShowDspInfo()) return;
-        CoordinatorLayout cl = (CoordinatorLayout) getActivity().findViewById(R.id.coordinator_layout);
+        CoordinatorLayout cl = getActivity().findViewById(R.id.coordinator_layout);
         Snackbar sb = Snackbar.make(cl, getString(R.string.sb_hold_to_configure_dsp), Snackbar.LENGTH_LONG);
         sb.setActionTextColor(Color.RED);
         sb.setAction(getString(R.string.ok), new View.OnClickListener() {
@@ -129,7 +123,6 @@ public class DspFragment extends Fragment
         sb.show();
     }
 
-
     @Override
     public void onPause() {
         super.onPause();
@@ -137,10 +130,9 @@ public class DspFragment extends Fragment
         mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
     }
 
-
     @Override
     public void onClick(View v) {
-        Switch swStraight = (Switch) mMain.findViewById(R.id.sw_straight);
+        Switch swStraight = mMain.findViewById(R.id.sw_straight);
         String action = "";
 
         switch (v.getId()) {
@@ -227,7 +219,6 @@ public class DspFragment extends Fragment
         mMain.runCtrlrTask(false, Commands.SET_DSP(action));
     }
 
-
     @Override
     public boolean onLongClick(final View v) {
         Handler handler = new Handler();
@@ -301,7 +292,6 @@ public class DspFragment extends Fragment
         return true;
     }
 
-
     public String getXmlName(int id) {
         switch (id) {
             case R.id.cv_movie_actiongame:
@@ -340,7 +330,6 @@ public class DspFragment extends Fragment
         return "";
     }
 
-
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         String action = "";
@@ -350,17 +339,17 @@ public class DspFragment extends Fragment
             case R.id.sw_direct:
                 action = Commands.SET_DIRECT(isChecked ? "On" : "Off");
 
-                Switch swStraight = (Switch) mMain.findViewById(R.id.sw_straight);
-                Switch swExtraBass = (Switch) mMain.findViewById(R.id.sw_extra_bass);
-                Switch swAdaptiveDrc = (Switch) mMain.findViewById(R.id.sw_adaptive_drc);
-                Switch sw_3dCinemaDrc = (Switch) mMain.findViewById(R.id.sw_3d_cinema_drc);
+                Switch swStraight = mMain.findViewById(R.id.sw_straight);
+                Switch swExtraBass = mMain.findViewById(R.id.sw_extra_bass);
+                Switch swAdaptiveDrc = mMain.findViewById(R.id.sw_adaptive_drc);
+                Switch sw_3dCinemaDrc = mMain.findViewById(R.id.sw_3d_cinema_drc);
 
                 swStraight.setVisibility(isChecked ? View.GONE : View.VISIBLE);
                 swExtraBass.setVisibility(isChecked ? View.GONE : View.VISIBLE);
                 swAdaptiveDrc.setVisibility(isChecked ? View.GONE : View.VISIBLE);
                 sw_3dCinemaDrc.setVisibility(isChecked ? View.GONE : View.VISIBLE);
 
-                LinearLayout dspContainer = (LinearLayout) mMain.findViewById(R.id.dsp_container);
+                LinearLayout dspContainer = mMain.findViewById(R.id.dsp_container);
                 dspContainer.setVisibility(isChecked ? View.GONE : View.VISIBLE);
 
                 break;
@@ -381,44 +370,41 @@ public class DspFragment extends Fragment
         mMain.runCtrlrTask(false, action, Const.DO_NOT_UPDATE);
     }
 
-
     private void initActionCards() {
-        CardView cvCh2Ch = (CardView) mMain.findViewById(R.id.cv_music_2ch);
-        CardView cvCh7Ch = (CardView) mMain.findViewById(R.id.cv_music_7ch);
-        CardView cvSurround = (CardView) mMain.findViewById(R.id.cv_music_surround_decoder);
+        CardView cvCh2Ch = mMain.findViewById(R.id.cv_music_2ch);
+        CardView cvCh7Ch = mMain.findViewById(R.id.cv_music_7ch);
+        CardView cvSurround = mMain.findViewById(R.id.cv_music_surround_decoder);
 
-        CardView cvCellar = (CardView) mMain.findViewById(R.id.cv_music_cellarclub);
-        CardView cvChamber = (CardView) mMain.findViewById(R.id.cv_music_chamber);
-        CardView cvMunich = (CardView) mMain.findViewById(R.id.cv_music_hallinmunich);
-        CardView cvVienna = (CardView) mMain.findViewById(R.id.cv_music_hallinvienna);
-        CardView cvBottom = (CardView) mMain.findViewById(R.id.cv_music_thebottomline);
-        CardView cvRoxy = (CardView) mMain.findViewById(R.id.cv_music_theroxytheatre);
-        CardView cvMusic = (CardView) mMain.findViewById(R.id.cv_music_musicvideo);
+        CardView cvCellar = mMain.findViewById(R.id.cv_music_cellarclub);
+        CardView cvChamber = mMain.findViewById(R.id.cv_music_chamber);
+        CardView cvMunich = mMain.findViewById(R.id.cv_music_hallinmunich);
+        CardView cvVienna = mMain.findViewById(R.id.cv_music_hallinvienna);
+        CardView cvBottom = mMain.findViewById(R.id.cv_music_thebottomline);
+        CardView cvRoxy = mMain.findViewById(R.id.cv_music_theroxytheatre);
+        CardView cvMusic = mMain.findViewById(R.id.cv_music_musicvideo);
 
-        CardView cvAction = (CardView) mMain.findViewById(R.id.cv_movie_actiongame);
-        CardView cvAdventure = (CardView) mMain.findViewById(R.id.cv_movie_adventure);
-        CardView cvDrama = (CardView) mMain.findViewById(R.id.cv_movie_drama);
-        CardView cvMono = (CardView) mMain.findViewById(R.id.cv_movie_monomovie);
-        CardView cvRole = (CardView) mMain.findViewById(R.id.cv_movie_roleplaygame);
-        CardView cvSci = (CardView) mMain.findViewById(R.id.cv_movie_sci_fi);
-        CardView cvSpec = (CardView) mMain.findViewById(R.id.cv_movie_spectacle);
-        CardView cvSports = (CardView) mMain.findViewById(R.id.cv_movie_sports);
-        CardView cvStan = (CardView) mMain.findViewById(R.id.cv_movie_standard);
-
+        CardView cvAction = mMain.findViewById(R.id.cv_movie_actiongame);
+        CardView cvAdventure = mMain.findViewById(R.id.cv_movie_adventure);
+        CardView cvDrama = mMain.findViewById(R.id.cv_movie_drama);
+        CardView cvMono = mMain.findViewById(R.id.cv_movie_monomovie);
+        CardView cvRole = mMain.findViewById(R.id.cv_movie_roleplaygame);
+        CardView cvSci = mMain.findViewById(R.id.cv_movie_sci_fi);
+        CardView cvSpec = mMain.findViewById(R.id.cv_movie_spectacle);
+        CardView cvSports = mMain.findViewById(R.id.cv_movie_sports);
+        CardView cvStan = mMain.findViewById(R.id.cv_movie_standard);
 
         setCardLevel(Setup.getTheme()
-                     == 0 ? Setup.COLOR_ACCENT
-                          : Setup.COLOR_ACCENT_LIGHT,
-                     cvCh2Ch, cvCh7Ch, cvSurround,
-                     cvCellar, cvChamber, cvMunich, cvVienna, cvBottom, cvRoxy,
-                     cvAction, cvAdventure, cvDrama, cvMono, cvMusic, cvRole, cvSci,
-                     cvSpec, cvSports, cvStan);
-
+                        == 0 ? Setup.COLOR_ACCENT
+                        : Setup.COLOR_ACCENT_LIGHT,
+                cvCh2Ch, cvCh7Ch, cvSurround,
+                cvCellar, cvChamber, cvMunich, cvVienna, cvBottom, cvRoxy,
+                cvAction, cvAdventure, cvDrama, cvMono, cvMusic, cvRole, cvSci,
+                cvSpec, cvSports, cvStan);
 
         setCardClickListener(cvCh2Ch, cvCh7Ch, cvSurround,
-                             cvCellar, cvChamber, cvMunich, cvVienna, cvBottom, cvRoxy,
-                             cvAction, cvAdventure, cvDrama, cvMono, cvMusic, cvRole, cvSci,
-                             cvSpec, cvSports, cvStan);
+                cvCellar, cvChamber, cvMunich, cvVienna, cvBottom, cvRoxy,
+                cvAction, cvAdventure, cvDrama, cvMono, cvMusic, cvRole, cvSci,
+                cvSpec, cvSports, cvStan);
 
         setCardLongClickListener(
                 cvCh7Ch,
@@ -428,24 +414,20 @@ public class DspFragment extends Fragment
                 cvSci, cvSpec, cvSports, cvStan);
     }
 
-
     private void initLabelCards() {
-        CardView cvStraight = (CardView) mMain.findViewById(R.id.cv_direct_and_straight);
-        CardView cvMusic = (CardView) mMain.findViewById(R.id.cv_music);
-        CardView cvMovie = (CardView) mMain.findViewById(R.id.cv_movie);
+        CardView cvStraight = mMain.findViewById(R.id.cv_direct_and_straight);
+        CardView cvMusic = mMain.findViewById(R.id.cv_music);
+        CardView cvMovie = mMain.findViewById(R.id.cv_movie);
         colorizeLabelCard(cvStraight, cvMusic, cvMovie);
     }
-
 
     private void setCardClickListener(CardView... cards) {
         for (CardView c : cards) c.setOnClickListener(this);
     }
 
-
     private void setCardLevel(int level, CardView... cards) {
         for (CardView c : cards) c.getForeground().setLevel(level);
     }
-
 
     private void colorizeLabelCard(CardView... cards) {
         for (CardView c : cards) {
@@ -453,13 +435,11 @@ public class DspFragment extends Fragment
         }
     }
 
-
     private void colorizeActionCard(CardView... cards) {
         for (CardView c : cards) {
             c.setCardBackgroundColor(mMain.getResources().getColor(Setup.getActionCardColor()));
         }
     }
-
 
     private void setActionBackground(TextView... tvs) {
         for (TextView t : tvs) {
@@ -467,13 +447,11 @@ public class DspFragment extends Fragment
         }
     }
 
-
     private void showActionInToolbar(String updateMsg) {
         mMain.setTemporaryTitleUpdate(updateMsg);
         mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
         mTitleWriterHandler.postDelayed(mTitleWriterRunnable, Const.DELAY_TITLE_RESET);
     }
-
 
     public void updateSwitches(boolean isDirect,
                                boolean isStraight,
@@ -481,14 +459,14 @@ public class DspFragment extends Fragment
                                boolean isAdaptiveDrc,
                                boolean is_3dCinemaDrc) {
 
-        Switch swDirect = (Switch) mMain.findViewById(R.id.sw_direct);
+        Switch swDirect = mMain.findViewById(R.id.sw_direct);
         swDirect.setChecked(isDirect);
         swDirect.setOnCheckedChangeListener(this);
 
-        Switch swStraight = (Switch) mMain.findViewById(R.id.sw_straight);
-        Switch swExtraBass = (Switch) mMain.findViewById(R.id.sw_extra_bass);
-        Switch swAdaptiveDrc = (Switch) mMain.findViewById(R.id.sw_adaptive_drc);
-        Switch sw_3dCinemaDrc = (Switch) mMain.findViewById(R.id.sw_3d_cinema_drc);
+        Switch swStraight = mMain.findViewById(R.id.sw_straight);
+        Switch swExtraBass = mMain.findViewById(R.id.sw_extra_bass);
+        Switch swAdaptiveDrc = mMain.findViewById(R.id.sw_adaptive_drc);
+        Switch sw_3dCinemaDrc = mMain.findViewById(R.id.sw_3d_cinema_drc);
 
         swStraight.setChecked(isStraight);
         swExtraBass.setChecked(isExtraBass);
@@ -503,10 +481,9 @@ public class DspFragment extends Fragment
         swAdaptiveDrc.setVisibility(isDirect ? View.GONE : View.VISIBLE);
         sw_3dCinemaDrc.setVisibility(isDirect ? View.GONE : View.VISIBLE);
 
-        LinearLayout dspContainer = (LinearLayout) mMain.findViewById(R.id.dsp_container);
+        LinearLayout dspContainer = mMain.findViewById(R.id.dsp_container);
         dspContainer.setVisibility(isDirect ? View.GONE : View.VISIBLE);
     }
-
 
     public void setCardLongClickListener(CardView... cards) {
         for (CardView card : cards) card.setOnLongClickListener(this);

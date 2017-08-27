@@ -16,11 +16,11 @@
 
 package com.pepperonas.yahama.app.dialogs;
 
-import android.content.DialogInterface;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.provider.Settings;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.utility.Const;
@@ -33,21 +33,18 @@ public class DialogWifiDisabled {
     boolean mIsShown = false;
     private final MaterialDialog mDialog;
 
-
     public DialogWifiDisabled(final MainActivity main) {
         mDialog = new MaterialDialog.Builder(main)
                 .title(R.string.dialog_title_check_settings)
-                .content(R.string.dialog_content_wifi_disabled)
+                .message(R.string.dialog_content_wifi_disabled)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
-                .autoDismiss(true)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .buttonCallback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
                         main.startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS), Const.REQ_CODE_ENABLE_WIFI);
                     }
-
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
@@ -55,20 +52,21 @@ public class DialogWifiDisabled {
                         main.finish();
                     }
                 })
-                .showListener(new DialogInterface.OnShowListener() {
+                .showListener(new MaterialDialog.ShowListener() {
                     @Override
-                    public void onShow(DialogInterface dialog) {
+                    public void onShow(AlertDialog dialog) {
+                        super.onShow(dialog);
                         mIsShown = true;
                     }
                 })
-                .dismissListener(new DialogInterface.OnDismissListener() {
+                .dismissListener(new MaterialDialog.DismissListener() {
                     @Override
-                    public void onDismiss(DialogInterface dialog) {
+                    public void onDismiss() {
+                        super.onDismiss();
                         mIsShown = false;
                     }
                 }).build();
     }
-
 
     public void showDialog() {
         if (!mIsShown) mDialog.show();

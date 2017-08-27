@@ -127,5 +127,6 @@
     <string name="select_icon">Icon auswählen</string>
 
     <string name="share_app_intro_text">Hey, schau\' dir diese App an</string>
+    <string name="ad_free">(werbefrei)</string>
 
 </resources>

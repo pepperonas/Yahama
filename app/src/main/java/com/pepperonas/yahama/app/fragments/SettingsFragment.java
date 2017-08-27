@@ -257,7 +257,9 @@ public class SettingsFragment
 
         p = findPreference(getString(R.string.PR_KEY_BUILD_VERSION));
         String bv = Utils.getAppVersionName(mMain);
-        p.setSummary(bv);
+        String additionalInfo = getResources().getBoolean(R.bool.build_without_ads) ?
+                getString(R.string.ad_free) : "";
+        p.setSummary(bv + " " +additionalInfo);
 
         /**
          * CheckBoxPreference

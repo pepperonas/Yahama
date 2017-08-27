@@ -16,14 +16,13 @@
 
 package com.pepperonas.yahama.app.dialogs;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.R;
 
 /**
@@ -34,20 +33,19 @@ public class DialogHelpAndFeedback {
     public DialogHelpAndFeedback(final Context ctx) {
         new MaterialDialog.Builder(ctx)
                 .title(R.string.u_dialog_title_help_and_feedback)
-                .customView(R.layout.dialog_help_and_feedback, true)
+                .customView(R.layout.dialog_help_and_feedback)
                 .positiveText(R.string.ok)
-                .autoDismiss(true)
-                .showListener(new MaterialDialog.OnShowListener() {
+                .showListener(new MaterialDialog.ShowListener() {
                     @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        Dialog dialog = (Dialog) dialogInterface;
-                        TextView msg1 = (TextView) dialog.findViewById(R.id.dialog_help_and_feedback_tv_01);
-                        TextView msg2 = (TextView) dialog.findViewById(R.id.dialog_help_and_feedback_tv_02);
-                        TextView msg3 = (TextView) dialog.findViewById(R.id.dialog_help_and_feedback_tv_03);
-                        TextView msg4 = (TextView) dialog.findViewById(R.id.dialog_help_and_feedback_tv_04);
+                    public void onShow(AlertDialog dialog) {
+                        super.onShow(dialog);
+                        TextView msg1 = dialog.findViewById(R.id.dialog_help_and_feedback_tv_01);
+                        TextView msg2 = dialog.findViewById(R.id.dialog_help_and_feedback_tv_02);
+                        TextView msg3 = dialog.findViewById(R.id.dialog_help_and_feedback_tv_03);
+                        TextView msg4 = dialog.findViewById(R.id.dialog_help_and_feedback_tv_04);
 
                         msg1.setText(Html.fromHtml(makeBold(ctx.getString(R.string.app_name)) + " " +
-                                                   ctx.getString(R.string.app_description)));
+                                ctx.getString(R.string.app_description)));
                         msg1.setMovementMethod(LinkMovementMethod.getInstance());
 
                         msg2.setText(Html.fromHtml(ctx.getString(R.string.web_presentation_info)));
@@ -60,8 +58,7 @@ public class DialogHelpAndFeedback {
                         msg4.setMovementMethod(LinkMovementMethod.getInstance());
                     }
                 })
-
-                .callback(new MaterialDialog.ButtonCallback() {
+                .buttonCallback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
@@ -70,7 +67,6 @@ public class DialogHelpAndFeedback {
                 })
                 .show();
     }
-
 
     private String makeBold(String text) {
         return "<b>" + text + "</b>";

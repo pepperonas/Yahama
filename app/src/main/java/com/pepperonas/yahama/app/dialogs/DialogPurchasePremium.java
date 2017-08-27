@@ -16,7 +16,7 @@
 
 package com.pepperonas.yahama.app.dialogs;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.fragments.SettingsFragment;
@@ -31,11 +31,11 @@ public class DialogPurchasePremium {
 
         new MaterialDialog.Builder(main)
                 .title(R.string.dialog_title_test_phase_expired)
-                .content(R.string.dialog_content_test_phase_expired)
+                .message(R.string.dialog_content_test_phase_expired)
                 .positiveText(R.string.dialog_learn_more)
                 .neutralText(R.string.dialog_not_now)
                 .negativeText(R.string.dialog_no_thanks)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .buttonCallback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
@@ -57,7 +57,6 @@ public class DialogPurchasePremium {
                         super.onNegative(dialog);
                         Setup.setShowDialogPurchasePremium(false);
                     }
-
                 })
                 .show();
 

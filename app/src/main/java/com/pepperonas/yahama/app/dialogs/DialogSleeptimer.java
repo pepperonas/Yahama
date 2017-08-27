@@ -16,15 +16,14 @@
 
 package com.pepperonas.yahama.app.dialogs;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.utility.Commands;
@@ -40,14 +39,13 @@ public class DialogSleeptimer {
     public DialogSleeptimer(final MainActivity main) {
         new MaterialDialog.Builder(main)
                 .title(R.string.dialog_title_sleeptimer)
-                .items(R.array.dialog_items_sleeptimer)
-                .icon(new IconicsDrawable(main, CommunityMaterial.Icon.cmd_timer)
-                              .colorRes(Setup.getDialogIconColor()).sizeDp(Const.DIALOG_ICON_SIZE))
-                .itemsCallback(new MaterialDialog.ListCallback() {
+                .listItems(true, main.getResources().getStringArray(R.array.dialog_items_sleeptimer))
+                .itemClickListener(new MaterialDialog.ItemClickListener() {
                     @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                    public void onClick(View v, int position, long id) {
+                        super.onClick(v, position, id);
                         int mins;
-                        switch (which) {
+                        switch (position) {
                             case 0:
                                 mins = 30;
                                 break;
@@ -70,12 +68,14 @@ public class DialogSleeptimer {
                         String msg;
                         if (mins != 0) {
                             msg = main.getString(R.string.sleep_timer_set_start) + " " +
-                                  mins + " " +
-                                  main.getString(R.string.sleep_timer_set_end);
-                        } else msg = main.getString(R.string.sleep_timer_disabled);
+                                    mins + " " +
+                                    main.getString(R.string.sleep_timer_set_end);
+                        } else {
+                            msg = main.getString(R.string.sleep_timer_disabled);
+                        }
 
                         main.runCtrlrTask(false, Commands.SET_SLEEPTIMER(mins));
-                        CoordinatorLayout cl = (CoordinatorLayout) main.findViewById(R.id.coordinator_layout);
+                        CoordinatorLayout cl = main.findViewById(R.id.coordinator_layout);
                         Snackbar sb = Snackbar.make(cl, msg, Snackbar.LENGTH_LONG);
                         sb.setActionTextColor(Color.RED);
                         if (mins != 0) {
@@ -86,15 +86,18 @@ public class DialogSleeptimer {
                                     Utils.toastShort(main, R.string.sleep_timer_disabled);
                                 }
                             });
+                            View snackbarView = sb.getView();
+                            snackbarView.setBackgroundColor(Color.BLACK);
+                            sb.show();
                         }
-                        View snackbarView = sb.getView();
-                        snackbarView.setBackgroundColor(Color.BLACK);
-                        sb.show();
                     }
                 })
-                .dismissListener(new DialogInterface.OnDismissListener() {
+                .icon(new IconicsDrawable(main, CommunityMaterial.Icon.cmd_timer)
+                        .colorRes(Setup.getDialogIconColor()).sizeDp(Const.DIALOG_ICON_SIZE))
+                .dismissListener(new MaterialDialog.DismissListener() {
                     @Override
-                    public void onDismiss(DialogInterface dialog) {
+                    public void onDismiss() {
+                        super.onDismiss();
                     }
                 })
                 .negativeText(R.string.cancel)

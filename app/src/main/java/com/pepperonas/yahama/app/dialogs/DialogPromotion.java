@@ -20,7 +20,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.EditText;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.fragments.SettingsFragment;
 import com.pepperonas.yahama.app.utility.Setup;
@@ -35,23 +35,21 @@ public class DialogPromotion {
 
     private static final String TAG = "DialogPromotion";
 
-
     public DialogPromotion(final SettingsFragment sf, final Context ctx) {
         new MaterialDialog.Builder(ctx)
                 .title(R.string.dialog_title_promotion)
-                .customView(R.layout.dialog_promo, true)
+                .customView(R.layout.dialog_promo)
                 .cancelable(false)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .buttonCallback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
 
-                        EditText etPromoCode = (EditText) dialog.findViewById(R.id.et_promo);
+                        EditText etPromoCode = dialog.findViewById(R.id.et_promo);
                         checkPromoCode(sf, etPromoCode, dialog);
                         super.onPositive(dialog);
                     }
-
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
@@ -62,7 +60,6 @@ public class DialogPromotion {
                 .show();
 
     }
-
 
     private void checkPromoCode(SettingsFragment sf, EditText etCode, MaterialDialog matDia) {
 
@@ -110,7 +107,9 @@ public class DialogPromotion {
             sf.updateSummaries();
             matDia.dismiss();
 
-        } else matDia.dismiss();
+        } else {
+            matDia.dismiss();
+        }
     }
 
 }

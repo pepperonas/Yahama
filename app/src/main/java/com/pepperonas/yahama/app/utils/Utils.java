@@ -32,6 +32,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
@@ -58,18 +59,19 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
+import java.net.UnknownHostException;
+import java.nio.ByteOrder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import static android.content.Context.WIFI_SERVICE;
 
 /**
  * @author Martin Pfeffer (pepperonas)
@@ -78,11 +80,9 @@ public class Utils {
 
     private static final String TAG = "Utils";
 
-
     public static final int TIME_STRING_NO_DIVIDER = 0, TIME_STRING_FILE = 1, TIME_STRING_GUI = 2;
 
     public static final int MORNING = 0, AFTERNOON = 1, EVENING = 2, NIGHT = 3;
-
 
     public static String getAppVersionCode(Context ctx) {
         try {
@@ -112,9 +112,9 @@ public class Utils {
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
-        } return "";
+        }
+        return "";
     }
-
 
     public static String getAppLastUpdateTime(Context ctx) {
         try {
@@ -135,7 +135,6 @@ public class Utils {
         }
         return "";
     }
-
 
     public static boolean launchApp(Context ctx, String packageName) {
         PackageManager manager = ctx.getPackageManager();
@@ -172,36 +171,25 @@ public class Utils {
         }
     }
 
-
     public static void toastShort(Context ctx, int id) {
         Toast.makeText(ctx, ctx.getString(id), Toast.LENGTH_SHORT).show();
     }
-
 
     public static void toastShort(Context ctx, String txt) {
         Toast.makeText(ctx, txt, Toast.LENGTH_SHORT).show();
     }
 
-
     public static void toastLong(Context ctx, int id) {
         Toast.makeText(ctx, ctx.getString(id), Toast.LENGTH_LONG).show();
     }
-
 
     public static float roundToHalf(float x) {
         return (float) (Math.ceil(x * 2) / 2);
     }
 
-
     public static String getValueFromXml(String xmlTag, String param) {
         return (param.split("<" + xmlTag + ">")[1]).split("</" + xmlTag)[0];
     }
-
-
-//    public static IconicsDrawable getIconic(Context ctx, CommunityMaterial.Icon icon, int color, int size) {
-//        return new IconicsDrawable(ctx, icon).colorRes(color).sizeDp(size);
-//    }
-
 
     public static boolean isConnected(Context ctx) {
         ConnectivityManager connManager = (ConnectivityManager) ctx
@@ -212,35 +200,31 @@ public class Utils {
         return info.isConnected();
     }
 
+    public static String getCurrentNetwork(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
+        int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
 
-    public static String getCurrentNetwork() {
-        //        boolean useIpV4 = true;
-        StringBuilder nw = new StringBuilder();
-        try {
-            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
-            for (NetworkInterface intf : interfaces) {
-                List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
-                for (InetAddress addr : addrs) {
-                    if (!addr.isLoopbackAddress()) {
-                        String ia = addr.getHostAddress().toUpperCase();
-                        boolean isIPv4 = InetAddressUtils.isIPv4Address(ia);
-                        if (isIPv4) {
-                            String ary[] = ia.split("\\.");
-                            for (int i = 0; i < ary.length - 1; i++) {
-                                nw.append(ary[i]).append(".");
-                            }
-                            Log.i(TAG, "getCurrentNetwork returns: " + nw);
-                            return String.valueOf(nw);
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error: " + e);
+        if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
+            ipAddress = Integer.reverseBytes(ipAddress);
         }
-        return "";
-    }
 
+        byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
+
+        String ip;
+        try {
+            ip = InetAddress.getByAddress(ipByteArray).getHostAddress();
+        } catch (UnknownHostException ex) {
+            Log.e(TAG, "Unable to get host address.");
+            ip = null;
+        }
+
+        int subnetLength = ip.lastIndexOf(".");
+        String subnet = ip.substring(0, subnetLength) + ".";
+
+        Log.i(TAG, "getCurrentNetwork: " + ip);
+
+        return subnet;
+    }
 
     public static boolean checkMd5(String md5, File updateFile) {
         if (TextUtils.isEmpty(md5) || updateFile == null) {
@@ -259,7 +243,6 @@ public class Utils {
 
         return calculatedDigest.equalsIgnoreCase(md5);
     }
-
 
     public static String calculateMd5(File updateFile) {
         MessageDigest digest;
@@ -301,7 +284,6 @@ public class Utils {
         }
     }
 
-
     public static Bitmap scaleDownBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
@@ -320,14 +302,12 @@ public class Utils {
         }
 
         return width != newWidth || height != newHeight ? resizeBitmap(bitmap, newWidth, newHeight)
-                                                        : bitmap;
+                : bitmap;
     }
-
 
     public static Bitmap resizeBitmap(Bitmap bitmap, int newWidth, int newHeight) {
         return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, false);
     }
-
 
     public static String decodeString(String text) {
         try {
@@ -338,7 +318,6 @@ public class Utils {
         }
     }
 
-
     public static String encodeString(String text) {
         try {
             return Base64.encodeToString(text.getBytes("UTF-8"), Base64.DEFAULT);
@@ -347,7 +326,6 @@ public class Utils {
             return null;
         }
     }
-
 
     public static void errorDialog(Context ctx, Exception e) {
         new AlertDialog.Builder(ctx)
@@ -360,7 +338,6 @@ public class Utils {
                             }
                         }).show();
     }
-
 
     public static void circleAnimate(final View view, int cx, int cy) {
         if (view == null) return;
@@ -385,21 +362,17 @@ public class Utils {
         }
     }
 
-
     public static boolean existFile(String fileName) {
         return new RootFile(fileName).exists();
     }
-
 
     public static String readFile(String fileName) {
         return readFile(fileName, true);
     }
 
-
     public static String getProp(String key) {
         return RootUtilities.runCommand("getprop " + key);
     }
-
 
     public static boolean isPropActive(String key) {
         try {
@@ -409,7 +382,6 @@ public class Utils {
         }
     }
 
-
     public static boolean hasProp(String key) {
         try {
             return RootUtilities.runCommand("getprop | grep " + key).split("]:").length > 1;
@@ -417,7 +389,6 @@ public class Utils {
             return false;
         }
     }
-
 
     public static void writeFile(String path, String text, boolean append) {
         FileWriter writer = null;
@@ -435,7 +406,6 @@ public class Utils {
             }
         }
     }
-
 
     public static String readFile(String file, boolean root) {
         if (root) return new RootFile(file).readFile();
@@ -465,12 +435,10 @@ public class Utils {
         return s == null ? null : s.toString().trim();
     }
 
-
     public static String getExternalStorage() {
         String path = RootUtilities.runCommand("echo ${SECONDARY_STORAGE%%:*}");
         return path.contains("/") ? path : null;
     }
-
 
     public static String getInternalStorage() {
         String dataPath = existFile("/data/media/0") ? "/data/media/0" : "/data/media";
@@ -478,7 +446,6 @@ public class Utils {
         if (existFile("/sdcard")) return "/sdcard";
         return Environment.getExternalStorageDirectory().getPath();
     }
-
 
     public static void confirmDialog(String title, String msg, DialogInterface.OnClickListener onClickListener,
                                      Context ctx) {
@@ -491,7 +458,6 @@ public class Utils {
             }
         }).setPositiveButton(ctx.getString(R.string.ok), onClickListener).show();
     }
-
 
     public static String readAssetFile(Context ctx, String file) {
         InputStream input = null;
@@ -517,7 +483,6 @@ public class Utils {
         return null;
     }
 
-
     public static void setLocale(String lang, Context ctx) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
@@ -526,16 +491,13 @@ public class Utils {
         ctx.getApplicationContext().getResources().updateConfiguration(config, null);
     }
 
-
     public static String formatCelsius(double celsius) {
         return round(celsius, 2) + "°C";
     }
 
-
     public static String celsiusToFahrenheit(double celsius) {
         return round(celsius * 9 / 5 + 32, 2) + "°F";
     }
-
 
     public static String round(double value, int places) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -545,7 +507,6 @@ public class Utils {
         return df.format(value);
     }
 
-
     public static long stringToLong(String string) {
         try {
             return Long.parseLong(string);
@@ -553,7 +514,6 @@ public class Utils {
             return 0;
         }
     }
-
 
     public static int stringToInt(String string) {
         try {
@@ -563,11 +523,9 @@ public class Utils {
         }
     }
 
-
     public static void launchUrl(Context ctx, String link) {
         ctx.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
     }
-
 
     public static int getActionBarHeight(Context ctx) {
         TypedArray ta = ctx.obtainStyledAttributes(new int[]{R.attr.actionBarSize});
@@ -576,40 +534,34 @@ public class Utils {
         return actionBarSize;
     }
 
-
     public static boolean isTV(Context ctx) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2
-               && ((UiModeManager) ctx.getSystemService(
+                && ((UiModeManager) ctx.getSystemService(
                 Context.UI_MODE_SERVICE)).getCurrentModeType()
-                  == Configuration.UI_MODE_TYPE_TELEVISION;
+                == Configuration.UI_MODE_TYPE_TELEVISION;
     }
-
 
     public static boolean isTablet(Context ctx) {
         return (ctx.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
-               >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
-
 
     public static int getScreenOrientation(Context ctx) {
         return ctx.getResources().getDisplayMetrics().widthPixels <
-               ctx.getResources().getDisplayMetrics().heightPixels ?
-               Configuration.ORIENTATION_PORTRAIT : Configuration.ORIENTATION_LANDSCAPE;
+                ctx.getResources().getDisplayMetrics().heightPixels ?
+                Configuration.ORIENTATION_PORTRAIT : Configuration.ORIENTATION_LANDSCAPE;
     }
-
 
     public static int mkDiP(Context ctx, int pixel) {
         DisplayMetrics metrics = ctx.getResources().getDisplayMetrics();
         return (int) (metrics.density * pixel);
     }
 
-
     public static float getDensity(Context ctx) {
         DisplayMetrics metrics = ctx.getResources().getDisplayMetrics();
         return metrics.density;
     }
-
 
     public static int checkLimits(int max, int arg) {
         boolean neg = arg < 0;
@@ -618,30 +570,24 @@ public class Utils {
         return (neg ? (abs * -1) : abs);
     }
 
-
     public static int checkMax(int arg, int maxVal) {
         arg = (arg > maxVal ? maxVal : arg);
         return arg;
     }
 
-
     public static double toPercent(double x, double maxX) {return x * (double) 100 / maxX;}
 
-
     private double toPercentScaled(double x, double maxX, int scaling) {return x * (double) scaling / maxX;}
-
 
     public static boolean stringEquals(String checkIt, String... params) {
         for (String s : params) if (s.equals(checkIt)) return true;
         return false;
     }
 
-
     public static boolean stringContains(String checkIt, String... params) {
         for (String s : params) if (s.contains(checkIt)) return true;
         return false;
     }
-
 
     public static int setMinMaxWhenOutOfRange(int min, int max, int checkIt) {
         if (checkIt <= min) return min;
@@ -649,11 +595,12 @@ public class Utils {
         return checkIt;
     }
 
-
     public void addValueToHashtable(Hashtable<String, Integer> countable, String s) {
         if (countable.containsKey(s)) {
             countable.put(s, countable.get(s) + 1);
-        } else countable.put(s, 1);
+        } else {
+            countable.put(s, 1);
+        }
     }
 
     private String resolveHashtableValues(Hashtable<String, Integer> countable) {
@@ -667,7 +614,6 @@ public class Utils {
         return result;
     }
 
-
     /**
      * @param mode: TIME_STRING_NO_DIVIDER for raw representation
      *              TIME_STRING_FILE for file representation
@@ -677,12 +623,12 @@ public class Utils {
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
 
         String d = gregorianCalendar.get(Calendar.YEAR)
-                   + String.format("%02d", gregorianCalendar.get(Calendar.MONTH))
-                   + String.format("%02d", gregorianCalendar.get(Calendar.DAY_OF_MONTH))
-                   + String.format("%02d", gregorianCalendar.get(Calendar.HOUR_OF_DAY))
-                   + String.format("%02d", gregorianCalendar.get(Calendar.MINUTE))
-                   + String.format("%02d", gregorianCalendar.get(Calendar.SECOND))
-                   + String.format("%04d", gregorianCalendar.get(Calendar.MILLISECOND));
+                + String.format("%02d", gregorianCalendar.get(Calendar.MONTH))
+                + String.format("%02d", gregorianCalendar.get(Calendar.DAY_OF_MONTH))
+                + String.format("%02d", gregorianCalendar.get(Calendar.HOUR_OF_DAY))
+                + String.format("%02d", gregorianCalendar.get(Calendar.MINUTE))
+                + String.format("%02d", gregorianCalendar.get(Calendar.SECOND))
+                + String.format("%04d", gregorianCalendar.get(Calendar.MILLISECOND));
 
         String month = d.substring(4, 6);
         if (month.startsWith("1")) {
@@ -699,32 +645,39 @@ public class Utils {
         String divMonth = "", divDateTime = "", divTime = "";
 
         switch (mode) {
-            case TIME_STRING_NO_DIVIDER: divMonth = ""; divDateTime = ""; divTime = "";
+            case TIME_STRING_NO_DIVIDER:
+                divMonth = "";
+                divDateTime = "";
+                divTime = "";
                 break;
-            case TIME_STRING_FILE: divMonth = "_"; divDateTime = "_"; divTime = "_";
+            case TIME_STRING_FILE:
+                divMonth = "_";
+                divDateTime = "_";
+                divTime = "_";
                 break;
-            case TIME_STRING_GUI: divMonth = "."; divDateTime = " - "; divTime = ":";
+            case TIME_STRING_GUI:
+                divMonth = ".";
+                divDateTime = " - ";
+                divTime = ":";
                 break;
         }
 
         return d.substring(6, 8) + divMonth + month + divMonth + d.substring(0, 4) + divDateTime +
-               d.substring(8, 10) + divTime + d.substring(10, 12);
+                d.substring(8, 10) + divTime + d.substring(10, 12);
     }
-
 
     public static int getDayTime() {
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
 
-        if (timeOfDay >= 6 && timeOfDay < 12) return MORNING;
-
-        else if (timeOfDay >= 12 && timeOfDay < 18) return AFTERNOON;
-
-        else if (timeOfDay >= 18 && timeOfDay < 22) return AFTERNOON;
+        if (timeOfDay >= 6 && timeOfDay < 12) {
+            return MORNING;
+        } else if (timeOfDay >= 12 && timeOfDay < 18) {
+            return AFTERNOON;
+        } else if (timeOfDay >= 18 && timeOfDay < 22) return AFTERNOON;
 
         return NIGHT;
     }
-
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
         Bitmap bitmap;
@@ -741,8 +694,8 @@ public class Utils {
             bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
         } else {
             bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                                         drawable.getIntrinsicHeight(),
-                                         Bitmap.Config.ARGB_8888);
+                    drawable.getIntrinsicHeight(),
+                    Bitmap.Config.ARGB_8888);
         }
 
         Canvas canvas = new Canvas(bitmap);
@@ -750,7 +703,6 @@ public class Utils {
         drawable.draw(canvas);
         return bitmap;
     }
-
 
     //    private void waitForInteraction() {
     //final ProgressDialog progressDialog = ProgressDialog.show(this, "", "Loading.. Wait..", true);
@@ -773,25 +725,23 @@ public class Utils {
     //t.start();
     //    }
 
-
     public static String buildSummary() {
         return "" +
-               "VERSION.RELEASE {" + Build.VERSION.RELEASE + "}" + "\n" +
-               "VERSION.INCREMENTAL {" + Build.VERSION.INCREMENTAL + "}" + "\n" +
-               "VERSION.SDK {" + Build.VERSION.SDK + "}" + "\n" +
-               "MANUFACTURER {" + Build.MANUFACTURER + "}" + "\n" +
-               "BRAND {" + Build.BRAND + "}" + "\n" +
-               "MODEL {" + Build.MODEL + "}" + "\n" +
-               "DEVICE {" + Build.DEVICE + "}" + "\n" +
-               "PRODUCT {" + Build.PRODUCT + "}" + "\n" +
-               "BOARD {" + Build.BOARD + "}" + "\n" +
-               "FINGERPRINT {" + Build.FINGERPRINT + "}" + "\n" +
-               "DISPLAY {" + Build.DISPLAY + "}" + "\n" +
-               "SERIAL {" + Build.SERIAL + "}" + "\n" +
-               "HOST {" + Build.HOST + "}" + "\n" +
-               "ID {" + Build.ID + "}";
+                "VERSION.RELEASE {" + Build.VERSION.RELEASE + "}" + "\n" +
+                "VERSION.INCREMENTAL {" + Build.VERSION.INCREMENTAL + "}" + "\n" +
+                "VERSION.SDK {" + Build.VERSION.SDK + "}" + "\n" +
+                "MANUFACTURER {" + Build.MANUFACTURER + "}" + "\n" +
+                "BRAND {" + Build.BRAND + "}" + "\n" +
+                "MODEL {" + Build.MODEL + "}" + "\n" +
+                "DEVICE {" + Build.DEVICE + "}" + "\n" +
+                "PRODUCT {" + Build.PRODUCT + "}" + "\n" +
+                "BOARD {" + Build.BOARD + "}" + "\n" +
+                "FINGERPRINT {" + Build.FINGERPRINT + "}" + "\n" +
+                "DISPLAY {" + Build.DISPLAY + "}" + "\n" +
+                "SERIAL {" + Build.SERIAL + "}" + "\n" +
+                "HOST {" + Build.HOST + "}" + "\n" +
+                "ID {" + Build.ID + "}";
     }
-
 
     /**
      * e.g. '5.1.1'
@@ -891,10 +841,8 @@ public class Utils {
         return Build.ID;
     }
 
-
     public static boolean apiGreaterOrEqual(int target) {
         return Build.VERSION.SDK_INT >= target;
     }
-
 
 }

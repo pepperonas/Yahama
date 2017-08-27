@@ -117,6 +117,6 @@
     <string name="pref_title_share_app">Tell a friend</string>
 
     <string name="share_app_intro_text">Hey, check out this app</string>
-
+    <string name="ad_free">(ad free)</string>
 
 </resources>

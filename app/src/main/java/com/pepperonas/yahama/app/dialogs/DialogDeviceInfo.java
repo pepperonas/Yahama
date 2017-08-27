@@ -18,9 +18,9 @@ package com.pepperonas.yahama.app.dialogs;
 
 import android.content.Context;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.utility.Const;
 import com.pepperonas.yahama.app.utility.Setup;
@@ -35,7 +35,7 @@ public class DialogDeviceInfo {
                 .title(R.string.dialog_title_device_info)
                 .icon(new IconicsDrawable(ctx, GoogleMaterial.Icon.gmd_info_outline)
                               .colorRes(Setup.getDialogIconColor()).sizeDp(Const.DIALOG_ICON_SIZE))
-                .content(dbgMsg)
+                .message(dbgMsg)
                 .positiveText(R.string.ok)
                 .show();
     }

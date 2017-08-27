@@ -16,14 +16,14 @@
 
 package com.pepperonas.yahama.app.dialogs;
 
-import android.content.DialogInterface;
+import android.app.AlertDialog;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.utility.Commands;
@@ -36,50 +36,47 @@ public class DialogCinemaDsp3d7ch {
 
     private static final String TAG = "Dsp3d_7CH";
 
-    TextView tvRange;
+    private TextView tvRange;
 
-    ImageView touchFrame;
+    private ImageView touchFrame;
 
-    ImageView visualizer;
-
+    private ImageView visualizer;
 
     public DialogCinemaDsp3d7ch(final MainActivity main) {
 
         Log.i(TAG, "DialogCinemaDsp3d7ch ");
 
         MaterialDialog dlg = new MaterialDialog.Builder(main)
-                .customView(R.layout.dialog_cinema_dsp3d_7ch, true)
+                .customView(R.layout.dialog_cinema_dsp3d_7ch)
                 .positiveText(R.string.ok)
                 .neutralText(R.string.reset)
                 .negativeText(R.string.cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .buttonCallback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
                     }
-
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
                         super.onNegative(dialog);
                     }
 
-
                     @Override
                     public void onNeutral(MaterialDialog dialog) {
                         super.onNeutral(dialog);
                         main.runCtrlrTask(false, Commands.RESET_SURROUND_3D_CONFIG());
                     }
-
                 })
-                .showListener(new DialogInterface.OnShowListener() {
+                .showListener(new MaterialDialog.ShowListener() {
                     @Override
-                    public void onShow(DialogInterface dialog) {
+                    public void onShow(AlertDialog dialog) {
+                        super.onShow(dialog);
                         MaterialDialog dlg = (MaterialDialog) dialog;
 
-                        tvRange = (TextView) dlg.findViewById(R.id.tv_range);
-                        touchFrame = (ImageView) dlg.findViewById(R.id.touch_frame);
-                        visualizer = (ImageView) dlg.findViewById(R.id.visualizer);
+                        tvRange = dlg.findViewById(R.id.tv_range);
+                        touchFrame = dlg.findViewById(R.id.touch_frame);
+                        visualizer = dlg.findViewById(R.id.visualizer);
 
                         makeStartConfig(main);
 
@@ -88,7 +85,6 @@ public class DialogCinemaDsp3d7ch {
                             public boolean onTouch(View v, MotionEvent event) {
                                 return trackInput(v, event);
                             }
-
 
                             private boolean trackInput(View v, MotionEvent event) {
 
@@ -120,15 +116,13 @@ public class DialogCinemaDsp3d7ch {
                                         String frontRear = main.getString(R.string.front_rear) + " " + Utils.checkLimits(5, pYi);
                                         tvRange.setText(String.format("%s\n%s", leftRight, frontRear));
 
-                                        main.runCtrlrTask                                        (false, Commands.SURROUND_DSP_3D_CONFIG(
+                                        main.runCtrlrTask(false, Commands.SURROUND_DSP_3D_CONFIG(
                                                 Utils.checkLimits(5, pXi),
-                                                Utils.checkLimits(5, pYi)                       ));
+                                                Utils.checkLimits(5, pYi)));
 
                                 }
-
                                 return true;
                             }
-
 
                             private void checkBounds(View v) {
                                 if (visualizer.getX() < 0) visualizer.setX(0);
@@ -148,7 +142,6 @@ public class DialogCinemaDsp3d7ch {
 
         dlg.show();
     }
-
 
     private void makeStartConfig(MainActivity main) {
         visualizer.setX(touchFrame.getWidth() / 2 - visualizer.getWidth() / 2);

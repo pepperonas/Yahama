@@ -38,8 +38,8 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
-import com.pepperonas.yahama.app.model.AmpYaRxV577;
 import com.pepperonas.yahama.app.dialogs.DialogVolumeSlider;
+import com.pepperonas.yahama.app.model.AmpYaRxV577;
 import com.pepperonas.yahama.app.utility.Commands;
 import com.pepperonas.yahama.app.utility.Const;
 import com.pepperonas.yahama.app.utility.Setup;
@@ -50,7 +50,7 @@ import com.pepperonas.yahama.app.utility.Setup;
 public class AudioFragment
         extends Fragment
         implements View.OnClickListener,
-                   CompoundButton.OnCheckedChangeListener {
+        CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "AudioFragment";
 
@@ -74,11 +74,9 @@ public class AudioFragment
     private SeekBar mInvisibleVolSlider;
     private DialogVolumeSlider mDialogVolumeSlider;
 
-
     public void setMain(MainActivity main) {
         this.mMain = main;
     }
-
 
     public static AudioFragment newInstance(int i) {
         AudioFragment fragment = new AudioFragment();
@@ -90,7 +88,6 @@ public class AudioFragment
         return fragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -99,7 +96,6 @@ public class AudioFragment
         mMain.setTitle(getString(R.string.audio));
         return v;
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -119,9 +115,13 @@ public class AudioFragment
         ensureRemoveAds();
     }
 
-
     private void ensureRemoveAds() {
-        AdView adView = (AdView) getActivity().findViewById(R.id.adView);
+        AdView adView = getActivity().findViewById(R.id.adView);
+        if (getActivity().getResources().getBoolean(R.bool.build_without_ads)) {
+            if (adView != null) {
+                adView.setVisibility(View.GONE);
+            }
+        }
         if (!Setup.getAdvertising()) {
             if (adView != null) {
                 adView.setVisibility(View.GONE);
@@ -131,7 +131,6 @@ public class AudioFragment
             adView.loadAd(adRequest);
         }
     }
-
 
     private void initInvisibleVolumeSlider() {
         mInvisibleVolSlider = MainActivity.getInvisibleVolSeekBar();
@@ -146,7 +145,7 @@ public class AudioFragment
                 mMain.setTemporaryTitleUpdate(volumeMsg);
                 if (mDialogVolumeSlider != null) mDialogVolumeSlider.showSeekBarValue(volumeMsg);
 
-                mMain.runCtrlrTask                                           (
+                mMain.runCtrlrTask(
                         false,
                         Commands.SET_VOL((int) (vol * 10)),
                         Const.M_VOLUME_SET + String.valueOf((int) (vol * 10)));
@@ -155,13 +154,11 @@ public class AudioFragment
                 mTitleWriterHandler.postDelayed(mTitleWriterRunnable, Const.DELAY_TITLE_RESET);
             }
 
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 mMain.resetLastExecutionTimestamp();
                 mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
             }
-
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
@@ -170,66 +167,63 @@ public class AudioFragment
         });
     }
 
-
     private void initActionCards() {
-        CardView cvPlayerStop = (CardView) mMain.findViewById(R.id.cv_player_stop);
-        CardView cvPlayerPause = (CardView) mMain.findViewById(R.id.cv_player_pause);
-        CardView cvPlayerPlay = (CardView) mMain.findViewById(R.id.cv_player_play);
+        CardView cvPlayerStop = mMain.findViewById(R.id.cv_player_stop);
+        CardView cvPlayerPause = mMain.findViewById(R.id.cv_player_pause);
+        CardView cvPlayerPlay = mMain.findViewById(R.id.cv_player_play);
 
-        CardView cvVolumeDown = (CardView) mMain.findViewById(R.id.cv_volume_down);
-        CardView cvVolumeUp = (CardView) mMain.findViewById(R.id.cv_volume_up);
-        CardView cvSlider = (CardView) mMain.findViewById(R.id.cv_slider);
+        CardView cvVolumeDown = mMain.findViewById(R.id.cv_volume_down);
+        CardView cvVolumeUp = mMain.findViewById(R.id.cv_volume_up);
+        CardView cvSlider = mMain.findViewById(R.id.cv_slider);
 
-        CardView cvBassDown = (CardView) mMain.findViewById(R.id.cv_bass_down);
-        CardView cvBassUp = (CardView) mMain.findViewById(R.id.cv_bass_up);
+        CardView cvBassDown = mMain.findViewById(R.id.cv_bass_down);
+        CardView cvBassUp = mMain.findViewById(R.id.cv_bass_up);
 
-        CardView cvTrebleDown = (CardView) mMain.findViewById(R.id.cv_treble_down);
-        CardView cvTrebleUp = (CardView) mMain.findViewById(R.id.cv_treble_up);
-
-        setCardLevel
-                (Setup.getTheme() == 0 ? Setup.COLOR_ACCENT
-                                       : Setup.COLOR_ACCENT_LIGHT,
-                 cvPlayerStop, cvPlayerPause, cvVolumeDown, cvSlider, cvBassDown, cvTrebleDown);
+        CardView cvTrebleDown = mMain.findViewById(R.id.cv_treble_down);
+        CardView cvTrebleUp = mMain.findViewById(R.id.cv_treble_up);
 
         setCardLevel
                 (Setup.getTheme() == 0 ? Setup.COLOR_ACCENT
-                                       : Setup.COLOR_ACCENT_LIGHT,
-                 cvPlayerPlay, cvVolumeUp, cvSlider, cvBassUp, cvTrebleUp);
+                                : Setup.COLOR_ACCENT_LIGHT,
+                        cvPlayerStop, cvPlayerPause, cvVolumeDown, cvSlider, cvBassDown, cvTrebleDown);
+
+        setCardLevel
+                (Setup.getTheme() == 0 ? Setup.COLOR_ACCENT
+                                : Setup.COLOR_ACCENT_LIGHT,
+                        cvPlayerPlay, cvVolumeUp, cvSlider, cvBassUp, cvTrebleUp);
 
         setCardClickListener
                 (cvPlayerStop, cvPlayerPause, cvPlayerPlay,
-                 cvVolumeDown, cvVolumeUp,
-                 cvSlider,
-                 cvBassDown, cvBassUp,
-                 cvTrebleDown, cvTrebleUp);
+                        cvVolumeDown, cvVolumeUp,
+                        cvSlider,
+                        cvBassDown, cvBassUp,
+                        cvTrebleDown, cvTrebleUp);
     }
 
-
     private void initLabelCards() {
-        CardView cvPlayer = (CardView) mMain.findViewById(R.id.cv_player);
-        CardView cvVolume = (CardView) mMain.findViewById(R.id.cv_volume);
-        CardView cvBass = (CardView) mMain.findViewById(R.id.cv_bass);
-        CardView cvTreble = (CardView) mMain.findViewById(R.id.cv_treble);
+        CardView cvPlayer = mMain.findViewById(R.id.cv_player);
+        CardView cvVolume = mMain.findViewById(R.id.cv_volume);
+        CardView cvBass = mMain.findViewById(R.id.cv_bass);
+        CardView cvTreble = mMain.findViewById(R.id.cv_treble);
 
         colorizeLabelCard(cvPlayer, cvVolume, cvBass, cvTreble);
     }
 
-
     private void drawIcons() {
 
-        ImageView ivPlayerStop = (ImageView) mMain.findViewById(R.id.iv_player_stop);
-        ImageView ivPlayerPause = (ImageView) mMain.findViewById(R.id.iv_player_pause);
-        ImageView ivPlayerPlay = (ImageView) mMain.findViewById(R.id.iv_player_play);
+        ImageView ivPlayerStop = mMain.findViewById(R.id.iv_player_stop);
+        ImageView ivPlayerPause = mMain.findViewById(R.id.iv_player_pause);
+        ImageView ivPlayerPlay = mMain.findViewById(R.id.iv_player_play);
 
-        ImageView ivVolumeDown = (ImageView) mMain.findViewById(R.id.iv_volume_down);
-        ImageView ivVolumeSlider = (ImageView) mMain.findViewById(R.id.iv_volume_slider);
-        ImageView ivVolumeUp = (ImageView) mMain.findViewById(R.id.iv_volume_up);
+        ImageView ivVolumeDown = mMain.findViewById(R.id.iv_volume_down);
+        ImageView ivVolumeSlider = mMain.findViewById(R.id.iv_volume_slider);
+        ImageView ivVolumeUp = mMain.findViewById(R.id.iv_volume_up);
 
-        ImageView ivBassDown = (ImageView) mMain.findViewById(R.id.iv_bass_down);
-        ImageView ivBassUp = (ImageView) mMain.findViewById(R.id.iv_bass_up);
+        ImageView ivBassDown = mMain.findViewById(R.id.iv_bass_down);
+        ImageView ivBassUp = mMain.findViewById(R.id.iv_bass_up);
 
-        ImageView ivTrebleDown = (ImageView) mMain.findViewById(R.id.iv_treble_down);
-        ImageView ivTrebleUp = (ImageView) mMain.findViewById(R.id.iv_treble_up);
+        ImageView ivTrebleDown = mMain.findViewById(R.id.iv_treble_down);
+        ImageView ivTrebleUp = mMain.findViewById(R.id.iv_treble_up);
 
         ivPlayerStop.setImageDrawable(new IconicsDrawable(mMain, CommunityMaterial
                 .Icon.cmd_close_circle_outline).colorRes(Setup.getButtonIconColor()).sizeDp(ACTION_ICON_SIZE_LARGE));
@@ -262,21 +256,19 @@ public class AudioFragment
                 .Icon.cmd_menu_up).colorRes(Setup.getButtonIconColor()).sizeDp(ACTION_ICON_SIZE_MEDIUM));
     }
 
-
     private void setCardClickListener(CardView... cards) {
         for (CardView c : cards) {
             c.setOnClickListener(this);
         }
     }
 
-
     private void setCardLevel(int level, CardView... cards) {
-        for (CardView c : cards)
+        for (CardView c : cards) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 c.getForeground().setLevel(level);
             }
+        }
     }
-
 
     private void colorizeLabelCard(CardView... cards) {
         for (CardView c : cards) {
@@ -284,13 +276,11 @@ public class AudioFragment
         }
     }
 
-
     private void colorizeActionCard(CardView... cards) {
         for (CardView c : cards) {
             c.setCardBackgroundColor(mMain.getResources().getColor(Setup.getActionCardColor()));
         }
     }
-
 
     private void setActionBackground(TextView... tvs) {
         for (TextView t : tvs) {
@@ -298,14 +288,12 @@ public class AudioFragment
         }
     }
 
-
     @Override
     public void onPause() {
         super.onPause();
         mMain.setTemporaryTitleUpdate(mMain.getLastSelection());
         mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -331,10 +319,9 @@ public class AudioFragment
                 mDialogVolumeSlider.show();
                 break;
 
-
             case R.id.cv_bass_down:
                 volBass = MainActivity.getAmp().getBass();
-                mMain.runCtrlrTask                                      (
+                mMain.runCtrlrTask(
                         false,
                         Commands.SET_BASS_OR_TREBLE("Bass", (volBass) - 5),
                         Const.M_BASS_SET + String.valueOf((volBass - 5)));
@@ -342,15 +329,15 @@ public class AudioFragment
                 displayedValue = ((float) (volBass - 5) / 10);
                 displayedValue = limitCheck(displayedValue);
                 updateMsg = getString(R.string.bass) + ": " +
-                            showPlusIfNeeded(displayedValue) +
-                            String.valueOf(displayedValue + " dB");
+                        showPlusIfNeeded(displayedValue) +
+                        String.valueOf(displayedValue + " dB");
 
                 showActionInToolbar(mMain, updateMsg);
                 return;
 
             case R.id.cv_bass_up:
                 volBass = MainActivity.getAmp().getBass();
-                mMain.runCtrlrTask                                      (
+                mMain.runCtrlrTask(
                         false,
                         Commands.SET_BASS_OR_TREBLE("Bass", (volBass) + 5),
                         Const.M_BASS_SET + String.valueOf((volBass + 5)));
@@ -358,16 +345,15 @@ public class AudioFragment
                 displayedValue = ((float) (volBass + 5) / 10);
                 displayedValue = limitCheck(displayedValue);
                 updateMsg = getString(R.string.bass) + ": " +
-                            showPlusIfNeeded(displayedValue) +
-                            String.valueOf(displayedValue) + " dB";
+                        showPlusIfNeeded(displayedValue) +
+                        String.valueOf(displayedValue) + " dB";
 
                 showActionInToolbar(mMain, updateMsg);
                 return;
 
-
             case R.id.cv_treble_down:
                 volTreble = MainActivity.getAmp().getTreble();
-                mMain.runCtrlrTask                                          (
+                mMain.runCtrlrTask(
                         false,
                         Commands.SET_BASS_OR_TREBLE("Treble", (volTreble) - 5),
                         Const.M_TREBLE_SET + String.valueOf((volTreble - 5)));
@@ -375,15 +361,15 @@ public class AudioFragment
                 displayedValue = ((float) (volTreble - 5) / 10);
                 displayedValue = limitCheck(displayedValue);
                 updateMsg = getString(R.string.treble) + ": " +
-                            showPlusIfNeeded(displayedValue) +
-                            String.valueOf(displayedValue + " dB");
+                        showPlusIfNeeded(displayedValue) +
+                        String.valueOf(displayedValue + " dB");
 
                 showActionInToolbar(mMain, updateMsg);
                 return;
 
             case R.id.cv_treble_up:
                 volTreble = MainActivity.getAmp().getTreble();
-                mMain.runCtrlrTask                                          (
+                mMain.runCtrlrTask(
                         false,
                         Commands.SET_BASS_OR_TREBLE("Treble", (volTreble) + 5),
                         Const.M_TREBLE_SET + String.valueOf((volTreble + 5)));
@@ -391,12 +377,11 @@ public class AudioFragment
                 displayedValue = ((float) (volTreble + 5) / 10);
                 displayedValue = limitCheck(displayedValue);
                 updateMsg = getString(R.string.treble) + ": " +
-                            showPlusIfNeeded(displayedValue) +
-                            String.valueOf(displayedValue + " dB");
+                        showPlusIfNeeded(displayedValue) +
+                        String.valueOf(displayedValue + " dB");
 
                 showActionInToolbar(mMain, updateMsg);
                 return;
-
 
             case R.id.cv_player_stop:
                 updateMsg = getString(R.string.stop);
@@ -418,25 +403,24 @@ public class AudioFragment
         showActionInToolbar(mMain, updateMsg);
     }
 
-
     private float limitCheck(float displayedValue) {
         if (displayedValue > 6 && displayedValue > 0) return 6;
-        if (displayedValue < -6 && displayedValue < 0) return -6;
-        else return displayedValue;
+        if (displayedValue < -6 && displayedValue < 0) {
+            return -6;
+        } else {
+            return displayedValue;
+        }
     }
-
 
     private String showPlusIfNeeded(float volBass) {
         return ((volBass) >= 0 ? "+" : "");
     }
-
 
     private void showActionInToolbar(MainActivity main, String updateMsg) {
         main.setTemporaryTitleUpdate(updateMsg);
         mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
         mTitleWriterHandler.postDelayed(mTitleWriterRunnable, Const.DELAY_TITLE_RESET);
     }
-
 
     public void setVolumeSlider(float volume) {
         Log.w(TAG, "volume: " + volume);
@@ -447,11 +431,10 @@ public class AudioFragment
         }
     }
 
-
     public void updateSwitches(boolean isEnhancer, boolean sprkA, boolean sprkB) {
-        Switch swEnhancer = (Switch) mMain.findViewById(R.id.sw_enhancer);
-        Switch swSpkrA = (Switch) mMain.findViewById(R.id.sw_speaker_a);
-        Switch swSpkrB = (Switch) mMain.findViewById(R.id.sw_speaker_b);
+        Switch swEnhancer = mMain.findViewById(R.id.sw_enhancer);
+        Switch swSpkrA = mMain.findViewById(R.id.sw_speaker_a);
+        Switch swSpkrB = mMain.findViewById(R.id.sw_speaker_b);
 
         if (swEnhancer != null) {
             swEnhancer.setChecked(isEnhancer);
@@ -468,7 +451,6 @@ public class AudioFragment
 
     }
 
-
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         String action = "", msg = "", trailer = "";
@@ -478,24 +460,24 @@ public class AudioFragment
             case R.id.sw_enhancer:
                 action = Commands.SET_ENHANCER("Enhancer", isChecked ? "On" : "Off");
                 msg = getString(R.string.spec_enhancer) + " " +
-                      (isChecked ? getString(R.string.active)
-                                 : getString(R.string.inactive));
+                        (isChecked ? getString(R.string.active)
+                                : getString(R.string.inactive));
                 trailer = Const.M_ENHANCER_SET + (isChecked ? "true" : "false");
                 break;
 
             case R.id.sw_speaker_a:
                 action = Commands.SPEAKER_CONFIG(isChecked, MainActivity.getAmp().isSpeakerB());
                 msg = getString(R.string.speaker_a) + " " +
-                      (isChecked ? getString(R.string.active)
-                                 : getString(R.string.inactive));
+                        (isChecked ? getString(R.string.active)
+                                : getString(R.string.inactive));
                 trailer = Const.M_SPKR_A_SET + (isChecked ? "true" : "false");
                 break;
 
             case R.id.sw_speaker_b:
                 action = Commands.SPEAKER_CONFIG(MainActivity.getAmp().isSpeakerA(), isChecked);
                 msg = getString(R.string.speaker_b) + " " +
-                      (isChecked ? getString(R.string.active)
-                                 : getString(R.string.inactive));
+                        (isChecked ? getString(R.string.active)
+                                : getString(R.string.inactive));
                 trailer = Const.M_SPKR_B_SET + (isChecked ? "true" : "false");
                 break;
 

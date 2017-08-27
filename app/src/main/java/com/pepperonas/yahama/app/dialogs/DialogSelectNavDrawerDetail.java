@@ -18,7 +18,7 @@ package com.pepperonas.yahama.app.dialogs;
 
 import android.view.View;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
 import com.pepperonas.yahama.app.fragments.SettingsFragment;
@@ -32,19 +32,16 @@ public class DialogSelectNavDrawerDetail {
     public DialogSelectNavDrawerDetail(final MainActivity main, final SettingsFragment sf) {
         new MaterialDialog.Builder(main)
                 .title(R.string.dialog_title_select_nav_drawer_detail)
-                .items(R.array.dialog_items_select_nav_drawer_detail)
-                .alwaysCallSingleChoiceCallback()
-                .itemsCallbackSingleChoice
-                        (Setup.getNavDrawerDetailPos(),
-                         new MaterialDialog.ListCallbackSingleChoice() {
-                             @Override
-                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                 Setup.setNavDrawerDetail(text.toString(), which);
-                                 if (MainActivity.getAmp().isOn()) main.runConnectionTask(false);
-                                 sf.updateSummaries();
-                                 return true;
-                             }
-                         })
+                .listItems(true, main.getResources().getStringArray(R.array.dialog_items_select_nav_drawer_detail))
+                .itemClickListener(new MaterialDialog.ItemClickListener() {
+                    @Override
+                    public void onClick(View v, int position, long id) {
+                        super.onClick(v, position, id);
+                        Setup.setNavDrawerDetail(main.getResources().getStringArray(R.array.dialog_items_select_nav_drawer_detail)[position], position);
+                        if (MainActivity.getAmp().isOn()) main.runConnectionTask(false);
+                        sf.updateSummaries();
+                    }
+                })
                 .show();
     }
 }
