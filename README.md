@@ -1,9 +1,8 @@
 # Yahama
 An Android App to control your Yamaha RX-V577 (or similar) amplifier.
 
+
 ## Features
-
-
 
 
 ## Screenshots
@@ -15,7 +14,6 @@ An Android App to control your Yamaha RX-V577 (or similar) amplifier.
 
 ![Screenshot](https://github.com/pepperonas/M104/blob/master/art/pic05.png "pic05")
 ![Screenshot](https://github.com/pepperonas/M104/blob/master/art/pic06.png "pic06")
-
 
 
 
