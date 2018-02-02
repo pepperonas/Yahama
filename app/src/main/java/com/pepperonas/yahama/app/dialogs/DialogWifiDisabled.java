@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016 Martin Pfeffer
+ * Copyright (c) 2018 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,6 +19,7 @@ package com.pepperonas.yahama.app.dialogs;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.yahama.app.MainActivity;
@@ -30,7 +31,9 @@ import com.pepperonas.yahama.app.utility.Const;
  */
 public class DialogWifiDisabled {
 
-    boolean mIsShown = false;
+    private static final String TAG = "DialogWifiDisabled";
+
+    private boolean mIsShown = false;
     private final MaterialDialog mDialog;
 
     public DialogWifiDisabled(final MainActivity main) {
@@ -43,13 +46,21 @@ public class DialogWifiDisabled {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-                        main.startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS), Const.REQ_CODE_ENABLE_WIFI);
+                        try {
+                            main.startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS), Const.REQ_CODE_ENABLE_WIFI);
+                        } catch (Exception e) {
+                            Log.e(TAG, "onPositive: " + e);
+                        }
                     }
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
                         super.onNegative(dialog);
-                        main.finish();
+                        try {
+                            main.finish();
+                        } catch (Exception e) {
+                            Log.e(TAG, "onNegative: ", e);
+                        }
                     }
                 })
                 .showListener(new MaterialDialog.ShowListener() {

@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016 Martin Pfeffer
+ * Copyright (c) 2018 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,6 +19,7 @@ package com.pepperonas.yahama.app.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -46,10 +47,11 @@ public class InputFragment extends Fragment implements View.OnClickListener {
         @Override
         public void run() {
             MainActivity a = (MainActivity) getActivity();
-            a.setTitle(a.getLastSelection());
+            if (a != null) {
+                a.setTitle(a.getLastSelection());
+            }
         }
     };
-
 
     public static InputFragment newInstance(int i) {
         InputFragment fragment = new InputFragment();
@@ -61,19 +63,19 @@ public class InputFragment extends Fragment implements View.OnClickListener {
         return fragment;
     }
 
-
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_input, container, false);
         MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.setTitle(getString(R.string.input));
+        if (mainActivity != null) {
+            mainActivity.setTitle(getString(R.string.input));
+        }
         return v;
     }
 
-
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.i(TAG, "onViewCreated()");
 
@@ -82,60 +84,57 @@ public class InputFragment extends Fragment implements View.OnClickListener {
         initActionCards();
     }
 
-
     private void initActionCards() {
-        CardView cvAv1 = (CardView) getActivity().findViewById(R.id.cv_av_av1);
-        CardView cvAv2 = (CardView) getActivity().findViewById(R.id.cv_av_av2);
-        CardView cvAv3 = (CardView) getActivity().findViewById(R.id.cv_av_av3);
+        if (getActivity() != null) {
+            CardView cvAv1 = getActivity().findViewById(R.id.cv_av_av1);
+            CardView cvAv2 = getActivity().findViewById(R.id.cv_av_av2);
+            CardView cvAv3 = getActivity().findViewById(R.id.cv_av_av3);
 
-        CardView cvAv4 = (CardView) getActivity().findViewById(R.id.cv_av_av4);
-        CardView cvAv5 = (CardView) getActivity().findViewById(R.id.cv_av_av5);
-        CardView cvAv6 = (CardView) getActivity().findViewById(R.id.cv_av_av6);
+            CardView cvAv4 = getActivity().findViewById(R.id.cv_av_av4);
+            CardView cvAv5 = getActivity().findViewById(R.id.cv_av_av5);
+            CardView cvAv6 = getActivity().findViewById(R.id.cv_av_av6);
 
+            CardView cvHdmi1 = getActivity().findViewById(R.id.cv_hdmi_hdmi1);
+            CardView cvHdmi2 = getActivity().findViewById(R.id.cv_hdmi_hdmi2);
+            CardView cvHdmi3 = getActivity().findViewById(R.id.cv_hdmi_hdmi3);
 
-        CardView cvHdmi1 = (CardView) getActivity().findViewById(R.id.cv_hdmi_hdmi1);
-        CardView cvHdmi2 = (CardView) getActivity().findViewById(R.id.cv_hdmi_hdmi2);
-        CardView cvHdmi3 = (CardView) getActivity().findViewById(R.id.cv_hdmi_hdmi3);
+            CardView cvHdmi4 = getActivity().findViewById(R.id.cv_hdmi_hdmi4);
+            CardView cvHdmi5 = getActivity().findViewById(R.id.cv_hdmi_hdmi5);
+            CardView cvHdmi6 = getActivity().findViewById(R.id.cv_hdmi_hdmi6);
 
-        CardView cvHdmi4 = (CardView) getActivity().findViewById(R.id.cv_hdmi_hdmi4);
-        CardView cvHdmi5 = (CardView) getActivity().findViewById(R.id.cv_hdmi_hdmi5);
-        CardView cvHdmi6 = (CardView) getActivity().findViewById(R.id.cv_hdmi_hdmi6);
+            CardView cvTuner = getActivity().findViewById(R.id.cv_others_tuner);
+            CardView cvAux = getActivity().findViewById(R.id.cv_others_aux);
+            CardView cvUsb = getActivity().findViewById(R.id.cv_others_usb);
 
+            setCardClickListener(
+                    cvAv1, cvAv2, cvAv3, cvAv4, cvAv5, cvAv6,
+                    cvHdmi1, cvHdmi2, cvHdmi3, cvHdmi4, cvHdmi5, cvHdmi5, cvHdmi6,
+                    cvTuner, cvAux, cvUsb);
 
-        CardView cvTuner = (CardView) getActivity().findViewById(R.id.cv_others_tuner);
-        CardView cvAux = (CardView) getActivity().findViewById(R.id.cv_others_aux);
-        CardView cvUsb = (CardView) getActivity().findViewById(R.id.cv_others_usb);
-
-        setCardClickListener(
-                cvAv1, cvAv2, cvAv3, cvAv4, cvAv5, cvAv6,
-                cvHdmi1, cvHdmi2, cvHdmi3, cvHdmi4, cvHdmi5, cvHdmi5, cvHdmi6,
-                cvTuner, cvAux, cvUsb);
-
-        setCardLevel(Setup.getTheme() == 0 ? Setup.COLOR_ACCENT
-                                           : Setup.COLOR_ACCENT_LIGHT,
-                     cvAv1, cvAv2, cvAv3, cvAv4, cvAv5, cvAv6,
-                     cvHdmi1, cvHdmi2, cvHdmi3, cvHdmi4, cvHdmi5, cvHdmi5, cvHdmi6,
-                     cvTuner, cvAux, cvUsb);
+            setCardLevel(Setup.getTheme() == 0 ? Setup.COLOR_ACCENT
+                            : Setup.COLOR_ACCENT_LIGHT,
+                    cvAv1, cvAv2, cvAv3, cvAv4, cvAv5, cvAv6,
+                    cvHdmi1, cvHdmi2, cvHdmi3, cvHdmi4, cvHdmi5, cvHdmi5, cvHdmi6,
+                    cvTuner, cvAux, cvUsb);
+        }
     }
-
 
     private void setCardClickListener(CardView... cards) {
         for (CardView c : cards) c.setOnClickListener(this);
     }
 
-
     private void setCardLevel(int level, CardView... cards) {
         for (CardView c : cards) c.getForeground().setLevel(level);
     }
 
-
     private void initLabelCards() {
-        CardView cvAv = (CardView) getActivity().findViewById(R.id.cv_av);
-        CardView cvHdmi = (CardView) getActivity().findViewById(R.id.cv_hdmi);
-        CardView cvOthers = (CardView) getActivity().findViewById(R.id.cv_others);
-        colorizeLabelCard(getActivity(), cvAv, cvHdmi, cvOthers);
+        if (getActivity() != null) {
+            CardView cvAv = getActivity().findViewById(R.id.cv_av);
+            CardView cvHdmi = getActivity().findViewById(R.id.cv_hdmi);
+            CardView cvOthers = getActivity().findViewById(R.id.cv_others);
+            colorizeLabelCard(getActivity(), cvAv, cvHdmi, cvOthers);
+        }
     }
-
 
     private void colorizeLabelCard(Activity a, CardView... cards) {
         for (CardView c : cards) {
@@ -143,15 +142,15 @@ public class InputFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
     @Override
     public void onPause() {
         super.onPause();
         MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.setTemporaryTitleUpdate(mainActivity.getLastSelection());
+        if (mainActivity != null) {
+            mainActivity.setTemporaryTitleUpdate(mainActivity.getLastSelection());
+        }
         mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -222,9 +221,10 @@ public class InputFragment extends Fragment implements View.OnClickListener {
                 break;
         }
 
-        mainActivity.runCtrlrTask(false, Commands.SELECT_INPUT(input), Const.M_INPUT_SET, input);
-
-        mainActivity.setTemporaryTitleUpdate(updateMsg);
+        if (mainActivity != null) {
+            mainActivity.runCtrlrTask(false, Commands.SELECT_INPUT(input), Const.M_INPUT_SET, input);
+            mainActivity.setTemporaryTitleUpdate(updateMsg);
+        }
         mTitleWriterHandler.removeCallbacks(mTitleWriterRunnable);
         mTitleWriterHandler.postDelayed(mTitleWriterRunnable, Const.DELAY_TITLE_RESET);
     }

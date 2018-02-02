@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016 Martin Pfeffer
+ * Copyright (c) 2018 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@
 package com.pepperonas.yahama.app.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GestureDetectorCompat;
@@ -44,7 +45,6 @@ import java.util.List;
 public class WebradioFragment extends Fragment implements RecyclerView.OnItemTouchListener {
 
     private static final String TAG = "WebradioFragment";
-    private RecyclerView mRecyclerView;
     private ArrayList<RadioContent> mRadioContent;
     private RadioAdapter mAdapter;
     private MainActivity mMain;
@@ -53,7 +53,6 @@ public class WebradioFragment extends Fragment implements RecyclerView.OnItemTou
     private LinearLayoutManager mLayoutManager;
 
     private String mTmpInfo = "";
-
 
     public static WebradioFragment newInstance(int i) {
         WebradioFragment fragment = new WebradioFragment();
@@ -65,9 +64,8 @@ public class WebradioFragment extends Fragment implements RecyclerView.OnItemTou
         return fragment;
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_webradio, container, false);
         mMain = (MainActivity) getActivity();
         mMain.setTitle(getString(R.string.webradio));
@@ -77,13 +75,13 @@ public class WebradioFragment extends Fragment implements RecyclerView.OnItemTou
 
         mRadioContent = new ArrayList<RadioContent>();
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.radio_recycler_view);
+        RecyclerView recyclerView = v.findViewById(R.id.radio_recycler_view);
 
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addOnItemTouchListener(this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addOnItemTouchListener(this);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -97,10 +95,9 @@ public class WebradioFragment extends Fragment implements RecyclerView.OnItemTou
             }
         });
 
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new RadioAdapter((MainActivity) getActivity(), this, mRadioContent);
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
 
         return v;
     }
@@ -110,13 +107,11 @@ public class WebradioFragment extends Fragment implements RecyclerView.OnItemTou
         mAdapter.notifyDataSetChanged();
     }
 
-
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.i(TAG, "created()");
     }
-
 
     public void onOverscrollDetected(int direction) {
         switch (direction) {
@@ -138,7 +133,6 @@ public class WebradioFragment extends Fragment implements RecyclerView.OnItemTou
         }
     }
 
-
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
         mGestureDetector.onTouchEvent(e);
@@ -157,13 +151,13 @@ public class WebradioFragment extends Fragment implements RecyclerView.OnItemTou
 
     private List<RadioContent> generateEmptyCards(int amount) {
         ArrayList<RadioContent> emptyList = new ArrayList<RadioContent>();
-        for (int i = 0; i < amount; i++) emptyList.add(new RadioContent(getString(R.string.no_radio_data)));
+        for (int i = 0; i < amount; i++) {
+            emptyList.add(new RadioContent(getString(R.string.no_radio_data)));
+        }
         return emptyList;
     }
 
-
     public void initRadioList(int maxLine, List<String> content, String info) {
-
         mTmpInfo = info;
 
         mRadioContent.clear();
@@ -177,13 +171,14 @@ public class WebradioFragment extends Fragment implements RecyclerView.OnItemTou
 
             if (mRadioContent.size() > pos) {
                 mRadioContent.set(pos, new RadioContent(s));
-            } else mRadioContent.add(new RadioContent(s));
+            } else {
+                mRadioContent.add(new RadioContent(s));
+            }
 
             i++;
         }
         mAdapter.notifyDataSetChanged();
     }
-
 
     public String getTmpInfo() {
         return mTmpInfo;

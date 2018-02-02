@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016 Martin Pfeffer
+ * Copyright (c) 2018 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,6 +30,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -215,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadIabHelper();
 
-        doAnalytics("MainActivity", "Starting...");
+        doAnalytics();
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("mute");
@@ -355,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Setup.setAdvertising(true);
 
-                if (Setup.getShowDialogPurchasePremium()) {
+                if (Setup.getShowDialogPurchasePremium() && getResources().getBoolean(R.bool.app_unlocked)) {
                     new DialogPurchasePremium(MainActivity.this);
                 }
             }
@@ -364,18 +365,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void doAnalytics(String screenName, String action) {
+    private void doAnalytics() {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
         Tracker tracker = analytics.newTracker(Const.ANALYTICS_ID);
 
         // All subsequent hits will be send with screen name = "main screen"
-        tracker.setScreenName(screenName);
+        tracker.setScreenName("MainActivity");
 
         Log.d(TAG, "doAnalytics tracker: " + tracker.toString());
 
         tracker.send(new HitBuilders.EventBuilder()
                 .setCategory("General")
-                .setAction(action)
+                .setAction("Starting...")
                 .setLabel("x")
                 .build());
     }
@@ -434,11 +435,15 @@ public class MainActivity extends AppCompatActivity {
 
             int read;
             byte[] bytes = new byte[1024];
-            while ((read = is.read(bytes)) != -1) {
-                fos.write(bytes, 0, read);
+            if (is != null) {
+                while ((read = is.read(bytes)) != -1) {
+                    fos.write(bytes, 0, read);
+                }
             }
             fos.close();
-            is.close();
+            if (is != null) {
+                is.close();
+            }
 
             AesPrefs.put("custom_icon_path", path.getAbsolutePath());
         } catch (Exception e) {
@@ -459,9 +464,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void processPurchase(int resultCode, Intent data) {
-        int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
+        //        int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
         String purchaseData = data.getStringExtra("INAPP_PURCHASE_DATA");
-        String dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE");
+        //        String dataSignature = data.getStringExtra("INAPP_DATA_SIGNATURE");
 
         if (resultCode == RESULT_OK) {
             try {
@@ -518,11 +523,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class ConnectionTask extends AsyncTask<String, Void, String> {
+    private class ConnectionTask extends AsyncTask<String, Void, String> {
 
         boolean showDialog;
 
-        public ConnectionTask(boolean showDialog) {
+        ConnectionTask(boolean showDialog) {
             this.showDialog = showDialog;
         }
 
@@ -692,12 +697,12 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public class ControllerTask extends AsyncTask<String, Void, String> {
+    private class ControllerTask extends AsyncTask<String, Void, String> {
 
         boolean showDialog;
         long sTime;
 
-        public ControllerTask(boolean showDialog) {
+        ControllerTask(boolean showDialog) {
             this.showDialog = showDialog;
         }
 
@@ -799,8 +804,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /*
-        * Here goes the fun part!
-        * */
+         * Here goes the fun part!
+         * */
         runCtrlrTask(false, Commands.PLAY_INFO(AmpYaRxV577.XML_INPUT_NET_RADIO));
     }
 
@@ -1189,7 +1194,7 @@ public class MainActivity extends AppCompatActivity {
 
         mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 menuItem.setChecked(menuItem.isChecked());
                 mDrawerLayout.closeDrawers();
 
@@ -1320,15 +1325,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new ControllerTask(false).execute
-                        (Commands.TOGGLE_MUTE
-                                        (mAmp.isMute() ? AmpYaRxV577.OFF
-                                                : AmpYaRxV577.ON),
-                                Const.M_MUTE,
-                                mAmp.isMute() ? "false"
-                                        : "true");
+                        (Commands.TOGGLE_MUTE(mAmp.isMute() ? AmpYaRxV577.OFF : AmpYaRxV577.ON),
+                                Const.M_MUTE, mAmp.isMute() ? "false" : "true");
 
-                setTemporaryTitleUpdate(mAmp.isMute() ? getString(R.string.toolbar_info_unmute)
-                        : getString(R.string.toolbar_info_mute));
+                setTemporaryTitleUpdate(mAmp.isMute() ? getString(R.string.toolbar_info_unmute) : getString(R.string.toolbar_info_mute));
 
                 mFabMenu.close(true);
 
@@ -1403,22 +1403,17 @@ public class MainActivity extends AppCompatActivity {
         mFabPower.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_power)
                 .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
-        mFabPower.setColorNormal(getResources().getColor(mAmp.isOn() ? R.color.fabPowerRed
-                : R.color.fabPowerGreen));
+        mFabPower.setColorNormal(getResources().getColor(mAmp.isOn() ? R.color.fabPowerRed : R.color.fabPowerGreen));
 
-        mFabPower.setLabelText(mAmp.isOn() ? getString(R.string.fab_action_power_off)
-                : getString(R.string.fab_action_power_on));
+        mFabPower.setLabelText(mAmp.isOn() ? getString(R.string.fab_action_power_off) : getString(R.string.fab_action_power_on));
 
         mFabMute.setImageDrawable(new IconicsDrawable(this, mAmp.isMute() ? GoogleMaterial.Icon.gmd_volume_up
-                : GoogleMaterial.Icon.gmd_volume_off)
-                .colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
+                : GoogleMaterial.Icon.gmd_volume_off).colorRes(Setup.getFabIconColor()).sizeDp(Const.FAB_ICON_SIZE));
 
-        mFabMute.setLabelText(mAmp.isMute() ? getString(R.string.fab_action_unmute)
-                : getString(R.string.fab_action_mute));
+        mFabMute.setLabelText(mAmp.isMute() ? getString(R.string.fab_action_unmute) : getString(R.string.fab_action_mute));
 
         int normalFabBgColor = getResources().getColor
-                (Setup.getTheme() != 0 ? R.color.fabBgColor_light
-                        : R.color.fabBgColor);
+                (Setup.getTheme() != 0 ? R.color.fabBgColor_light : R.color.fabBgColor);
 
         mFabMute.setColorNormal(normalFabBgColor);
         mFabDeviceInfo.setColorNormal(normalFabBgColor);
@@ -1606,12 +1601,14 @@ public class MainActivity extends AppCompatActivity {
 
             assert ownedItems != null;
             Iterable<String> ownedSkus = ownedItems.getStringArrayList(IabHelper.RESPONSE_INAPP_ITEM_LIST);
-            for (String inapp : ownedSkus) {
-                if (inapp.equals("premium")) {
-                    Setup.setPremium(true);
-                }
+            if (ownedSkus != null) {
+                for (String inapp : ownedSkus) {
+                    if (inapp.equals("premium")) {
+                        Setup.setPremium(true);
+                    }
 
-                Log.d(TAG, "Gekauft: " + inapp);
+                    Log.d(TAG, "Gekauft: " + inapp);
+                }
             }
 
             Log.d(TAG, "Die Produktsuche wurde abgeschlossen.");

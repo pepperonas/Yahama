@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016 Martin Pfeffer
+ * Copyright (c) 2018 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,6 @@ package com.pepperonas.yahama.app;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -35,10 +34,10 @@ import com.pepperonas.yahama.app.utility.Setup;
  */
 public class VolumeSliderActivity extends AppCompatActivity {
 
+    @SuppressWarnings("unused")
     private static final String TAG = "VolumeSliderActivity";
 
     private TextView mTvVolume;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +50,8 @@ public class VolumeSliderActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int screenWidth = (int) (metrics.widthPixels * 0.8f);
+        //        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        //        int screenWidth = (int) (metrics.widthPixels * 0.8f);
 
         setContentView(R.layout.activity_volume_slider);
 
@@ -64,7 +63,7 @@ public class VolumeSliderActivity extends AppCompatActivity {
         //        getWindow().setLayout(screenWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
         getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        LinearLayout container = (LinearLayout) findViewById(R.id.activity_dialog_volume_slider_container);
+        LinearLayout container = findViewById(R.id.activity_dialog_volume_slider_container);
         container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,11 +83,11 @@ public class VolumeSliderActivity extends AppCompatActivity {
                 finish();
             }
         };
-        mTvVolume = (TextView) findViewById(R.id.activity_dialog_volume_textview);
+        mTvVolume = findViewById(R.id.activity_dialog_volume_textview);
         mTvVolume.setText(MainActivity.getVolumeMessage(this, AmpYaRxV577
                 .getVolume_dB(MainActivity.getInvisibleVolSeekBar().getProgress())));
 
-        SeekBar volumeSlider = (SeekBar) findViewById(R.id.activity_dialog_volume_slider);
+        SeekBar volumeSlider = findViewById(R.id.activity_dialog_volume_slider);
         volumeSlider.setMax((int) AmpYaRxV577.MAX_VOL_SLIDER);
         volumeSlider.setProgress(MainActivity.getInvisibleVolSeekBar().getProgress());
 
@@ -102,12 +101,10 @@ public class VolumeSliderActivity extends AppCompatActivity {
                 fireClosingTimer(h, runnable);
             }
 
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 MainActivity.getAmp().setMute(false);
             }
-
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) { }
@@ -115,7 +112,6 @@ public class VolumeSliderActivity extends AppCompatActivity {
 
         fireClosingTimer(h, runnable);
     }
-
 
     private void fireClosingTimer(Handler h, Runnable runnable) {
         h.removeCallbacks(runnable);

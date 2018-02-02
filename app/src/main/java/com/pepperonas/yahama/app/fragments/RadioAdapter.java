@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016 Martin Pfeffer
+ * Copyright (c) 2018 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -47,30 +47,27 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder> 
     private WebradioFragment mWrf;
     private ArrayList<RadioContent> mRadioContent;
 
-
-    public RadioAdapter(MainActivity main, WebradioFragment wrf, ArrayList<RadioContent> radioContent) {
+    RadioAdapter(MainActivity main, WebradioFragment wrf, ArrayList<RadioContent> radioContent) {
         mMain = main;
         mWrf = wrf;
         mRadioContent = radioContent;
     }
 
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+        CardView mCv;
+        ImageView mIv;
+        TextView mTv;
 
-        public CardView mCv;
-        public ImageView mIv;
-        public TextView mTv;
-
-        public ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
-            mCv = (CardView) v.findViewById(R.id.cv_radio_item);
-            mIv = (ImageView) v.findViewById(R.id.iv_radio_item);
-            mTv = (TextView) v.findViewById(R.id.tv_radio_item);
+            mCv = v.findViewById(R.id.cv_radio_item);
+            mIv = v.findViewById(R.id.iv_radio_item);
+            mTv = v.findViewById(R.id.tv_radio_item);
         }
     }
 
-
-    public void invokeAction(int pos, String name) {
+    private void invokeAction(int pos, String name) {
         Log.d(TAG, "invokeAction  " + "" + Commands.LIST_CLICK("NET_RADIO", (pos + 1)));
 
         String xmlInfo = mWrf.getTmpInfo();
@@ -88,14 +85,11 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder> 
         mMain.runCtrlrTask(false, Commands.LIST_CLICK("NET_RADIO", xmlPos), Const.LONGCLICKED_STATION);
     }
 
-
     @Override
     public RadioAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.radio_item, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
-
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
@@ -128,7 +122,6 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder> 
         }
 
     }
-
 
     @Override
     public int getItemCount() {

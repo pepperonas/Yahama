@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016 Martin Pfeffer
+ * Copyright (c) 2018 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,6 +19,7 @@ package com.pepperonas.yahama.app.fragments;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -89,7 +90,7 @@ public class AudioFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_audio, null, false);
         mMain = (MainActivity) getActivity();
@@ -98,7 +99,7 @@ public class AudioFragment
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.i(TAG, "onViewCreated()");
 
@@ -116,19 +117,21 @@ public class AudioFragment
     }
 
     private void ensureRemoveAds() {
-        AdView adView = getActivity().findViewById(R.id.adView);
-        if (getActivity().getResources().getBoolean(R.bool.build_without_ads)) {
-            if (adView != null) {
-                adView.setVisibility(View.GONE);
+        if (getActivity() != null) {
+            AdView adView = getActivity().findViewById(R.id.adView);
+            if (getActivity().getResources().getBoolean(R.bool.build_without_ads)) {
+                if (adView != null) {
+                    adView.setVisibility(View.GONE);
+                }
             }
-        }
-        if (!Setup.getAdvertising()) {
-            if (adView != null) {
-                adView.setVisibility(View.GONE);
+            if (!Setup.getAdvertising()) {
+                if (adView != null) {
+                    adView.setVisibility(View.GONE);
+                }
+            } else if (adView != null) {
+                AdRequest adRequest = new AdRequest.Builder().build();
+                adView.loadAd(adRequest);
             }
-        } else if (adView != null) {
-            AdRequest adRequest = new AdRequest.Builder().build();
-            adView.loadAd(adRequest);
         }
     }
 

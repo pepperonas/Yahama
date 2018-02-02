@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2016 Martin Pfeffer
+ * Copyright (c) 2018 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,6 +19,7 @@ package com.pepperonas.yahama.app.fragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -44,9 +45,7 @@ import com.pepperonas.yahama.app.utility.Setup;
 /**
  * @author Martin Pfeffer (pepperonas)
  */
-public class DspFragment extends Fragment
-        implements View.OnClickListener,
-        View.OnLongClickListener,
+public class DspFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener,
         CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "DspFragment";
@@ -79,7 +78,7 @@ public class DspFragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "onViewCreated()");
 
         View v = inflater.inflate(R.layout.fragment_dsp, container, false);
@@ -96,7 +95,7 @@ public class DspFragment extends Fragment
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.i(TAG, "onViewCreated()");
 
@@ -109,18 +108,20 @@ public class DspFragment extends Fragment
 
     private void showInfoSnackbarIfNeeded() {
         if (!Setup.getShowDspInfo()) return;
-        CoordinatorLayout cl = getActivity().findViewById(R.id.coordinator_layout);
-        Snackbar sb = Snackbar.make(cl, getString(R.string.sb_hold_to_configure_dsp), Snackbar.LENGTH_LONG);
-        sb.setActionTextColor(Color.RED);
-        sb.setAction(getString(R.string.ok), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Setup.setShowDspInfo(false);
-            }
-        });
-        View snackbarView = sb.getView();
-        snackbarView.setBackgroundColor(Color.BLACK);
-        sb.show();
+        if (getActivity() != null) {
+            CoordinatorLayout cl = getActivity().findViewById(R.id.coordinator_layout);
+            Snackbar sb = Snackbar.make(cl, getString(R.string.sb_hold_to_configure_dsp), Snackbar.LENGTH_LONG);
+            sb.setActionTextColor(Color.RED);
+            sb.setAction(getString(R.string.ok), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Setup.setShowDspInfo(false);
+                }
+            });
+            View snackbarView = sb.getView();
+            snackbarView.setBackgroundColor(Color.BLACK);
+            sb.show();
+        }
     }
 
     @Override
