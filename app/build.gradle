@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2018 Martin Pfeffer
+ * Copyright (c) 2019 Martin Pfeffer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 
 apply plugin: 'com.android.application'
 
@@ -26,21 +27,21 @@ repositories {
     }
 }
 
-
-def getDate() {
-    def date = new Date()
-    def formattedDate = date.format('_yyyy-MM-dd-hh-mm-ss')
-    return formattedDate
-}
-
-
-repositories {
-    jcenter()
-    flatDir { dirs 'libs' }
-    maven { url "https://jitpack.io" }
-}
-
 android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    useLibrary 'org.apache.http.legacy'
+    defaultConfig {
+        applicationId "com.pepperonas.yahama.app"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 23
+        versionName "0.2.3"
+//        project.ext.set("archivesBaseName", "yaamp")
+        multiDexEnabled true
+        setProperty("archivesBaseName", "yaamp-$versionName")
+    }
+
     signingConfigs {
         release
     }
@@ -59,20 +60,6 @@ android {
         // javaMaxHeapSize "2048m"
     }
 
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
-
-    defaultConfig {
-        applicationId "com.pepperonas.yahama.app"
-        minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 23
-        versionName "0.2.3"
-//        project.ext.set("archivesBaseName", "yaamp")
-        multiDexEnabled true
-        setProperty("archivesBaseName", "yaamp-$versionName")
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_6
@@ -83,7 +70,7 @@ android {
         }
 
         release {
-//            multiDexEnabled true
+            multiDexEnabled true
             minifyEnabled true
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -128,27 +115,27 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.github.pepperonas:andbasx:0.3.0'
-    compile 'com.github.pepperonas:appregistry:0.1.1'
-    compile 'com.github.pepperonas:aesprefs:0.0.4'
-    compile 'com.android.support:multidex:1.0.2'
-    compile 'com.google.android.gms:play-services-ads:11.8.0'
-    compile 'com.google.android.gms:play-services-auth:11.8.0'
-    compile 'com.google.android.gms:play-services-gcm:11.8.0'
-    compile 'com.google.android.gms:play-services-analytics:11.8.0'
-    compile 'com.android.support:appcompat-v7:27.0.2'
-    compile 'com.android.support:design:27.0.2'
-    compile 'com.android.support:cardview-v7:27.0.2'
-    compile 'com.android.support:recyclerview-v7:27.0.2'
-    compile 'com.github.clans:fab:1.6.2'
-    compile 'de.hdodenhof:circleimageview:1.3.0'
-    compile 'com.mikepenz:iconics-core:2.9.3@aar'
-    compile 'com.mikepenz:google-material-typeface:3.0.1.0.original@aar'
-    compile 'com.mikepenz:fontawesome-typeface:4.4.0@aar'
-    compile 'com.mikepenz:octicons-typeface:3.2.0.2@aar'
-    compile 'com.mikepenz:meteocons-typeface:1.1.3@aar'
-    compile 'com.mikepenz:community-material-typeface:1.8.36.1@aar'
-    compile 'com.github.machinarius:preferencefragment:0.1.1'
-    compile 'com.github.pepperonas:materialdialog:0.3.4'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.github.pepperonas:andbasx:0.3.0'
+    implementation 'com.github.pepperonas:appregistry:0.1.1'
+    implementation 'com.github.pepperonas:aesprefs:0.0.4'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.android.gms:play-services-gcm:16.1.0'
+    implementation 'com.google.android.gms:play-services-analytics:16.0.8'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.github.clans:fab:1.6.2'
+    implementation 'de.hdodenhof:circleimageview:1.3.0'
+    implementation 'com.mikepenz:iconics-core:2.9.3@aar'
+    implementation 'com.mikepenz:google-material-typeface:3.0.1.0.original@aar'
+    implementation 'com.mikepenz:fontawesome-typeface:4.4.0@aar'
+    implementation 'com.mikepenz:octicons-typeface:3.2.0.2@aar'
+    implementation 'com.mikepenz:meteocons-typeface:1.1.3@aar'
+    implementation 'com.mikepenz:community-material-typeface:1.8.36.1@aar'
+    implementation 'com.github.machinarius:preferencefragment:0.1.1'
+    implementation 'com.github.pepperonas:materialdialog:0.3.4'
 }
