@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
             new DialogWifiDisabled(MainActivity.this).showDialog();
         }
 
-        //        ensureAdvertising();
+        ensureAdvertising();
 
         storeCurrentVersion();
 
@@ -346,13 +346,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void ensureAdvertising() {
+        Setup.setAdvertising(true);
         if (Setup.getInstallationDate() == -1) {
             Setup.setInstallationDate(System.currentTimeMillis());
         } else if (!Setup.getPremium()) {
             long delta = System.currentTimeMillis() - Setup.getInstallationDate();
             if (delta > (Constants.WEEK_IN_MS)) {
 
-                Setup.setAdvertising(true);
+
 
                 if (Setup.getShowDialogPurchasePremium() && getResources().getBoolean(R.bool.app_unlocked)) {
                     new DialogPurchasePremium(MainActivity.this);
@@ -577,9 +578,7 @@ public class MainActivity extends AppCompatActivity {
          * 2=deviceName
          */
         private String[] checkIp(String networkAddress, int lastByte) {
-
             String deviceInfo[] = {"", "", ""};
-
             String _deviceIp = networkAddress + String.valueOf(lastByte);
 
             try {
@@ -999,7 +998,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initConfigMovie(String s) {
-
         if (s.contains("<" + AmpYaRxV577.STANDARD + ">")) {
             String standard = s.split("<" + AmpYaRxV577.STANDARD + ">")[1].split("</" + AmpYaRxV577.STANDARD)[0];
             initStandard(mAmp.getConfigMovie().getStandard(), standard);

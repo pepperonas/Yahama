@@ -48,9 +48,7 @@ import com.pepperonas.yahama.app.utility.Setup;
 /**
  * @author Martin Pfeffer (pepperonas)
  */
-public class AudioFragment
-        extends Fragment
-        implements View.OnClickListener,
+public class AudioFragment extends Fragment implements View.OnClickListener,
         CompoundButton.OnCheckedChangeListener {
 
     private static final String TAG = "AudioFragment";

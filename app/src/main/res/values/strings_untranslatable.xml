@@ -33,11 +33,10 @@
     <string name="app_description" translatable="false">is a lightweight third party controller app for various Yamaha amplifiers.</string>
     <string name="web_presentation_info" translatable="false">
     <![CDATA[
-    Designed by <b>pepperonas</b>.
+    Designed by <b>celox.io</b>.
     <br>
-    <font color="#f50057"><a href="https://www.pepperonas.com">Website</a></font>&nbsp;&nbsp;
-    <font color="#f50057"><a href="https://play.google.com/store/apps/developer?id=pepperonas">Google Play</a></font>&nbsp;&nbsp;
-    <font color="#f50057"><a href="https://plus.google.com/communities/100642582416636996643">Google+</a></font>&nbsp;&nbsp;
+    <font color="#f50057"><a href="https://celox.io">Website</a></font>&nbsp;&nbsp;
+    <font color="#f50057"><a href="https://play.google.com/store/apps/dev?id=8486269375445922130&hl=en">Google Play</a></font>&nbsp;&nbsp;
     <font color="#f50057"><a href="https://github.com/pepperonas">GitHub</a></font>&nbsp;&nbsp;
     ]]></string>
     <string name="translate_native_info" translatable="false">

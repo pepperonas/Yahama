@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2019 Martin Pfeffer
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,21 +14,20 @@
   ~ limitations under the License.
   -->
 
-<ScrollView
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
         android:id="@+id/audio_layout"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/layout_padding_t"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/layout_padding_l_r"
+        android:paddingTop="@dimen/layout_padding_t"
         android:paddingRight="@dimen/layout_padding_l_r">
 
         <!--PLAYER-->
@@ -42,11 +40,11 @@
                 android:id="@+id/tv_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="@string/player"
                 android:textColor="@color/label_card_text_color"
-                android:layout_gravity="center"
                 android:textSize="@dimen/labelcard_text_size"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
 
@@ -66,7 +64,7 @@
                     android:id="@+id/iv_player_stop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center" />
 
             </android.support.v7.widget.CardView>
 
@@ -79,7 +77,7 @@
                     android:id="@+id/iv_player_pause"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center" />
 
             </android.support.v7.widget.CardView>
 
@@ -92,7 +90,7 @@
                     android:id="@+id/iv_player_play"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center" />
 
             </android.support.v7.widget.CardView>
 
@@ -103,13 +101,12 @@
             android:id="@+id/adView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/banner_ad_unit_id"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/gap_card_to_next_section_v">
-        </com.google.android.gms.ads.AdView>
+            android:layout_marginBottom="@dimen/gap_card_to_next_section_v"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id" />
 
 
         <!--VOLUME-->
@@ -122,11 +119,11 @@
                 android:id="@+id/tv_volume"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="@string/volume"
                 android:textColor="@color/label_card_text_color"
-                android:layout_gravity="center"
                 android:textSize="@dimen/labelcard_text_size"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
 
@@ -146,7 +143,7 @@
                     android:id="@+id/iv_volume_down"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center" />
 
             </android.support.v7.widget.CardView>
 
@@ -159,7 +156,7 @@
                     android:id="@+id/iv_volume_up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center" />
 
             </android.support.v7.widget.CardView>
 
@@ -173,7 +170,7 @@
                     android:id="@+id/iv_volume_slider"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center" />
 
             </android.support.v7.widget.CardView>
 
@@ -182,16 +179,16 @@
 
         <!--BASS-->
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/gap_card_to_card_larger_h"
                 android:layout_weight="1"
-                android:layout_marginRight="@dimen/gap_card_to_card_larger_h">
+                android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_bass"
@@ -202,11 +199,11 @@
                         android:id="@+id/tv_bass"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="@string/bass"
                         android:textColor="@color/label_card_text_color"
-                        android:layout_gravity="center"
                         android:textSize="@dimen/labelcard_text_size"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                 </android.support.v7.widget.CardView>
 
@@ -215,8 +212,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/gap_card_to_next_section_v"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/cv_bass_down"
@@ -227,7 +223,7 @@
                             android:id="@+id/iv_bass_down"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center" />
 
                     </android.support.v7.widget.CardView>
 
@@ -240,7 +236,7 @@
                             android:id="@+id/iv_bass_up"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center" />
 
                     </android.support.v7.widget.CardView>
 
@@ -248,11 +244,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/gap_card_to_card_larger_h"
                 android:layout_weight="1"
-                android:layout_marginLeft="@dimen/gap_card_to_card_larger_h">
+                android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_treble"
@@ -263,11 +259,11 @@
                         android:id="@+id/tv_treble"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="@string/treble"
                         android:textColor="@color/label_card_text_color"
-                        android:layout_gravity="center"
                         android:textSize="@dimen/labelcard_text_size"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                 </android.support.v7.widget.CardView>
 
@@ -287,7 +283,7 @@
                             android:id="@+id/iv_treble_down"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center" />
 
                     </android.support.v7.widget.CardView>
 
@@ -300,7 +296,7 @@
                             android:id="@+id/iv_treble_up"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center" />
 
                     </android.support.v7.widget.CardView>
 
@@ -317,32 +313,30 @@
             android:id="@+id/sw_enhancer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/spec_enhancer"
+            android:layout_gravity="right"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="@dimen/gap_switch_to_switch_v"
             android:switchPadding="@dimen/text_padding_switch"
-            android:layout_gravity="right"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
+            android:text="@string/spec_enhancer"
+            android:textStyle="bold" />
 
         <Switch
             android:id="@+id/sw_speaker_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/speaker_a"
+            android:layout_gravity="right"
             android:layout_marginBottom="@dimen/gap_switch_to_switch_v"
             android:switchPadding="@dimen/text_padding_switch"
-            android:layout_gravity="right"
-            />
+            android:text="@string/speaker_a" />
 
         <Switch
             android:id="@+id/sw_speaker_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/speaker_b"
+            android:layout_gravity="right"
             android:layout_marginBottom="@dimen/gap_switch_to_switch_v"
             android:switchPadding="@dimen/text_padding_switch"
-            android:layout_gravity="right"
-            />
+            android:text="@string/speaker_b" />
 
     </LinearLayout>
 </ScrollView>
