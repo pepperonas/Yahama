@@ -54,7 +54,6 @@ public class AudioFragment extends Fragment implements View.OnClickListener,
     private static final String TAG = "AudioFragment";
 
     private static final int ACTION_ICON_SIZE_MEDIUM = 32;
-
     private static final int ACTION_ICON_SIZE_LARGE = 40;
 
     private MainActivity mMain;

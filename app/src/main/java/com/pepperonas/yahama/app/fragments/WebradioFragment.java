@@ -45,6 +45,7 @@ import java.util.List;
 public class WebradioFragment extends Fragment implements RecyclerView.OnItemTouchListener {
 
     private static final String TAG = "WebradioFragment";
+
     private ArrayList<RadioContent> mRadioContent;
     private RadioAdapter mAdapter;
     private MainActivity mMain;

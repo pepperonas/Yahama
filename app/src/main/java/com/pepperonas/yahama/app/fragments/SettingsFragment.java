@@ -29,17 +29,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 
 import com.android.vending.billing.IInAppBillingService;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.pepperonas.aesprefs.AesPrefs;
-import com.pepperonas.andbasx.system.SystemUtils;
 import com.pepperonas.andbasx.system.UsabilityUtils;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
-import com.pepperonas.yahama.app.config.Analyst;
 import com.pepperonas.yahama.app.dialogs.DialogGetPremium;
 import com.pepperonas.yahama.app.dialogs.DialogPromotion;
 import com.pepperonas.yahama.app.dialogs.DialogSelectNavDrawerDetail;
@@ -62,7 +58,7 @@ public class SettingsFragment extends com.github.machinarius.preferencefragment.
     private static final int ICON_SIZE = 24;
     private int mIconColor;
 
-    private Tracker mTracker;
+    //    private Tracker mTracker;
 
     private IInAppBillingService mService;
 
@@ -176,7 +172,7 @@ public class SettingsFragment extends com.github.machinarius.preferencefragment.
             getActivity().unbindService(mServiceConn);
         }
 
-        doAnalyticsOnLifecycle();
+        //        doAnalyticsOnLifecycle();
 
         AesPrefs.unregisterOnSharedPreferenceChangeListener(mChangeListener);
 
@@ -225,7 +221,8 @@ public class SettingsFragment extends com.github.machinarius.preferencefragment.
         if (Setup.getPremium() && Setup.getShowPremium()) {
             Preference getPremium = findPreference(getString(R.string.PR_KEY_GET_PREMIUM));
             if (getContext() != null) {
-                getPremium.setIcon(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_checkbox_marked_outline).colorRes(mIconColor).sizeDp(ICON_SIZE));
+                getPremium.setIcon(new IconicsDrawable(getContext(), CommunityMaterial.Icon.cmd_checkbox_marked_outline)
+                        .colorRes(mIconColor).sizeDp(ICON_SIZE));
             }
 
             getPremium.setTitle(getString(R.string.premium_unlocked_title));
@@ -295,7 +292,7 @@ public class SettingsFragment extends com.github.machinarius.preferencefragment.
     private void onRate() {
         if (getActivity() != null) {
             UsabilityUtils.launchAppStore(getActivity(), "com.pepperonas.yahama.app");
-            doAnalyticsOnAction("onRate");
+            //            doAnalyticsOnAction("onRate");
         }
     }
 
@@ -305,7 +302,7 @@ public class SettingsFragment extends com.github.machinarius.preferencefragment.
     private void onShare() {
         if (getActivity() != null) {
             UsabilityUtils.launchShareAppIntent(getActivity(), "com.pepperonas.yahama.app", getString(R.string.share_app_intro_text));
-            doAnalyticsOnAction("onShare");
+            //            doAnalyticsOnAction("onShare");
         }
     }
 
@@ -323,26 +320,26 @@ public class SettingsFragment extends com.github.machinarius.preferencefragment.
     //        }
     //    }
 
-    /**
-     * Do analytics on action.
-     *
-     * @param action the action
-     */
-    private void doAnalyticsOnAction(String action) {
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setCustomDimension(Analyst.ANDROID_ID, SystemUtils.getAndroidId())
-                .setAction(action)
-                .build());
-    }
-
-    /**
-     * Do analytics on lifecycle.
-     */
-    private void doAnalyticsOnLifecycle() {
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Lifecycle")
-                .setLabel("onDestroy")
-                .build());
-    }
+    //    /**
+    //     * Do analytics on action.
+    //     *
+    //     * @param action the action
+    //     */
+    //    private void doAnalyticsOnAction(String action) {
+    //        mTracker.send(new HitBuilders.EventBuilder()
+    //                .setCategory("Action")
+    //                .setCustomDimension(Analyst.ANDROID_ID, SystemUtils.getAndroidId())
+    //                .setAction(action)
+    //                .build());
+    //    }
+    //
+    //    /**
+    //     * Do analytics on lifecycle.
+    //     */
+    //    private void doAnalyticsOnLifecycle() {
+    //        mTracker.send(new HitBuilders.EventBuilder()
+    //                .setCategory("Lifecycle")
+    //                .setLabel("onDestroy")
+    //                .build());
+    //    }
 }
