@@ -346,14 +346,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void ensureAdvertising() {
-        Setup.setAdvertising(true);
         if (Setup.getInstallationDate() == -1) {
             Setup.setInstallationDate(System.currentTimeMillis());
         } else if (!Setup.getPremium()) {
             long delta = System.currentTimeMillis() - Setup.getInstallationDate();
             if (delta > (Constants.WEEK_IN_MS)) {
 
-
+                Setup.setAdvertising(true);
 
                 if (Setup.getShowDialogPurchasePremium() && getResources().getBoolean(R.bool.app_unlocked)) {
                     new DialogPurchasePremium(MainActivity.this);
