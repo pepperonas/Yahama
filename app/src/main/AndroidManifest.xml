@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2019 Martin Pfeffer
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +14,13 @@
   ~ limitations under the License.
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.pepperonas.yahama.app">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.pepperonas.yahama.app">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="com.android.vending.BILLING"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--<uses-permission android:name="com.android.vending.BILLING" />-->
 
     <application
         android:name=".YaAmpApp"
@@ -30,41 +29,41 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         tools:replace="icon, label">
-        <meta-data
-            android:name="com.google.android.gms.analytics.globalConfigResource"
-            android:resource="@xml/analytics_global_config"/>
+        <!--<meta-data-->
+        <!--android:name="com.google.android.gms.analytics.globalConfigResource"-->
+        <!--android:resource="@xml/analytics_global_config" />-->
 
         <!-- Multiwindow-Support -->
         <uses-library
             android:name="com.sec.android.app.multiwindow"
-            android:required="false"/>
+            android:required="false" />
 
         <meta-data
             android:name="com.samsung.android.sdk.multiwindow.multiinstance.enable"
-            android:value="true"/>
+            android:value="true" />
         <meta-data
             android:name="com.sec.android.support.multiwindow"
-            android:value="true"/>
+            android:value="true" />
         <meta-data
             android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W"
-            android:resource="@dimen/app_defaultsize_w"/>
+            android:resource="@dimen/app_defaultsize_w" />
         <meta-data
             android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H"
-            android:resource="@dimen/app_defaultsize_h"/>
+            android:resource="@dimen/app_defaultsize_h" />
         <meta-data
             android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W"
-            android:resource="@dimen/app_minimumsize_w"/>
+            android:resource="@dimen/app_minimumsize_w" />
         <meta-data
             android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
-            android:resource="@dimen/app_minimumsize_h"/>
+            android:resource="@dimen/app_minimumsize_h" />
 
         <activity
             android:name="com.pepperonas.yahama.app.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -74,55 +73,58 @@
         -->
         <activity
             android:name="com.pepperonas.yahama.app.VolumeSliderActivity"
-            android:theme="@style/AppTheme.Dialog"
             android:excludeFromRecents="true"
             android:label=""
-            android:taskAffinity="">
-        </activity>
+            android:taskAffinity=""
+            android:theme="@style/AppTheme.Dialog"></activity>
 
         <activity
             android:name="com.pepperonas.yahama.app.NotificationActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleTop"
-            android:theme="@style/Transparent"/>
+            android:theme="@style/Transparent" />
 
         <!-- ADVERTISING -->
         <!-- This meta-data tag is required to use Google Play Services. -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
-        <!-- Include the AdActivity configChanges and theme. -->
-        <activity
-            android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent"/>
+        <!--<meta-data-->
+        <!--android:name="com.google.android.gms.version"-->
+        <!--android:value="@integer/google_play_services_version"/>-->
+        <!--&lt;!&ndash; Include the AdActivity configChanges and theme. &ndash;&gt;-->
+        <!--<activity-->
+        <!--android:name="com.google.android.gms.ads.AdActivity"-->
+        <!--android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"-->
+        <!--android:launchMode="singleTop"-->
+        <!--android:theme="@android:style/Theme.Translucent"/>-->
 
         <!-- ANALYTICS -->
         <!-- Optionally, register AnalyticsReceiver and AnalyticsService to support background dispatching on non-Google Play devices -->
-        <receiver
-            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH"/>
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+        <!--android:name="com.google.android.gms.analytics.AnalyticsReceiver"-->
+        <!--android:enabled="true">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH"/>-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
 
-        <service
-            android:name="com.google.android.gms.analytics.AnalyticsService"
-            android:enabled="true"
-            android:exported="false"/>
+        <!--<service-->
+        <!--android:name="com.google.android.gms.analytics.AnalyticsService"-->
+        <!--android:enabled="true"-->
+        <!--android:exported="false"/>-->
 
         <!-- Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable installation campaign reporting -->
-        <receiver
-            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER"/>
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+        <!--android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"-->
+        <!--android:exported="true">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.android.vending.INSTALL_REFERRER"/>-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
 
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>
+        <!--<service android:name="com.google.android.gms.analytics.CampaignTrackingService"/>-->
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3236103587680169~2479131537" />
 
     </application>
 

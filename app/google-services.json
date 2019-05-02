@@ -1,45 +1,45 @@
-{
-  "project_info": {
-    "project_id": "yaamp-6a257",
-    "project_number": "209794291218",
-    "name": "YaAmp"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:209794291218:android:4c82f72e3594b62e",
-        "client_id": "android:com.pepperonas.yahama.app",
-        "client_type": 1,
-        "android_client_info": {
-          "package_name": "com.pepperonas.yahama.app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [],
-      "services": {
-        "analytics_service": {
-          "status": 2,
-          "analytics_property": {
-            "tracking_id": "UA-58002990-10"
-          }
-        },
-        "cloud_messaging_service": {
-          "status": 1,
-          "apns_config": []
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "google_signin_service": {
-          "status": 1
-        },
-        "ads_service": {
-          "status": 1
-        }
-      }
-    }
-  ],
-  "client_info": [],
-  "ARTIFACT_VERSION": "1"
-}
+//{
+//  "project_info": {
+//    "project_id": "yaamp-6a257",
+//    "project_number": "209794291218",
+//    "name": "YaAmp"
+//  },
+//  "client": [
+//    {
+//      "client_info": {
+//        "mobilesdk_app_id": "1:209794291218:android:4c82f72e3594b62e",
+//        "client_id": "android:com.pepperonas.yahama.app",
+//        "client_type": 1,
+//        "android_client_info": {
+//          "package_name": "com.pepperonas.yahama.app"
+//        }
+//      },
+//      "oauth_client": [],
+//      "api_key": [],
+//      "services": {
+//        "analytics_service": {
+//          "status": 2,
+//          "analytics_property": {
+//            "tracking_id": "UA-58002990-10"
+//          }
+//        },
+//        "cloud_messaging_service": {
+//          "status": 1,
+//          "apns_config": []
+//        },
+//        "appinvite_service": {
+//          "status": 1,
+//          "other_platform_oauth_client": []
+//        },
+//        "google_signin_service": {
+//          "status": 1
+//        },
+//        "ads_service": {
+//          "status": 1
+//        }
+//      }
+//    }
+//  ],
+//  "client_info": [],
+//  "ARTIFACT_VERSION": "1"
+//}

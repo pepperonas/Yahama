@@ -166,13 +166,15 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mNotificationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("mute")) {
-                Log.d(TAG, "onReceive  " + "mute");
-                mFabMute.callOnClick();
-                mNotificationPanel.update();
-            } else if (intent.getAction().equals("close")) {
-                Log.d(TAG, "onReceive  " + "close");
-                finish();
+            if (intent != null && intent.getAction() != null) {
+                if (intent.getAction().equals("mute")) {
+                    Log.d(TAG, "onReceive  " + "mute");
+                    mFabMute.callOnClick();
+                    mNotificationPanel.update();
+                } else if (intent.getAction().equals("close")) {
+                    Log.d(TAG, "onReceive  " + "close");
+                    finish();
+                }
             }
         }
     };
@@ -210,13 +212,13 @@ public class MainActivity extends AppCompatActivity {
             new DialogWifiDisabled(MainActivity.this).showDialog();
         }
 
-        ensureAdvertising();
+        //        ensureAdvertising();
 
         storeCurrentVersion();
 
         loadIabHelper();
 
-        doAnalytics();
+        //        doAnalytics();
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("mute");
@@ -254,11 +256,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         try {
-
             stopDriver();
-
             dismissProgressDialog();
-
         } catch (Exception e) {
             Log.e(TAG, "Error in onPause - Msg: " + e.getMessage());
         }
@@ -327,7 +326,6 @@ public class MainActivity extends AppCompatActivity {
         int action = event.getAction();
 
         switch (event.getKeyCode()) {
-
             case KeyEvent.KEYCODE_VOLUME_UP:
                 if (action == KeyEvent.ACTION_DOWN) {
                     mInvisibleVolSlider.incrementProgressBy(Setup.getVolumeSteps());
@@ -382,16 +380,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startApp() {
-
         runConnectionTask(true);
-
         initToolbar();
 
         mMainFrame = findViewById(R.id.main_frame);
         initFab();
-
         initNavView();
-
         initNavDrawer();
 
         if (getIntent() != null) {
@@ -409,7 +403,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         switch (requestCode) {
             case Const.REQ_CODE_ENABLE_WIFI:
                 waitForWifi();
@@ -735,10 +728,10 @@ public class MainActivity extends AppCompatActivity {
             if (nullCheck(resp)) return "";
 
             if (resp != null) {
-                String s = resp.toString();
+                StringBuilder s = new StringBuilder(resp.toString());
 
-                for (String param : params) s += param;
-                return s;
+                for (String param : params) s.append(param);
+                return s.toString();
             }
             return "error";
         }
@@ -821,7 +814,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSpotifyTrackInfo(String info) {
-
         String[] params = info.split("<Meta_Info>");
         String station = "", song = "", album = "", artist = "", track = "";
 
@@ -1150,6 +1142,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
 
+                //noinspection ConstantConditions
                 if (!AesPrefs.get("custom_icon_path", "").isEmpty()) {
                     loadIconFromStorage();
                 }
@@ -1168,9 +1161,8 @@ public class MainActivity extends AppCompatActivity {
                 iv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media
-                                .EXTERNAL_CONTENT_URI);
+                        Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         pickIntent.setType("image/*");
 
                         Intent chooserIntent = Intent.createChooser(MainActivity.this.getIntent(), getString(R.string
@@ -1184,7 +1176,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
         mDrawerToggle.syncState();
     }
@@ -1612,7 +1604,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             Log.d(TAG, "Die Produktsuche wurde abgeschlossen.");
-
         }
     };
 

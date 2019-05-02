@@ -39,7 +39,6 @@ import com.pepperonas.andbasx.system.SystemUtils;
 import com.pepperonas.andbasx.system.UsabilityUtils;
 import com.pepperonas.yahama.app.MainActivity;
 import com.pepperonas.yahama.app.R;
-import com.pepperonas.yahama.app.YaAmpApp;
 import com.pepperonas.yahama.app.config.Analyst;
 import com.pepperonas.yahama.app.dialogs.DialogGetPremium;
 import com.pepperonas.yahama.app.dialogs.DialogPromotion;
@@ -165,7 +164,7 @@ public class SettingsFragment extends com.github.machinarius.preferencefragment.
         mMain = (MainActivity) getActivity();
         mMain.setTitle(getString(R.string.settings));
 
-        initAnalytics();
+        //        initAnalytics();
 
         updateSummaries();
         AesPrefs.registerOnSharedPreferenceChangeListener(mChangeListener);
@@ -313,16 +312,16 @@ public class SettingsFragment extends com.github.machinarius.preferencefragment.
     /**
      * Init analytics.
      */
-    private void initAnalytics() {
-        if (getActivity() != null) {
-            YaAmpApp application = (YaAmpApp) getActivity().getApplication();
-            mTracker = application.getDefaultTracker();
-            if (mTracker != null) {
-                mTracker.setScreenName("FragmentSettings");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-            }
-        }
-    }
+    //    private void initAnalytics() {
+    //        if (getActivity() != null) {
+    //            YaAmpApp application = (YaAmpApp) getActivity().getApplication();
+    //            mTracker = application.getDefaultTracker();
+    //            if (mTracker != null) {
+    //                mTracker.setScreenName("FragmentSettings");
+    //                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    //            }
+    //        }
+    //    }
 
     /**
      * Do analytics on action.

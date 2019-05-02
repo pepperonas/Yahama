@@ -18,7 +18,6 @@ package com.pepperonas.yahama.app;
 
 import android.app.Application;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -33,12 +32,11 @@ public class YaAmpApp extends Application {
 
     private Tracker mTracker;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
 
-        AesPrefs.init(this, "config", "myaespreferencepassword");
+        AesPrefs.init(this, "config", "pryse-elutor-awa-bigger-daroo-enemy-genys");
 
         AndBasx.init(this);
 
@@ -50,14 +48,13 @@ public class YaAmpApp extends Application {
         Iconics.registerFont(new GoogleMaterial());
     }
 
-
-    synchronized public Tracker getDefaultTracker() {
-        if (mTracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-            mTracker = analytics.newTracker(R.xml.analytics_global_config);
-        }
-        return mTracker;
-    }
+    //    synchronized public Tracker getDefaultTracker() {
+    //        if (mTracker == null) {
+    //            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+    //            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+    //            mTracker = analytics.newTracker(R.xml.analytics_global_config);
+    //        }
+    //        return mTracker;
+    //    }
 
 }
