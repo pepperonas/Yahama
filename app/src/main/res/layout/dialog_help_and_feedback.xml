@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2019 Martin Pfeffer
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,35 +14,31 @@
   ~ limitations under the License.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
 
     <TextView
+        android:id="@+id/dialog_help_and_feedback_tv_01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/dialog_help_and_feedback_tv_01"/>
+        android:layout_marginTop="@dimen/dialog_help_and_feedback_tv_margin"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/dialog_help_and_feedback_tv_02"
-        android:layout_marginTop="@dimen/dialog_help_and_feedback_tv_margin"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="@dimen/dialog_help_and_feedback_tv_margin"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
         android:id="@+id/dialog_help_and_feedback_tv_03"
-        android:layout_marginTop="@dimen/dialog_help_and_feedback_tv_margin"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/dialog_help_and_feedback_tv_04"
-        android:layout_marginTop="@dimen/dialog_help_and_feedback_tv_margin"/>
+        android:layout_marginTop="@dimen/dialog_help_and_feedback_tv_margin"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

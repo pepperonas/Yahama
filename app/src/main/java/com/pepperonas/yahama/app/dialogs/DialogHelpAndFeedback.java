@@ -42,7 +42,6 @@ public class DialogHelpAndFeedback {
                         TextView msg1 = dialog.findViewById(R.id.dialog_help_and_feedback_tv_01);
                         TextView msg2 = dialog.findViewById(R.id.dialog_help_and_feedback_tv_02);
                         TextView msg3 = dialog.findViewById(R.id.dialog_help_and_feedback_tv_03);
-                        TextView msg4 = dialog.findViewById(R.id.dialog_help_and_feedback_tv_04);
 
                         msg1.setText(Html.fromHtml(makeBold(ctx.getString(R.string.app_name)) + " " +
                                 ctx.getString(R.string.app_description)));
@@ -51,11 +50,8 @@ public class DialogHelpAndFeedback {
                         msg2.setText(Html.fromHtml(ctx.getString(R.string.web_presentation_info)));
                         msg2.setMovementMethod(LinkMovementMethod.getInstance());
 
-                        msg3.setText(Html.fromHtml(ctx.getString(R.string.translate_native_info)));
+                        msg3.setText(Html.fromHtml(ctx.getString(R.string.copyright)));
                         msg3.setMovementMethod(LinkMovementMethod.getInstance());
-
-                        msg4.setText(Html.fromHtml(ctx.getString(R.string.copyright)));
-                        msg4.setMovementMethod(LinkMovementMethod.getInstance());
                     }
                 })
                 .buttonCallback(new MaterialDialog.ButtonCallback() {
