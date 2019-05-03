@@ -17,7 +17,6 @@
 package com.pepperonas.yahama.app.dialogs;
 
 import android.app.AlertDialog;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,32 +33,22 @@ import com.pepperonas.yahama.app.utils.Utils;
  */
 public class DialogCinemaDsp3d7ch {
 
-    private static final String TAG = "Dsp3d_7CH";
+    @SuppressWarnings("unused")
+    private static final String TAG = "DialogCinemaDsp3d7ch";
 
     private TextView tvRange;
-
     private ImageView touchFrame;
-
     private ImageView visualizer;
 
     public DialogCinemaDsp3d7ch(final MainActivity main) {
-
-        Log.i(TAG, "DialogCinemaDsp3d7ch ");
-
         MaterialDialog dlg = new MaterialDialog.Builder(main)
                 .customView(R.layout.dialog_cinema_dsp3d_7ch)
                 .positiveText(R.string.ok)
                 .neutralText(R.string.reset)
-                .negativeText(R.string.cancel)
                 .buttonCallback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
                     }
 
                     @Override
@@ -87,7 +76,6 @@ public class DialogCinemaDsp3d7ch {
                             }
 
                             private boolean trackInput(View v, MotionEvent event) {
-
                                 int x = (int) event.getX() - (v.getWidth() / 2);
                                 int y = (int) event.getY() - (v.getHeight() / 2);
                                 int maxX = v.getWidth();
